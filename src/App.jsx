@@ -7,6 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   
+  console.log("hej")
   const testFunction = () => {
     console.log; Alert("Hejsa...")
   }
@@ -14,6 +15,7 @@ function App() {
   useEffect(() => {
     testFunction()
   }, [])
+
 
 
   return (
