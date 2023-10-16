@@ -8,7 +8,7 @@ function App() {
 
   
   const testFunction = () => {
-    Alert("Hejsa...")
+    console.log; Alert("Hejsa...")
   }
   
   useEffect(() => {
