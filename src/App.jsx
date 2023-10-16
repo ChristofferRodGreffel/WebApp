@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebase-config";
 import SignInForm from "./Components/SignInForm";
 import SignUpForm from "./Components/SignUpForm";
+import { CustomSignOut } from "./Helperfunctions/CustomSignOut";
 
 function App() {
 
@@ -26,20 +27,12 @@ function App() {
     });
   }, [])
 
-  const handleSignOut = () => {
-    signOut(FIREBASE_AUTH).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
-  }
-
   return (
     <>
       <SignUpForm />
       <SignInForm />
 
-      <button onClick={handleSignOut}>Sign out</button>
+      <button onClick={CustomSignOut}>Sign out</button>
 
       <h2>{user}</h2>
 

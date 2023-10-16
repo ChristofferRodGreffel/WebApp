@@ -11,7 +11,6 @@ function SignInForm() {
 
     const handleSignIn = (e) => {
         e.preventDefault()
-
         CustomSignIn(formRef, setLoading)
     }
 
@@ -20,7 +19,7 @@ function SignInForm() {
             <input type='email' disabled={loading} name='signInEmail' placeholder='Write email here...'></input>
             <input type='password' disabled={loading} name='signInPassword' placeholder='Write password here...'></input>
 
-                <button type='submit' disabled={loading}>Sign in</button>
+            <button type='submit' disabled={loading}>Sign in</button>
 
         </form>
     )
