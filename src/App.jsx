@@ -1,39 +1,50 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebase-config";
+import SignInForm from "./Components/SignInForm";
+import SignUpForm from "./Components/SignUpForm";
 
 function App() {
+
+  const [user, setUser] = useState('')  
   
   useEffect(() => {
+    
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
+        setUser(uid)
         // ...
       } else {
+        setUser('')
         // User is signed out
         // ...
       }
     });
   }, [])
 
+  const handleSignOut = () => {
+    signOut(FIREBASE_AUTH).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+      <SignUpForm />
+      <SignInForm />
+
+      <button onClick={handleSignOut}>Sign out</button>
+
+      <h2>{user}</h2>
+
       <h1>Hej Christoffer, det virker stadig</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
