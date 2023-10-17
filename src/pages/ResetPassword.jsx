@@ -13,7 +13,7 @@ const ResetPassword = () => {
   const handleResetPassword = (e) => {
     e.preventDefault()
 
-    const email = form.current?.resetPassword.value
+    const email = formRef.current?.resetPassword.value
 
     sendPasswordResetEmail(FIREBASE_AUTH, email)
       .then(() => {
