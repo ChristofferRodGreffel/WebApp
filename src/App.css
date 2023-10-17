@@ -19,6 +19,7 @@ body {
 /* -- Component styling -- */
 
 button {
+  cursor: pointer;
   border: none;
   font-family: inherit;
   background-color: var(--light-grey);
