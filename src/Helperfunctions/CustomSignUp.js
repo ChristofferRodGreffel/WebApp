@@ -41,15 +41,21 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
 
   const querySnapshot = await getDocs(q);
 
+  let result = false
+
   querySnapshot.forEach((name) => {
     // doc.data() is never undefined for query doc snapshots
 
-    if(signUpUsername === name.id) {
-      alert("Hov, to ens...")
-      return true
+    if(signUpUsername.toLowerCase() === name.id.toLowerCase()) {
+      alert("Sorry, this username is taken...")
+      result = true
+      return
     }
   });
 
+  if(result) {
+    return
+  }
 
   try {
     createUserWithEmailAndPassword(FIREBASE_AUTH, signUpEmail, signUpPassword)
