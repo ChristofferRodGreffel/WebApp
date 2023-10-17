@@ -4,6 +4,9 @@ import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 
 export function CustomSignUp(form, customSetLoad) {
 
+    // Sets the loading state to true, so user gets feedback
+    // afterwards signin in with the passed values
+
     customSetLoad(true)
 
     const signUpEmail = form.current?.signUpEmail.value
@@ -22,12 +25,14 @@ export function CustomSignUp(form, customSetLoad) {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                // ..
+                // ... wrong information passed, or server is down. Checks whenever we
+                // have a custom message to the user...
                 alert(firebaseErrorsCodes[errorCode] || errorMessage)
             });
     }
 
     finally {
+        // Sets the loading state to false, whenever the function is done.
         customSetLoad(false)
     }
 }

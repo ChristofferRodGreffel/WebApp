@@ -9,10 +9,11 @@ function SignInForm() {
 
   const formRef = useRef(null);
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-    CustomSignIn(formRef, setLoading);
-  };
+    // Function that calls our Sign in function, passing the values needed.
+    const handleSignIn = (e) => {
+        e.preventDefault()
+        CustomSignIn(formRef, setLoading)
+    }
 
   return (
     <form ref={formRef} onSubmit={handleSignIn}>
