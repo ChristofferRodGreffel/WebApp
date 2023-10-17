@@ -18,7 +18,7 @@ const ResetPassword = () => {
     sendPasswordResetEmail(FIREBASE_AUTH, email)
       .then(() => {
         // Password reset email sent!
-        alert("Password send, please check your email. Be sure to check spam too.")
+        alert("Password send, please check your email. Be sure to check spam too if you can't find it.")
         formRef.current?.reset()
       })
       .catch((error) => {
