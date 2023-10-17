@@ -37,6 +37,10 @@ a {
   color: var(--white);
 }
 
+.loader {
+  align-items: center;
+}
+
 /* Button Primary */
 .button-primary {
   border: none;

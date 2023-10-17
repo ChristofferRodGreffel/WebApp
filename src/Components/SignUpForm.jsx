@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { CustomSignUp } from "../Helperfunctions/CustomSignUp";
 import { ButtonPrimary } from "./ButtonPrimary";
 import { useNavigate } from "react-router-dom";
+import CircleLoader from "react-spinners/CircleLoader";
+
 
 function SignInForm() {
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,26 @@ function SignInForm() {
         </p>
       </div>
 
-      <ButtonPrimary content="Sign Up" disabled={loading} type="submit" />
+      {loading ?
+        <>
+          <div className="loader">
+            <CircleLoader
+              color={"#dadada"}
+              loading={loading}
+              size={100}
+              cssOverride={{}}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
+        </>
+        :
+        <>
+          <ButtonPrimary content="Sign Up" disabled={loading} type="submit" />
+        </>}
+
+
+
     </form>
   );
 }
