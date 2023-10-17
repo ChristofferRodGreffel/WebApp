@@ -1,12 +1,30 @@
 import React, { useRef, useState } from "react";
 import { ButtonPrimary } from "../Components/ButtonPrimary";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../firebase-config";
+
+
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const formRef = useRef(null);
 
-  const handleResetPassword = () => {};
+  const handleResetPassword = () => {
+
+    const email = form.current?.resetPassword.value
+
+    sendPasswordResetEmail(FIREBASE_AUTH, email)
+      .then(() => {
+        // Password reset email sent!
+        alert("Password send, please check your email. Be sure to check spam too.")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
   return (
     <div className="signup">
