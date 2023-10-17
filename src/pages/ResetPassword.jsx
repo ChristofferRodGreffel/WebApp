@@ -4,7 +4,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { Link } from "react-router-dom";
 
-
+// Komponent udvilket i fælleskab i gruppen
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -12,15 +12,15 @@ const ResetPassword = () => {
   const formRef = useRef(null);
 
   const handleResetPassword = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const email = formRef.current?.resetPassword.value
+    const email = formRef.current?.resetPassword.value;
 
     sendPasswordResetEmail(FIREBASE_AUTH, email)
       .then(() => {
         // Password reset email sent!
-        alert("Password send, please check your email. Be sure to check spam too if you can't find it.")
-        formRef.current?.reset()
+        alert("Password send, please check your email. Be sure to check spam too if you can't find it.");
+        formRef.current?.reset();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -31,7 +31,7 @@ const ResetPassword = () => {
 
   return (
     <div className="signup">
-          <Link to="/signin">{`<-- back to login`}</Link>
+      <Link to="/signin">{`<-- back to login`}</Link>
       <p>
         Forget your password? Kein problemo. <br />
         <br /> We'll send you a reset link
@@ -50,8 +50,6 @@ const ResetPassword = () => {
 
         <ButtonPrimary content="Send reset email" disabled={loading} type="submit" />
       </form>
-
-
     </div>
   );
 };
