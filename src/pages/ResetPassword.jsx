@@ -31,7 +31,7 @@ const ResetPassword = () => {
 
   return (
     <div className="signup">
-          <Link to="/signin">Go to log in</Link>
+          <Link to="/signin">{`<-- back to login`}</Link>
       <p>
         Forget your password? Kein problemo. <br />
         <br /> We'll send you a reset link
