@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebase-config";
-import SignUp from "./pages/SignUp";
 import { CustomSignOut } from "./Helperfunctions/CustomSignOut";
+import SignIn from "./pages/SignIn";
 
 function App() {
   const [user, setUser] = useState("");
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <>
-      <SignUp />
+      <SignIn />
     </>
   );
 }

@@ -1,28 +1,45 @@
-import React, { useRef, useState } from 'react'
-import { FIREBASE_AUTH } from '../../firebase-config'
-import { firebaseErrorsCodes } from '../../firebaseErrorCodes'
-import { CustomSignIn } from '../Helperfunctions/CustomSignIn'
+import React, { useRef, useState } from "react";
+import { FIREBASE_AUTH } from "../../firebase-config";
+import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
+import { CustomSignIn } from "../Helperfunctions/CustomSignIn";
+import { ButtonPrimary } from "./ButtonPrimary";
 
 function SignInForm() {
+  const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false)
+  const formRef = useRef(null);
 
-    const formRef = useRef(null)
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    CustomSignIn(formRef, setLoading);
+  };
 
-    const handleSignIn = (e) => {
-        e.preventDefault()
-        CustomSignIn(formRef, setLoading)
-    }
+  return (
+    <form ref={formRef} onSubmit={handleSignIn}>
+      <div>
+        <label htmlFor="signInEmail">E-mail</label>
+        <input
+          id="signInEmail"
+          type="email"
+          disabled={loading}
+          name="signInEmail"
+          placeholder="Write email here..."
+        ></input>
+      </div>
+      <div>
+        <label htmlFor="signInPassword">Password</label>
+        <input
+          id="signInPassword"
+          type="password"
+          disabled={loading}
+          name="signInPassword"
+          placeholder="Write password here..."
+        ></input>
+      </div>
 
-    return (
-        <form ref={formRef} onSubmit={handleSignIn}>
-            <input type='email' disabled={loading} name='signInEmail' placeholder='Write email here...'></input>
-            <input type='password' disabled={loading} name='signInPassword' placeholder='Write password here...'></input>
-
-            <button type='submit' disabled={loading}>Sign in</button>
-
-        </form>
-    )
+      <ButtonPrimary content="Sign In" disabled={loading} type="submit" />
+    </form>
+  );
 }
 
-export default SignInForm
+export default SignInForm;
