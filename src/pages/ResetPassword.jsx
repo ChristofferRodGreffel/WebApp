@@ -10,7 +10,8 @@ const ResetPassword = () => {
 
   const formRef = useRef(null);
 
-  const handleResetPassword = () => {
+  const handleResetPassword = (e) => {
+    e.preventDefault()
 
     const email = form.current?.resetPassword.value
 
@@ -18,6 +19,7 @@ const ResetPassword = () => {
       .then(() => {
         // Password reset email sent!
         alert("Password send, please check your email. Be sure to check spam too.")
+        formRef.current?.reset()
       })
       .catch((error) => {
         const errorCode = error.code;
