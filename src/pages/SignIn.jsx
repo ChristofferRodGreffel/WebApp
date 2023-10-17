@@ -7,13 +7,15 @@ function SignIn() {
   return (
     <div className="signup">
       <img src={logo} alt="WatchBuddy logo" />
-      <p>Welcome back, please log in</p>
-      <SignInForm />
+      <div>
+        <p>Welcome back, please log in</p>
+        <SignInForm />
+      </div>
       <div className="bottom-content">
         <p>
-          Don't have an account yet? <Link to="/">Sign Up</Link>
+          Don't have an account yet? <Link to="/signup">Sign Up</Link>
         </p>
-        <Link to="/">Reset password</Link>
+        <Link to="/reset">Reset password</Link>
       </div>
     </div>
   );

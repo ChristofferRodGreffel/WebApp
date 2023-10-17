@@ -4,6 +4,10 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebase-config";
 import { CustomSignOut } from "./Helperfunctions/CustomSignOut";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [user, setUser] = useState("");
@@ -26,7 +30,13 @@ function App() {
 
   return (
     <>
-      <SignIn />
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/reset" element={<ResetPassword />} />
+        <Route path="*" element={<SignIn />} />
+      </Routes>
     </>
   );
 }

@@ -51,14 +51,18 @@ a {
 .signup {
   width: 80%;
   margin: auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
+.signup img {
+  width: 16rem;
+  margin-top: 2rem;
+}
 .signup p {
-  width: 70%;
+  width: 80%;
+  text-wrap: balance;
   align-self: flex-start;
   font-size: 1.5rem;
 }
@@ -81,11 +85,13 @@ a {
   border-radius: 0.5rem;
 }
 .signup form button {
-  margin-top: 5rem;
+  margin-top: 3rem;
+}
+.signup form div p {
+  font-size: 0.85rem;
+  width: 100%;
 }
 .bottom-content {
-  position: fixed;
-  bottom: 1rem;
   width: 100%;
   padding: 0.5rem;
   text-align: center;

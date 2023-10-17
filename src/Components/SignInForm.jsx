@@ -3,17 +3,19 @@ import { FIREBASE_AUTH } from "../../firebase-config";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 import { CustomSignIn } from "../Helperfunctions/CustomSignIn";
 import { ButtonPrimary } from "./ButtonPrimary";
+import { useNavigate } from "react-router-dom";
 
 function SignInForm() {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const formRef = useRef(null);
 
-    // Function that calls our Sign in function, passing the values needed.
-    const handleSignIn = (e) => {
-        e.preventDefault()
-        CustomSignIn(formRef, setLoading)
-    }
+  // Function that calls our Sign in function, passing the values needed.
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    CustomSignIn(formRef, setLoading, navigate);
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSignIn}>
