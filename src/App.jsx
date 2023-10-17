@@ -9,10 +9,10 @@ function App() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
+    // Function that runs whenever the the user status changes (logged in / logged out)
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
+        // User is signed in
         const uid = user.uid;
         setUser(uid);
         // ...
