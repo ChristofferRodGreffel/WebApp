@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { ButtonPrimary } from "../Components/ButtonPrimary";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
+import { Link } from "react-router-dom";
 
 
 
@@ -30,6 +31,7 @@ const ResetPassword = () => {
 
   return (
     <div className="signup">
+          <Link to="/signin">Go to log in</Link>
       <p>
         Forget your password? Kein problemo. <br />
         <br /> We'll send you a reset link
@@ -48,6 +50,8 @@ const ResetPassword = () => {
 
         <ButtonPrimary content="Send reset email" disabled={loading} type="submit" />
       </form>
+
+
     </div>
   );
 };
