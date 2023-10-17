@@ -1,5 +1,5 @@
 export const firebaseErrorsCodes = {
-    'auth/missing-password': 'Please write a password on atleast six (6) characters.',
+    'auth/missing-password': 'Please write a password on at least six (6) characters.',
     'auth/user-not-found': 'There is no user with this email.',
     'auth/email-already-in-use': 'There is already a user with this email.',
     'auth/invalid-email': 'Invalid email. \n\nPlease write a correct email.',
