@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomSignOut } from "../Helperfunctions/CustomSignOut";
 import { staticMovies } from "../staticmovies";
+import MovieCard from "../Components/MovieCard";
 
 const Home = () => {
   const handleSignOut = () => {
@@ -14,12 +15,7 @@ const Home = () => {
       <div>
         {staticMovies.movies.map((movie, key) => {
           return (
-            <img
-              style={{ width: "140px", height: "200px", objectFit: "cover" }}
-              src={movie.poster_image}
-              key={key}
-              alt="movie poster"
-            />
+            <MovieCard title={movie.title} url={movie.poster_image} rating={movie.rating} icon={"fa-solid fa-plus"} />
           );
         })}
       </div>
