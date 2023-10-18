@@ -133,7 +133,7 @@ a {
   top: 10px;
   left: 10px;
 
-  background-color: var(--dark-grey);
+  background: color-mix(in srgb, var(--dark-grey) 80%, transparent);
 
   display: flex;
   align-items: center;
