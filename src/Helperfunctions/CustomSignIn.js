@@ -19,7 +19,7 @@ export function CustomSignIn(form, customSetLoad, navigate) {
         const user = userCredential.user;
         form.current?.reset();
         navigate("/home");
-
+        customSetLoad(false);
         // ...
       })
       .catch((error) => {
@@ -27,6 +27,7 @@ export function CustomSignIn(form, customSetLoad, navigate) {
         const errorMessage = error.message;
         // ... wrong information passed, or server is down. Checks whenever we
         // have a custom message to the user...
+        customSetLoad(false);
         alert(firebaseErrorsCodes[errorCode] || errorMessage);
       });
   } finally {
