@@ -4,7 +4,6 @@ import { ButtonPrimary } from "./ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import CircleLoader from "react-spinners/CircleLoader";
 
-
 function SignInForm() {
   const [loading, setLoading] = useState(false);
 
@@ -21,69 +20,36 @@ function SignInForm() {
     <form ref={formRef} onSubmit={handleSignUp}>
       <div>
         <label htmlFor="signUpEmail">E-mail</label>
-        <input
-          id="signUpEmail"
-          type="email"
-          disabled={loading}
-          name="signUpEmail"
-          placeholder="Write email here..."
-        ></input>
+        <input id="signUpEmail" type="email" disabled={loading} name="signUpEmail" placeholder="Your email..."></input>
       </div>
       <div>
         <label htmlFor="signUpUsername">Username</label>
-        <input
-          id="signUpUsername"
-          type="text"
-          disabled={loading}
-          name="signUpUsername"
-          placeholder="Write username here..."
-        ></input>
+        <input id="signUpUsername" type="text" disabled={loading} name="signUpUsername" placeholder="Your username..."></input>
       </div>
       <div>
         <label htmlFor="signUpPassword">Password</label>
-        <input
-          id="signUpPassword"
-          type="password"
-          disabled={loading}
-          name="signUpPassword"
-          placeholder="Write password here..."
-        ></input>
+        <input id="signUpPassword" type="password" disabled={loading} name="signUpPassword" placeholder="Enter password..."></input>
       </div>
       <div>
         <h3>Invited by a friend?</h3>
         <label htmlFor="signUpInvited">Who invited you?</label>
-        <input
-          id="signUpInvited"
-          type="text"
-          disabled={loading}
-          name="signUpInvited"
-          placeholder="Your friends username"
-        ></input>
+        <input id="signUpInvited" type="text" disabled={loading} name="signUpInvited" placeholder="Your friends username"></input>
         <p>
           You get 25 points and your friend gets 10 points* <br />* First redeem grants your friend 25 points too!
         </p>
       </div>
 
-      {loading ?
+      {loading ? (
         <>
           <div className="loader">
-            <CircleLoader
-              color={"#dadada"}
-              loading={loading}
-              size={100}
-              cssOverride={{}}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
+            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
           </div>
         </>
-        :
+      ) : (
         <>
           <ButtonPrimary content="Sign Up" disabled={loading} type="submit" />
-        </>}
-
-
-
+        </>
+      )}
     </form>
   );
 }

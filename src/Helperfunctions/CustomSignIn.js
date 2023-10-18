@@ -31,6 +31,5 @@ export function CustomSignIn(form, customSetLoad, navigate) {
       });
   } finally {
     // Sets the loading state to false, whenever the function is done.
-    customSetLoad(false);
   }
 }

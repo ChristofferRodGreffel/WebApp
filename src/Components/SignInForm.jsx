@@ -4,6 +4,7 @@ import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 import { CustomSignIn } from "../Helperfunctions/CustomSignIn";
 import { ButtonPrimary } from "./ButtonPrimary";
 import { useNavigate } from "react-router-dom";
+import CircleLoader from "react-spinners/CircleLoader";
 
 function SignInForm() {
   const [loading, setLoading] = useState(false);
@@ -21,26 +22,24 @@ function SignInForm() {
     <form ref={formRef} onSubmit={handleSignIn}>
       <div>
         <label htmlFor="signInEmail">E-mail</label>
-        <input
-          id="signInEmail"
-          type="email"
-          disabled={loading}
-          name="signInEmail"
-          placeholder="Write email here..."
-        ></input>
+        <input id="signInEmail" type="email" disabled={loading} name="signInEmail" placeholder="Your email here..."></input>
       </div>
       <div>
         <label htmlFor="signInPassword">Password</label>
-        <input
-          id="signInPassword"
-          type="password"
-          disabled={loading}
-          name="signInPassword"
-          placeholder="Write password here..."
-        ></input>
+        <input id="signInPassword" type="password" disabled={loading} name="signInPassword" placeholder="Your password here..."></input>
       </div>
 
-      <ButtonPrimary content="Sign In" disabled={loading} type="submit" />
+      {loading ? (
+        <>
+          <div className="loader">
+            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+          </div>
+        </>
+      ) : (
+        <>
+          <ButtonPrimary content="Sign In" disabled={loading} type="submit" />
+        </>
+      )}
     </form>
   );
 }
