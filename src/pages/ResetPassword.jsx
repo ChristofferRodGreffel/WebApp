@@ -3,6 +3,7 @@ import { ButtonPrimary } from "../Components/ButtonPrimary";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // Komponent udvilket i fælleskab i gruppen
 
@@ -19,7 +20,16 @@ const ResetPassword = () => {
     sendPasswordResetEmail(FIREBASE_AUTH, email)
       .then(() => {
         // Password reset email sent!
-        alert("Password send, please check your email. Be sure to check spam too if you can't find it.");
+        toast.success("Password send, please check your email. Be sure to check spam too if you can't find it.", {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
         formRef.current?.reset();
       })
       .catch((error) => {
