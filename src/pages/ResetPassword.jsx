@@ -4,6 +4,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 
 // Komponent udvilket i fælleskab i gruppen
 
@@ -35,6 +36,16 @@ const ResetPassword = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        toast.error(`${firebaseErrorsCodes[errorCode] || errorMessage}`, {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
         // ..
       });
   };
