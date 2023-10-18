@@ -2,6 +2,7 @@ import React from "react";
 import { CustomSignOut } from "../Helperfunctions/CustomSignOut";
 import { staticMovies } from "../staticmovies";
 import MovieCard from "../Components/MovieCard";
+import HorizontalScroller from "../Components/HorizontalScroller";
 
 const Home = () => {
   const handleSignOut = () => {
@@ -12,13 +13,19 @@ const Home = () => {
     <>
       <div>Home</div>
       <button onClick={handleSignOut}>Sign out</button>
-      <div className="allMovies">
-        {staticMovies.movies.map((movie, key) => {
+      <HorizontalScroller
+        content={staticMovies.movies.map((movie, key) => {
           return (
-            <MovieCard title={movie.title} url={movie.poster_image} rating={movie.rating} icon={"fa-solid fa-plus"} />
+            <MovieCard
+              key={key}
+              title={movie.title}
+              url={movie.poster_image}
+              rating={movie.rating}
+              icon={"fa-solid fa-plus"}
+            />
           );
         })}
-      </div>
+      />
     </>
   );
 };

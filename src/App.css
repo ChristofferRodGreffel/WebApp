@@ -1,6 +1,13 @@
 /* Import fonts */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* Remove all margin */
+*,
+*::before,
+*::after {
+  margin: 0;
+}
+
 /* Color variables */
 :root {
   --light-grey: #dadada;
@@ -112,14 +119,12 @@ a {
 .moviecardWrapper {
   width: 140px;
   height: 200px;
-
   border-radius: 15px;
 }
 
 .moviecardWrapper > div > img {
   width: 100%;
-  height: 100%;
-
+  height: 200px;
   border-radius: 15px;
 }
 
@@ -158,8 +163,8 @@ a {
   position: absolute;
   bottom: 4px;
   right: 0;
-  height: 30px;
-  width: 30px;
+  height: 50px;
+  width: 50px;
 
   display: flex;
   justify-content: center;
@@ -169,15 +174,8 @@ a {
   border-radius: 50px 0px 15px 0px;
 }
 
-.allMovies {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
 .moviecardWrapper > div {
   overflow: hidden;
-
   position: relative;
 }
 
@@ -187,4 +185,21 @@ a {
   top: 4px;
 
   font-size: 25px;
+}
+
+/* HORIZONTAL SCROLLER / MEDIA SCROLLER */
+.media-scroller {
+  padding-bottom: 80px;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+.media-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.media-element {
+  aspect-ratio: 16 / 9;
 }

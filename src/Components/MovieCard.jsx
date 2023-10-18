@@ -2,7 +2,7 @@ import React from "react";
 
 function MovieCard(props) {
   return (
-    <div className="moviecardWrapper">
+    <div className="moviecardWrapper media-element" key={props.key}>
       <div>
         <img src={props.url} alt={`${props.title} Movie poster`} />
 
