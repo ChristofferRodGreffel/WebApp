@@ -35,6 +35,7 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
   const signUpPassword = form.current?.signUpPassword.value;
 
   if (!signUpUsername) {
+    customSetLoad(false);
     return
   }
 
@@ -74,10 +75,10 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
         const errorMessage = error.message;
         // ... wrong information passed, or server is down. Checks whenever we
         // have a custom message to the user...
+        customSetLoad(false);
         alert(firebaseErrorsCodes[errorCode] || errorMessage);
       });
   } finally {
-    // Sets the loading state to false, whenever the function is done.
     
   }
 }
