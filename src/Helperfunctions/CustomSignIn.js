@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function CustomSignIn(form, customSetLoad, navigate) {
   // Sets the loading state to true, so user gets feedback
@@ -19,7 +20,7 @@ export function CustomSignIn(form, customSetLoad, navigate) {
         const user = userCredential.user;
         form.current?.reset();
         navigate("/home");
-
+        customSetLoad(false);
         // ...
       })
       .catch((error) => {
@@ -27,7 +28,19 @@ export function CustomSignIn(form, customSetLoad, navigate) {
         const errorMessage = error.message;
         // ... wrong information passed, or server is down. Checks whenever we
         // have a custom message to the user...
-        alert(firebaseErrorsCodes[errorCode] || errorMessage);
+        customSetLoad(false);
+
+        toast.error(`${firebaseErrorsCodes[errorCode] || errorMessage}`, {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
+
       });
   } finally {
     // Sets the loading state to false, whenever the function is done.

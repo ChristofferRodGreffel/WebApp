@@ -3,6 +3,7 @@ import { FIREBASE_AUTH, db } from "../../firebase-config";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 import { useNavigate } from "react-router-dom";
 import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 async function insertUsername(signUpUsername, navigate, customSetLoad) {
 
@@ -35,6 +36,16 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
   const signUpPassword = form.current?.signUpPassword.value;
 
   if (!signUpUsername) {
+    toast.error('Please write a username', {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
     customSetLoad(false);
     return
   }
@@ -49,7 +60,16 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
     // doc.data() is never undefined for query doc snapshots
 
     if(signUpUsername.toLowerCase() === name.id.toLowerCase()) {
-      alert("Sorry, this username is taken...")
+      toast.error('Sorry, this username is already taken...', {
+        position: "top-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
       result = true
       customSetLoad(false);
       return
@@ -76,7 +96,16 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
         // ... wrong information passed, or server is down. Checks whenever we
         // have a custom message to the user...
         customSetLoad(false);
-        alert(firebaseErrorsCodes[errorCode] || errorMessage);
+        toast.error(`${firebaseErrorsCodes[errorCode] || errorMessage}`, {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        });
       });
   } finally {
     
