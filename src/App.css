@@ -128,7 +128,7 @@ a {
   top: 10px;
   left: 10px;
 
-  background-color: var(--dark-grey);
+  background: color-mix(in srgb, var(--dark-grey) 80%, transparent);
 
   display: flex;
   align-items: center;
@@ -158,8 +158,8 @@ a {
   position: absolute;
   bottom: 4px;
   right: 0;
-  height: 30px;
-  width: 30px;
+  height: 50px;
+  width: 50px;
 
   display: flex;
   justify-content: center;
@@ -167,12 +167,6 @@ a {
 
   background: color-mix(in srgb, var(--purple) 70%, transparent);
   border-radius: 50px 0px 15px 0px;
-}
-
-.allMovies {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
 }
 
 .moviecardWrapper > div {
