@@ -35,6 +35,7 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
   const signUpPassword = form.current?.signUpPassword.value;
 
   if (!signUpUsername) {
+    alert("Please write a username")
     customSetLoad(false);
     return
   }

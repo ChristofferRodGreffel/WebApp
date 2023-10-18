@@ -9,6 +9,9 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import ResetPassword from "./pages/ResetPassword";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const [user, setUser] = useState("");
 
@@ -30,6 +33,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer />
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
