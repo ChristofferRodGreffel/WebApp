@@ -3,15 +3,16 @@ import { CustomSignOut } from "../Helperfunctions/CustomSignOut";
 
 const Home = () => {
   const handleSignOut = () => {
-    CustomSignOut();
-  };
-
+    CustomSignOut()
+  }
+  
   return (
     <>
       <div>Home</div>
       <button onClick={handleSignOut}>Sign out</button>
     </>
-  );
+
+  )
 };
 
 export default Home;
