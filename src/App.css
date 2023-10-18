@@ -189,6 +189,8 @@ a {
 
 /* HORIZONTAL SCROLLER / MEDIA SCROLLER */
 .media-scroller {
+  scroll-snap-type: inline mandatory;
+  padding-top: 20px;
   padding-bottom: 80px;
   display: flex;
   gap: 20px;
@@ -201,5 +203,6 @@ a {
 }
 
 .media-element {
+  scroll-snap-align: start;
   aspect-ratio: 16 / 9;
 }
