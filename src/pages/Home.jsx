@@ -12,7 +12,7 @@ const Home = () => {
     <>
       <div>Home</div>
       <button onClick={handleSignOut}>Sign out</button>
-      <div>
+      <div className="allMovies">
         {staticMovies.movies.map((movie, key) => {
           return (
             <MovieCard title={movie.title} url={movie.poster_image} rating={movie.rating} icon={"fa-solid fa-plus"} />
