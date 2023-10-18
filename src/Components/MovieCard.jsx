@@ -5,7 +5,9 @@ function MovieCard(props) {
     <div>
       <img src={props.url} alt={`${props.title} Movie poster`} />
 
-      <div></div>
+      <div>
+        <i className="fa-solid fa-star"></i>
+      </div>
     </div>
   );
 }
