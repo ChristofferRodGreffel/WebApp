@@ -43,7 +43,7 @@ const ResetPassword = () => {
     <div className="signup">
       <Link to="/signin">{`<-- back to login`}</Link>
       <p>
-        Forget your password? Kein problemo. <br />
+        Forgot your password? Kein problemo. <br />
         <br /> We'll send you a reset link
       </p>
       <form ref={formRef} onSubmit={handleResetPassword}>
