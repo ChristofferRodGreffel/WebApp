@@ -74,6 +74,13 @@ a {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.signup h1 {
+  width: 90%;
+  text-wrap: balance;
+  align-self: flex-start;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
 .signup p {
   width: 80%;
   text-wrap: balance;
@@ -106,6 +113,7 @@ a {
   width: 100%;
 }
 .bottom-content {
+  margin-top: 3rem;
   width: 100%;
   padding: 0.5rem;
   text-align: center;
@@ -113,6 +121,25 @@ a {
 .bottom-content p {
   width: 100%;
   font-size: 1rem;
+}
+.referral {
+  margin-top: 1rem;
+}
+.referral p {
+  margin-top: 0.5rem;
+}
+
+/* Reset page */
+.reset h1 {
+  width: 100%;
+}
+.reset p {
+  margin-bottom: 1rem;
+}
+.reset a {
+  margin-top: 2rem;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 /*MovieCard styling */
@@ -191,6 +218,7 @@ a {
 .media-scroller {
   scroll-snap-type: inline mandatory;
   padding-top: 20px;
+  padding-left: 2rem;
   padding-bottom: 80px;
   display: flex;
   gap: 20px;
@@ -205,4 +233,7 @@ a {
 .media-element {
   scroll-snap-align: start;
   aspect-ratio: 16 / 9;
+}
+
+.horizontal-scroller {
 }

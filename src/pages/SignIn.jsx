@@ -8,7 +8,7 @@ function SignIn() {
     <div className="signup">
       <img src={logo} alt="WatchBuddy logo" />
       <div>
-        <p>Welcome back, please log in</p>
+        <h1>Welcome back, please log in</h1>
         <SignInForm />
       </div>
       <div className="bottom-content">

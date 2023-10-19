@@ -30,7 +30,7 @@ function SignInForm() {
         <label htmlFor="signUpPassword">Password</label>
         <input id="signUpPassword" type="password" disabled={loading} name="signUpPassword" placeholder="Enter password..."></input>
       </div>
-      <div>
+      <div className="referral">
         <h3>Invited by a friend?</h3>
         <label htmlFor="signUpInvited">Who invited you?</label>
         <input id="signUpInvited" type="text" disabled={loading} name="signUpInvited" placeholder="Your friends username"></input>

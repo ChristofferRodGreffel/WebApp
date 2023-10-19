@@ -6,7 +6,7 @@ import React from "react";
 
 const HorizontalScroller = (props) => {
   return (
-    <div>
+    <div className="horizontal-scroller">
       <h1>{props.scrollerTitle}</h1>
       <div className="media-scroller">{props.content}</div>
     </div>

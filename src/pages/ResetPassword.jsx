@@ -5,6 +5,7 @@ import { FIREBASE_AUTH } from "../../firebase-config";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
+import logo from "../assets/logo.svg";
 
 // Komponent udvilket i fælleskab i gruppen
 
@@ -51,26 +52,23 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="signup">
-      <Link to="/signin">{`<-- back to login`}</Link>
-      <p>
-        Forgot your password? Kein problemo. <br />
-        <br /> We'll send you a reset link
-      </p>
+    <div className="signup reset">
+      <img src={logo} alt="WatchBuddy logo" />
+      <div>
+        <h1>Forgot your password?</h1>
+        <p>No problem, we'll send you a reset link!</p>
+      </div>
       <form ref={formRef} onSubmit={handleResetPassword}>
         <div>
           <label htmlFor="resetPassword">E-mail</label>
-          <input
-            id="resetPassword"
-            type="email"
-            disabled={loading}
-            name="resetPassword"
-            placeholder="Write email here..."
-          ></input>
+          <input id="resetPassword" type="email" disabled={loading} name="resetPassword" placeholder="Write your email here..."></input>
         </div>
 
         <ButtonPrimary content="Send reset email" disabled={loading} type="submit" />
       </form>
+      <Link to="/signin">
+        <i className="fa-solid fa-arrow-left"></i> Back to login
+      </Link>
     </div>
   );
 };
