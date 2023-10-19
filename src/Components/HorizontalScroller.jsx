@@ -1,5 +1,9 @@
 import React from "react";
 
+// Komponenten er udviklet fælles i gruppen.
+
+// This component is a shell for the horizontal scrolling behaviour in the app.
+
 const HorizontalScroller = (props) => {
   return (
     <div>

@@ -14,50 +14,29 @@ const Home = () => {
       <div>Home</div>
       <button onClick={handleSignOut}>Sign out</button>
       <HorizontalScroller
-        scrollerTitle="All movies"
+        scrollerTitle="Movies for you"
         content={staticMovies.movies.map((movie, key) => {
-          return (
-            <MovieCard
-              key={key}
-              id={movie.imdb_id}
-              title={movie.title}
-              url={movie.poster_image}
-              rating={movie.rating.toPrecision(2)}
-              icon={"fa-solid fa-plus"}
-            />
-          );
+          if (key <= 4) {
+            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+          }
         })}
       />
 
       <HorizontalScroller
-        scrollerTitle="All movies"
+        scrollerTitle="Popular"
         content={staticMovies.movies.map((movie, key) => {
-          return (
-            <MovieCard
-              key={key}
-              id={movie.imdb_id}
-              title={movie.title}
-              url={movie.poster_image}
-              rating={movie.rating.toPrecision(2)}
-              icon={"fa-solid fa-plus"}
-            />
-          );
+          if (key > 5 && key <= 10) {
+            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+          }
         })}
       />
 
       <HorizontalScroller
-        scrollerTitle="All movies"
+        scrollerTitle="Your friends like"
         content={staticMovies.movies.map((movie, key) => {
-          return (
-            <MovieCard
-              key={key}
-              id={movie.imdb_id}
-              title={movie.title}
-              url={movie.poster_image}
-              rating={movie.rating.toPrecision(2)}
-              icon={"fa-solid fa-plus"}
-            />
-          );
+          if (key > 10) {
+            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+          }
         })}
       />
     </>

@@ -1,5 +1,9 @@
 import React from "react";
 
+// Komponenten er udviklet fælles i gruppen
+
+// This component is a single "moviecard"
+
 function MovieCard(props, { key }) {
   return (
     <div className="moviecardWrapper media-element" data-id={props.id} key={key}>
