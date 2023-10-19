@@ -26,6 +26,7 @@ body {
 }
 
 ::-webkit-scrollbar {
+  scrollbar-width: none;
   display: none;
 }
 
@@ -268,6 +269,7 @@ nav a i {
 
 .media-scroller::-webkit-scrollbar {
   display: none;
+  scrollbar-width: none;
 }
 .media-element {
   scroll-snap-align: start;
