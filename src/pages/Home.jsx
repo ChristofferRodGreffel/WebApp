@@ -3,6 +3,7 @@ import { CustomSignOut } from "../Helperfunctions/CustomSignOut";
 import { staticMovies } from "../staticmovies";
 import MovieCard from "../Components/MovieCard";
 import HorizontalScroller from "../Components/HorizontalScroller";
+import SearchBar from "../Components/SearchBar";
 
 const Home = () => {
   const handleSignOut = () => {
@@ -11,7 +12,8 @@ const Home = () => {
 
   return (
     <>
-      <button onClick={handleSignOut}>Sign out</button>
+      <SearchBar />
+      {/* <button onClick={handleSignOut}>Sign out</button> */}
       <HorizontalScroller
         scrollerTitle="Movies for you"
         content={staticMovies.movies.map((movie, key) => {
