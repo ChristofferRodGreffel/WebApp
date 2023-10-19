@@ -9,13 +9,15 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import ResetPassword from "./pages/ResetPassword";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navigation from "./Components/Navigation";
 
 function App() {
   const [user, setUser] = useState("");
+  const [showNav, setShowNav] = useState(true);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Function that runs whenever the the user status changes (logged in / logged out)
@@ -24,11 +26,13 @@ function App() {
         // User is signed in
         const uid = user.uid;
         setUser(uid);
-        navigate("/home")
+        setShowNav(true);
+        navigate("/home");
         // ...
       } else {
         setUser("");
-        navigate("/")
+        setShowNav(false);
+        navigate("/");
         // User is signed out
         // ...
       }
@@ -38,14 +42,13 @@ function App() {
   return (
     <>
       <ToastContainer />
+      {showNav && <Navigation />}
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="*" element={<SignIn />} />
-        {user && (
-          <Route path="/home" element={<Home />} />
-        )}
+        {user && <Route path="/home" element={<Home />} />}
       </Routes>
     </>
   );
