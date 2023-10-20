@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { staticMovies } from "../staticmovies";
 
 function SingleMovieOverview() {
   const { imdbid } = useParams();
 
+    const [movieData, setMovieData] = useState()
+
   useEffect(() => {
     const getStreamingData = async () => {
-      const url = "https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id={INSERT IMDB ID HERE SEBASTIAN!!!}";
+      const url = `https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id=${imdbid}`;
       const options = {
         method: "GET",
         headers: {
@@ -19,11 +21,12 @@ function SingleMovieOverview() {
       try {
         const response = await fetch(url, options);
         const result = await response.text();
-        console.log(result);
+        setMovieData(result)
       } catch (error) {
         console.error(error);
       }
     };
+    getStreamingData()
   }, []);
 
   return (
