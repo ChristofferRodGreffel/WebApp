@@ -1,12 +1,20 @@
 /* Import fonts */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* Remove all margin */
+*,
+*::before,
+*::after {
+  margin: 0;
+}
+
 /* Color variables */
 :root {
   --light-grey: #dadada;
   --dark-grey: #303030;
   --purple: #5425b8;
   --white: #ffffff;
+  --yellow: #ffd600;
 }
 
 /* General styling for whole document */
@@ -14,6 +22,12 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: var(--dark-grey);
   color: var(--white);
+  margin-bottom: 5rem;
+}
+
+::-webkit-scrollbar {
+  scrollbar-width: none;
+  display: none;
 }
 
 /* -- Component styling -- */
@@ -52,6 +66,40 @@ a {
   margin: auto;
 }
 
+/* Nav styling */
+nav {
+  z-index: 1000;
+  box-shadow: 1px -15px 59px -2px rgba(0, 0, 0, 0.21);
+  -webkit-box-shadow: 1px -15px 59px -2px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 1px -15px 59px -2px rgba(0, 0, 0, 0.21);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+nav a {
+  width: 100%;
+  background-color: var(--light-grey);
+  text-decoration: none;
+  color: var(--dark-grey);
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}
+nav a i {
+  font-size: 15pt;
+}
+
+.active {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
 /* SignUp styling */
 .signup {
   width: 80%;
@@ -64,6 +112,13 @@ a {
 .signup img {
   width: 16rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.signup h1 {
+  width: 90%;
+  text-wrap: balance;
+  align-self: flex-start;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
 }
 .signup p {
@@ -98,6 +153,7 @@ a {
   width: 100%;
 }
 .bottom-content {
+  margin-top: 3rem;
   width: 100%;
   padding: 0.5rem;
   text-align: center;
@@ -105,4 +161,168 @@ a {
 .bottom-content p {
   width: 100%;
   font-size: 1rem;
+}
+.referral {
+  margin-top: 1rem;
+}
+.referral p {
+  margin-top: 0.5rem;
+}
+
+/* Reset page */
+.reset h1 {
+  width: 100%;
+}
+.reset p {
+  margin-bottom: 1rem;
+}
+.reset a {
+  margin-top: 2rem;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/*MovieCard styling */
+.moviecardWrapper {
+  width: 140px;
+  height: 200px;
+  border-radius: 15px;
+}
+
+.moviecardWrapper > div > img {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+}
+
+.moviecardRatingContainer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  background: color-mix(in srgb, var(--dark-grey) 90%, transparent);
+
+  display: flex;
+  align-items: center;
+
+  height: 22px;
+  gap: 5px;
+  padding: 2.5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+}
+
+.moviecardRatingContainer i {
+  color: var(--yellow);
+}
+
+.moviecardWrapper > p {
+  text-align: center;
+  margin: 0;
+  margin-top: 3px;
+
+  font-size: 13px;
+}
+
+.moviecardAdd {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  height: 50px;
+  width: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: color-mix(in srgb, var(--purple) 80%, transparent);
+  border-radius: 50px 0px 15px 0px;
+}
+
+.moviecardWrapper > div {
+  overflow: hidden;
+  position: relative;
+}
+
+.moviecardAdd > i {
+  position: relative;
+  left: 4px;
+  top: 4px;
+
+  font-size: 25px;
+}
+
+/* HORIZONTAL SCROLLER / MEDIA SCROLLER */
+
+.media-scroller {
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline: 1rem;
+  padding: 1rem 1rem 4.5rem 2rem;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+
+.media-scroller::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+}
+.media-element {
+  scroll-snap-align: start;
+  aspect-ratio: 16 / 9;
+}
+.horizontal-scroller h1 {
+  margin-left: 1rem;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Searchbar */
+.searchbar {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  width: 90%;
+  margin: auto;
+}
+
+.search-buttons {
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 10px;
+}
+
+.searchbar button {
+  border: none;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.search-input {
+  border: 2px solid var(--light-grey);
+  padding: 10px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--dark-grey);
+  position: relative;
+}
+
+.search-input input {
+  background-color: var(--dark-grey);
+  font-size: 15px;
+  color: var(--light-grey);
+}
+.search-input input:focus {
+  outline: none;
+}
+.search-input i {
+  font-size: 20px;
+  color: var(--light-grey);
 }

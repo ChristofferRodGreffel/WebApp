@@ -8,7 +8,7 @@ const SignUp = () => {
     <div className="signup">
       <img src={logo} alt="WatchBuddy logo" />
       <div>
-        <p>We’re happy to have you. Lets get started!</p>
+        <h1>We’re happy to have you. Lets get started!</h1>
         <SignUpForm />
       </div>
       <div className="bottom-content">
