@@ -1,12 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // Komponenten er udviklet fælles i gruppen
 
 // This component is a single "moviecard"
 
 function MovieCard(props, { key }) {
+
+  const navigate = useNavigate();
+
+  const handleOnCardClick = () => {
+    navigate(`/overview/${props.id}`);
+  }
+
   return (
-    <div className="moviecardWrapper media-element" data-id={props.id} key={key}>
+    <div onClick={handleOnCardClick} className="moviecardWrapper media-element" data-id={props.id} key={key}>
       <div>
         <img src={props.url} alt={`${props.title} Movie poster`} />
 
