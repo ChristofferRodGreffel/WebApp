@@ -4,6 +4,7 @@ import { staticMovies } from "../staticmovies";
 import MovieCard from "../Components/MovieCard";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import SearchBar from "../Components/SearchBar";
+import AddToList from "../Components/AddToList";
 
 const Home = () => {
   const handleSignOut = () => {
@@ -40,6 +41,8 @@ const Home = () => {
           }
         })}
       />
+
+      <AddToList />
     </>
   );
 };

@@ -4,7 +4,7 @@ const SearchBar = () => {
   return (
     <div className="searchbar">
       <div className="search-input">
-        <i class="fa-solid fa-magnifying-glass"></i>
+        <i className="fa-solid fa-magnifying-glass"></i>
         <form>
           <input type="text" placeholder="Search for content..." />
         </form>
