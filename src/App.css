@@ -250,7 +250,6 @@ nav a i {
   position: relative;
   left: 4px;
   top: 4px;
-
   font-size: 25px;
 }
 
@@ -283,7 +282,7 @@ nav a i {
 
 /* Searchbar */
 .searchbar {
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-bottom: 2rem;
   width: 90%;
   margin: auto;
@@ -325,4 +324,56 @@ nav a i {
 .search-input i {
   font-size: 20px;
   color: var(--light-grey);
+}
+
+/* Add To List component styling */
+.addToList {
+  position: fixed;
+  top: 0;
+  display: flex;
+  height: 80vh;
+  width: 90%;
+  margin: auto;
+  border-radius: 15px;
+  background-color: var(--purple);
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.addToList-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  height: 85%;
+  margin: auto;
+}
+.addToList-content p {
+  padding-top: 0.5rem;
+}
+.fa-xmark {
+  font-size: 35px;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+}
+.addNewList h4 {
+  margin-bottom: 0.5rem;
+}
+.addNewList form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.addNewList form input {
+  padding: 10px;
+}
+.addNewList form button {
+  padding: 10px;
+  background-color: var(--dark-grey);
+  color: var(--white);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
 }
