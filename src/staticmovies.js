@@ -15,6 +15,7 @@ export const staticMovies = {
       imdb_id: "tt0468569",
       title: "The Dark Knight",
       poster_image: "https://m.media-amazon.com/images/M/MV5BMTIzMDc4MzA2Ml5BMl5BanBnXkFtZTcwODU0MzA3MQ@@._V1_FMjpg_UX510_.jpg?fbclid=IwAR3gDfAz30F6KV8v4bpFB_p-VGiBXqrqT0WAeM8MFxJcjiL8cjFUbQ7mjkE",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTM1NTcwMTk4OV5BMl5BanBnXkFtZTcwOTczMTk2Mw@@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=kmJLuwP3MbY",
       runtime: "2h 32min",
       genres: ["Action", "Crime", "Drama"],

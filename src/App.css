@@ -377,3 +377,95 @@ nav a i {
   font-size: 15px;
   font-weight: 500;
 }
+
+/* Single Movie Page Styling */
+
+.poster-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.movie-container {
+  width: 90%;
+  margin: auto;
+  margin-top: 1rem;
+}
+.first-line {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.first-line-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+  padding: 5px 15px;
+  border-radius: 20px;
+  border: 2px solid var(--light-grey);
+}
+.rating p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.trailer {
+  background-color: var(--light-grey);
+  color: var(--dark-grey);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+.first-line i {
+  font-size: 30px;
+}
+
+.runtime-genre-container {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+}
+.dots-list {
+  display: flex;
+}
+.dots-list p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fa-circle {
+  font-size: 5px;
+}
+.addToList-btn {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--purple);
+  color: var(--white);
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.addToList-btn i {
+  font-size: 20px;
+}
+
+.services {
+  margin-top: 1.5rem;
+}
+.services h2 {
+  margin-bottom: 0.5rem;
+}
