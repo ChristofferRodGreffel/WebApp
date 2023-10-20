@@ -37,7 +37,7 @@ const AddToList = (props) => {
           })}
         </div>
         <div className="addNewList">
-          <h4>Create new list</h4>
+          <h4>Create new personal list</h4>
           <form>
             <input type="text" placeholder="Add a list name" />
             <button type="submit">Add new list</button>

@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 // This component is a single "moviecard"
 
 function MovieCard(props, { key }) {
-
   const navigate = useNavigate();
 
   const handleOnCardClick = () => {
     navigate(`/overview/${props.id}`);
-  }
+  };
+
+  const handleOpen = (e) => {
+    e.stopPropagation();
+    const popup = document.querySelector(".addToList");
+    popup.style.display = "flex";
+  };
 
   return (
     <div onClick={handleOnCardClick} className="moviecardWrapper media-element" data-id={props.id} key={key}>
@@ -23,7 +28,7 @@ function MovieCard(props, { key }) {
           <p>{props.rating}</p>
         </div>
 
-        <div className="moviecardAdd">
+        <div className="moviecardAdd" data-id={props.title} onClick={handleOpen}>
           <i className={props.icon}></i>
         </div>
       </div>
