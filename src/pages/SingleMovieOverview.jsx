@@ -6,8 +6,8 @@ function SingleMovieOverview() {
   const { imdbid } = useParams();
 
   useEffect(() => {
-    const getStreamingInfo = async () => {
-      const url = "https://streaming-availability.p.rapidapi.com/countries";
+    const getStreamingData = async () => {
+      const url = "https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id={INSERT IMDB ID HERE SEBASTIAN!!!}";
       const options = {
         method: "GET",
         headers: {
