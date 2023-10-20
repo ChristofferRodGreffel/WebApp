@@ -46,12 +46,15 @@ function SingleMovieOverview() {
                     return (
                         <div key={listItem.imdb_id}>
                             <img style={{ width: "20%" }} src={listItem.poster_image} alt={`${listItem.title} poster`} />
+
+                            <div>{listItem.service}</div>
                         </div>
                     );
                 }
             })}
 
-            <div>{movieData?.result?.streamingInfo.dk[0].service}</div>
+
+            {/* <div>{movieData?.result?.streamingInfo.dk[0].service}</div> */}
 
             <div style={{ fontSize: 128 }}>{imdbid}</div>
         </>
