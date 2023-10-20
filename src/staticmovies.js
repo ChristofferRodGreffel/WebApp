@@ -1,10 +1,20 @@
+const services = {
+  netflix: "Netflix",
+  hbo: "HBO Max",
+  disney: "Disney+",
+  viaplay: "Viaplay",
+  prime: "Prime Video",
+  apple: "Apple TV",
+  tv2: "TV2 PLay",
+  filmstriben: "FilmStriben",
+};
+
 export const staticMovies = {
   movies: [
     {
       imdb_id: "tt0468569",
       title: "The Dark Knight",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BMTIzMDc4MzA2Ml5BMl5BanBnXkFtZTcwODU0MzA3MQ@@._V1_FMjpg_UX510_.jpg?fbclid=IwAR3gDfAz30F6KV8v4bpFB_p-VGiBXqrqT0WAeM8MFxJcjiL8cjFUbQ7mjkE",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BMTIzMDc4MzA2Ml5BMl5BanBnXkFtZTcwODU0MzA3MQ@@._V1_FMjpg_UX510_.jpg?fbclid=IwAR3gDfAz30F6KV8v4bpFB_p-VGiBXqrqT0WAeM8MFxJcjiL8cjFUbQ7mjkE",
       trailer: "https://www.youtube.com/watch?v=kmJLuwP3MbY",
       runtime: "2h 32min",
       genres: ["Action", "Crime", "Drama"],
@@ -12,6 +22,7 @@ export const staticMovies = {
       release_date: "2008-07-18",
       description: "When the Joker wreaks havoc on Gotham City, Batman must confront the chaos he brings.",
       language: "English",
+      service: [services.hbo],
     },
     {
       imdb_id: "tt0172495",
@@ -25,6 +36,7 @@ export const staticMovies = {
       release_date: "2000-05-05",
       description: "A former Roman General seeks justice against the corrupt Emperor who murdered his family.",
       language: "English",
+      service: [services.prime, services.prime, services.viaplay],
     },
     {
       imdb_id: "tt0109830",
@@ -38,12 +50,12 @@ export const staticMovies = {
       release_date: "1994-07-06",
       description: "The life of a man with low intelligence, who achieves great success in life.",
       language: "English",
+      service: [services.netflix, services.tv2],
     },
     {
       imdb_id: "tt0361748",
       title: "Inglourious Basterds",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWYtMTVjOC00ZjlmLWE0NGMtZmE1OWVmZDQ2OWJhXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_FMjpg_UY3000_.jpg",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWYtMTVjOC00ZjlmLWE0NGMtZmE1OWVmZDQ2OWJhXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_FMjpg_UY3000_.jpg",
       trailer: "https://www.youtube.com/watch?v=KnrRy6kSFF0",
       runtime: "2h 33min",
       genres: ["Adventure", "Drama", "War"],
@@ -51,6 +63,7 @@ export const staticMovies = {
       release_date: "2009-08-21",
       description: "In Nazi-occupied France, a group of Jewish-American soldiers plot to assassinate Nazi leaders.",
       language: "English, German, French, Italian",
+      service: [services.netflix],
     },
     {
       imdb_id: "tt1392190",
@@ -62,9 +75,9 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Sci-Fi"],
       rating: 8.1,
       release_date: "2015-05-15",
-      description:
-        "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland.",
+      description: "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland.",
       language: "English",
+      service: [services.prime, services.hbo],
     },
     {
       imdb_id: "tt0169547",
@@ -76,9 +89,9 @@ export const staticMovies = {
       genres: ["Drama"],
       rating: 8.3,
       release_date: "1999-10-01",
-      description:
-        "A sexually frustrated suburban father has a mid-life crisis after becoming infatuated with his daughter's friend.",
+      description: "A sexually frustrated suburban father has a mid-life crisis after becoming infatuated with his daughter's friend.",
       language: "English",
+      service: [services.tv2],
     },
     {
       imdb_id: "tt0076759",
@@ -90,23 +103,22 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Fantasy"],
       rating: 8.6,
       release_date: "1977-05-25",
-      description:
-        "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying Death Star.",
+      description: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying Death Star.",
       language: "English",
+      service: [services.viaplay, services.disney],
     },
     {
       imdb_id: "tt5311514",
       title: "Parasite",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BMTE5MGYwMWUtMWVmYi00MmYyLWI1OTYtNWUwZTZmOTY0MmIxXkEyXkFqcGdeQXVyMTAyOTE2ODg0._V1_FMjpg_UX1123_.jpg",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BMTE5MGYwMWUtMWVmYi00MmYyLWI1OTYtNWUwZTZmOTY0MmIxXkEyXkFqcGdeQXVyMTAyOTE2ODg0._V1_FMjpg_UX1123_.jpg",
       trailer: "https://www.youtube.com/watch?v=5xH0HfJHsaY",
       runtime: "2h 12min",
       genres: ["Comedy", "Drama", "Thriller"],
       rating: 8.6,
       release_date: "2019-11-08",
-      description:
-        "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+      description: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
       language: "Korean",
+      service: [services.filmstriben],
     },
     {
       imdb_id: "tt0167260",
@@ -118,9 +130,9 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Drama"],
       rating: 8.9,
       release_date: "2003-12-17",
-      description:
-        "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+      description: "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
       language: "English",
+      service: [services.prime, services.hbo],
     },
     {
       imdb_id: "tt0111161",
@@ -132,29 +144,27 @@ export const staticMovies = {
       genres: ["Drama", "Crime"],
       rating: 9.3,
       release_date: "1994-10-14",
-      description:
-        "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
       language: "English",
+      service: [services.prime, services.viaplay, services.filmstriben],
     },
     {
       imdb_id: "tt0110912",
       title: "Pulp Fiction",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1055_.jpg",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1055_.jpg",
       trailer: "https://www.youtube.com/watch?v=s7EdQ4FqbhY",
       runtime: "2h 34min",
       genres: ["Crime", "Drama"],
       rating: 8.9,
       release_date: "1994-10-14",
-      description:
-        "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+      description: "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
       language: "English",
+      service: [services.viaplay],
     },
     {
       imdb_id: "tt2488496",
       title: "Star Wars: The Force Awakens",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_FMjpg_UY3240_.jpg",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_FMjpg_UY3240_.jpg",
       trailer: "https://www.youtube.com/watch?v=sGbxmsDFVnE",
       runtime: "2h 18min",
       genres: ["Action", "Adventure", "Fantasy"],
@@ -162,26 +172,25 @@ export const staticMovies = {
       release_date: "2015-12-18",
       description: "Three decades after the Empire's defeat, a new threat arises in the form of the First Order.",
       language: "English",
+      service: [services.disney],
     },
     {
       imdb_id: "tt1234567",
       title: "Inception",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BMTk4NzE0OTQxMV5BMl5BanBnXkFtZTcwOTE0MjYwMw@@._V1_FMjpg_UX550_.jpg?fbclid=IwAR1GAxFiE9zdvRoo_A8-ZEdRsI3HFE_LRgNgos_nSk2kJGIZ04CozKvExNU",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BMTk4NzE0OTQxMV5BMl5BanBnXkFtZTcwOTE0MjYwMw@@._V1_FMjpg_UX550_.jpg?fbclid=IwAR1GAxFiE9zdvRoo_A8-ZEdRsI3HFE_LRgNgos_nSk2kJGIZ04CozKvExNU",
       trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0",
       runtime: "2h 28min",
       genres: ["Action", "Adventure", "Sci-Fi"],
       rating: 8.8,
       release_date: "2010-07-16",
-      description:
-        "A thief who enters the dreams of others to obtain information must plant an idea into a CEO's mind.",
+      description: "A thief who enters the dreams of others to obtain information must plant an idea into a CEO's mind.",
       language: "English",
+      service: [services.prime, services.viaplay, services.hbo],
     },
     {
       imdb_id: "tt4154796",
       title: "Avengers: Endgame",
-      poster_image:
-        "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_FMjpg_UY2048_.jpg",
+      poster_image: "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_FMjpg_UY2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=TcMBFSGVi1c",
       runtime: "3h 1min",
       genres: ["Action", "Adventure", "Sci-Fi"],
@@ -189,6 +198,7 @@ export const staticMovies = {
       release_date: "2019-04-26",
       description: "The Avengers and their allies must work together to undo the damage caused by Thanos.",
       language: "English",
+      service: [services.disney],
     },
   ],
 };
