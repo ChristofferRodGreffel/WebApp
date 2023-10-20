@@ -33,6 +33,7 @@ const ResetPassword = () => {
           theme: "dark",
         });
         formRef.current?.reset();
+
       })
       .catch((error) => {
         const errorCode = error.code;
