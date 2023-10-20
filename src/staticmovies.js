@@ -36,7 +36,7 @@ export const staticMovies = {
       release_date: "2000-05-05",
       description: "A former Roman General seeks justice against the corrupt Emperor who murdered his family.",
       language: "English",
-      service: [services.prime, services.prime, services.viaplay],
+      service: [services.prime, services.viaplay],
     },
     {
       imdb_id: "tt0109830",
