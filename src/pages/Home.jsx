@@ -18,7 +18,7 @@ const Home = () => {
       <HorizontalScroller
         scrollerTitle="Movies for you"
         content={staticMovies.movies.map((movie, key) => {
-          if (key <= 4) {
+          if (key <= 5) {
             return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
           }
         })}

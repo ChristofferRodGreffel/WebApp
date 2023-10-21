@@ -1,4 +1,4 @@
-const services = {
+export const services = {
   netflix: "Netflix",
   hbo: "HBO Max",
   disney: "Disney+",
@@ -24,13 +24,13 @@ export const staticMovies = {
       description: "When the Joker wreaks havoc on Gotham City, Batman must confront the chaos he brings.",
       language: "English",
       service: [services.hbo],
-      serviceImage: "hboIcon",
     },
     {
       imdb_id: "tt0172495",
       title: "Gladiator",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UY2599_.jpg?fbclid=IwAR1E1mBvMDTJhaW9p3UsdYKnReS3oc_GfgLopRAxWRJMhxSeUDXzkpnHdd0",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMjE1OTc4MzA0NV5BMl5BanBnXkFtZTcwODQ0NjcxNA@@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=ol67qo3WhJk",
       runtime: "2h 35min",
       genres: ["Action", "Drama", "Adventure"],
@@ -45,6 +45,8 @@ export const staticMovies = {
       title: "Forrest Gump",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_QL75_UY562_CR4,0,380,562_.jpg?fbclid=IwAR06-d1OvzHfdiLRNmxmdX67jfXfwdv9nfx-D_W71jI8wzMXgsoZRP27ZfE",
+      cover_image:
+        "https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABSsc41-h_OVZwpZoKKJFiiiQ7hNpl_-Ecm8LXGAlliKCfJb1GFk97igiBg_rYdLPg-LtzEoYAmDmGR-jRGhYNfyjd47J2XNqix9B.jpg?r=9f4",
       trailer: "https://www.youtube.com/watch?v=bLvqoHBptjg",
       runtime: "2h 22min",
       genres: ["Drama", "Romance"],
@@ -58,6 +60,7 @@ export const staticMovies = {
       imdb_id: "tt0361748",
       title: "Inglourious Basterds",
       poster_image: "https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWYtMTVjOC00ZjlmLWE0NGMtZmE1OWVmZDQ2OWJhXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_FMjpg_UY3000_.jpg",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMjIxNTE5MjEzM15BMl5BanBnXkFtZTgwMDgyNzk3MTI@._V1_FMjpg_UX1900_.jpg",
       trailer: "https://www.youtube.com/watch?v=KnrRy6kSFF0",
       runtime: "2h 33min",
       genres: ["Adventure", "Drama", "War"],
@@ -72,6 +75,7 @@ export const staticMovies = {
       title: "Mad Max: Fury Road",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BMzUzODU3ZGYtYzQwZS00NmU4LTkwN2QtZWE4N2RjOTY2M2JlXkEyXkFqcGdeQXVyNzI1NzMxNzM@._V1_QL75_UX380_CR0,4,380,562_.jpg?fbclid=IwAR0XpqtfPAhCcJKmMFl1i1D0NOMUQDFsHJ6caC7xVejgYnj3ntx_cM80DR0",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTgxMDU2OTUzMl5BMl5BanBnXkFtZTgwMDM3NTE2NTE@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=hEJnMQG9ev8",
       runtime: "2h",
       genres: ["Action", "Adventure", "Sci-Fi"],
@@ -86,6 +90,7 @@ export const staticMovies = {
       title: "American Beauty",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BNTBmZWJkNjctNDhiNC00MGE2LWEwOTctZTk5OGVhMWMyNmVhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX675_.jpg?fbclid=IwAR00OzYr4WAQZyyqgtCSW5GVrEU7S66ADEMbXJwHVwpkW8pJH7KtFz24ANs",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTYzNjIwNzI0OV5BMl5BanBnXkFtZTcwNjIyODY3Mw@@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=3Fzsq35aFTw",
       runtime: "2h 2min",
       genres: ["Drama"],
@@ -100,6 +105,7 @@ export const staticMovies = {
       title: "Star Wars: Episode IV - A New Hope",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BOTA5NjhiOTAtZWM0ZC00MWNhLThiMzEtZDFkOTk2OTU1ZDJkXkEyXkFqcGdeQXVyMTA4NDI1NTQx._V1_QL75_UX380_CR0,9,380,562_.jpg?fbclid=IwAR2WWUoUcEibH_jwAvNyQIQ8bUBi2aYOaHOU0FrrdVmHCiYAkNjevcM9WtU",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTk3MTkzNTk3Ml5BMl5BanBnXkFtZTgwOTcyMzQyNDM@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=1g3_CFmnU7k",
       runtime: "2h 1min",
       genres: ["Action", "Adventure", "Fantasy"],
@@ -110,9 +116,10 @@ export const staticMovies = {
       service: [services.viaplay, services.disney],
     },
     {
-      imdb_id: "tt5311514",
+      imdb_id: "tt6751668",
       title: "Parasite",
       poster_image: "https://m.media-amazon.com/images/M/MV5BMTE5MGYwMWUtMWVmYi00MmYyLWI1OTYtNWUwZTZmOTY0MmIxXkEyXkFqcGdeQXVyMTAyOTE2ODg0._V1_FMjpg_UX1123_.jpg",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BNGNmOTNlMzItNzJjYi00MTM4LWIyYzktOGRlOTY1NzQ5MjFhXkEyXkFqcGdeQXVyODUzMDY0NTE@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=5xH0HfJHsaY",
       runtime: "2h 12min",
       genres: ["Comedy", "Drama", "Thriller"],
@@ -127,6 +134,7 @@ export const staticMovies = {
       title: "The Lord of the Rings: The Return of the King",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX800_.jpg?fbclid=IwAR0U3ptAmfumVD3C3gVtGYPwMEzfmPAUg_h90iYG5ccB6UVXvAdTsLY0vDE",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTk1ODY0NDg2M15BMl5BanBnXkFtZTcwNTU2MTk2Mw@@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=r5X-hFf6Bwo",
       runtime: "3h 21min",
       genres: ["Action", "Adventure", "Drama"],
@@ -141,6 +149,7 @@ export const staticMovies = {
       title: "The Shawshank Redemption",
       poster_image:
         "https://m.media-amazon.com/images/M/MV5BMzBmNWM0YzktOTM2MC00MzVkLWFiNjUtNWVjMWRiOTQ0OWM0XkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UY3000_.jpg?fbclid=IwAR2DrnpSSMzQ_78UJfifFBp4MX9b_OFL59pUqhdOcakWzGXTK74rJKArmoc",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMTgxMTU1MDkwOV5BMl5BanBnXkFtZTcwMDQxNDY3Mw@@._V1_FMjpg_UX1800_.jpg",
       trailer: "https://www.youtube.com/watch?v=6hB3S9bIaco",
       runtime: "2h 22min",
       genres: ["Drama", "Crime"],
@@ -154,6 +163,7 @@ export const staticMovies = {
       imdb_id: "tt0110912",
       title: "Pulp Fiction",
       poster_image: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1055_.jpg",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMjE1ODYxOTkxOF5BMl5BanBnXkFtZTgwNTE4OTEwMjE@._V1_FMjpg_UX1600_.jpg",
       trailer: "https://www.youtube.com/watch?v=s7EdQ4FqbhY",
       runtime: "2h 34min",
       genres: ["Crime", "Drama"],
@@ -167,6 +177,7 @@ export const staticMovies = {
       imdb_id: "tt2488496",
       title: "Star Wars: The Force Awakens",
       poster_image: "https://m.media-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_FMjpg_UY3240_.jpg",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BMDMzODA1MzAtM2ZhYS00OGM5LTgxNDUtZTE0NDcyMTY0ZGM3XkEyXkFqcGdeQXVyNDczOTA3ODE@._V1_FMjpg_UX2160_.jpg",
       trailer: "https://www.youtube.com/watch?v=sGbxmsDFVnE",
       runtime: "2h 18min",
       genres: ["Action", "Adventure", "Fantasy"],
@@ -177,9 +188,10 @@ export const staticMovies = {
       service: [services.disney],
     },
     {
-      imdb_id: "tt1234567",
+      imdb_id: "tt1375666",
       title: "Inception",
       poster_image: "https://m.media-amazon.com/images/M/MV5BMTk4NzE0OTQxMV5BMl5BanBnXkFtZTcwOTE0MjYwMw@@._V1_FMjpg_UX550_.jpg?fbclid=IwAR1GAxFiE9zdvRoo_A8-ZEdRsI3HFE_LRgNgos_nSk2kJGIZ04CozKvExNU",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BNjMxNjI1Mjc1OV5BMl5BanBnXkFtZTcwMDY0OTk1Mw@@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0",
       runtime: "2h 28min",
       genres: ["Action", "Adventure", "Sci-Fi"],
@@ -193,6 +205,7 @@ export const staticMovies = {
       imdb_id: "tt4154796",
       title: "Avengers: Endgame",
       poster_image: "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_FMjpg_UY2048_.jpg",
+      cover_image: "https://m.media-amazon.com/images/M/MV5BZGFmYWU1OGUtYmUxNS00N2E4LTkxYmMtZGYxM2NmYzhjZjJkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_FMjpg_UX2048_.jpg",
       trailer: "https://www.youtube.com/watch?v=TcMBFSGVi1c",
       runtime: "3h 1min",
       genres: ["Action", "Adventure", "Sci-Fi"],

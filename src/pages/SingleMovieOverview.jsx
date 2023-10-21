@@ -1,8 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { staticMovies } from "../staticmovies";
-import { movieDataJS } from "../exampleResponse";
 import imdb from "../assets/imdb.svg";
+import netflixIcon from "../assets/icons/netflix.svg";
+import hboIcon from "../assets/icons/hbo.svg";
+import disneyIcon from "../assets/icons/disney.svg";
+import viaplayIcon from "../assets/icons/viaplay.svg";
+import primeIcon from "../assets/icons/prime.svg";
+import appleIcon from "../assets/icons/appletv.svg";
+import tv2Icon from "../assets/icons/tv2play.svg";
+import filmstribenIcon from "../assets/icons/filmstriben.png";
+import { services } from "../staticmovies";
+
+const serviceIcons = {
+  [services.netflix]: netflixIcon,
+  [services.hbo]: hboIcon,
+  [services.disney]: disneyIcon,
+  [services.viaplay]: viaplayIcon,
+  [services.prime]: primeIcon,
+  [services.apple]: appleIcon,
+  [services.tv2]: tv2Icon,
+  [services.filmstriben]: filmstribenIcon,
+};
 
 function SingleMovieOverview() {
   const { imdbid } = useParams();
@@ -79,19 +98,14 @@ function SingleMovieOverview() {
                   </button>
                   <div className="services">
                     <h2>Available on</h2>
-                    <div className="dots-list">
+                    <div className="dots-list services">
                       {movie.service.map((service, key) => {
-                        if (movie.service.length == 1) {
-                          return <p key={key}>{service}</p>;
-                        } else if (movie.service.length == key + 1) {
-                          return <p key={key}>{service}</p>;
-                        } else {
-                          return (
-                            <div key={key}>
-                              {service}&nbsp; <i className="fa-solid fa-circle"></i> &nbsp;
-                            </div>
-                          );
-                        }
+                        return (
+                          <div key={key}>
+                            <img src={serviceIcons[service]} alt={`${service} icon`} />
+                            <p>{service}</p>
+                          </div>
+                        );
                       })}
                     </div>
                   </div>

@@ -393,6 +393,10 @@ nav a i {
   margin: auto;
   margin-top: 1rem;
 }
+.movie-container h1 {
+  font-size: 25px;
+  font-weight: 700;
+}
 .first-line {
   margin-top: 0.5rem;
   display: flex;
@@ -411,7 +415,7 @@ nav a i {
   width: max-content;
   padding: 5px 15px;
   border-radius: 20px;
-  border: 2px solid var(--light-grey);
+  border: 3px solid var(--light-grey);
 }
 .rating p {
   font-size: 18px;
@@ -439,10 +443,26 @@ nav a i {
 .dots-list {
   display: flex;
 }
+.dots-list div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
 .dots-list p {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.dots-list img {
+  width: 40px;
+  height: 40px;
+}
+.services {
+  gap: 1.5rem;
+}
+.services p {
+  font-size: 13px;
 }
 .fa-circle {
   font-size: 5px;
