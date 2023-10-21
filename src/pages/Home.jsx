@@ -14,7 +14,6 @@ const Home = () => {
   return (
     <>
       <SearchBar />
-      {/* <button onClick={handleSignOut}>Sign out</button> */}
       <HorizontalScroller
         scrollerTitle="Movies for you"
         content={staticMovies.movies.map((movie, key) => {

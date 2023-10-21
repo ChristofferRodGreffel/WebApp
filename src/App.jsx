@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./Components/Navigation";
 import SingleMovieOverview from "./pages/SingleMovieOverview";
+import Profile from "./pages/Profile";
 
 function App() {
   const [user, setUser] = useState("");
@@ -49,6 +50,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/overview/:imdbid" element={<SingleMovieOverview />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<SignIn />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
