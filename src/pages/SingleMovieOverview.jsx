@@ -87,9 +87,9 @@ function SingleMovieOverview() {
                           return <p key={key}>{service}</p>;
                         } else {
                           return (
-                            <p key={key}>
+                            <div key={key}>
                               {service}&nbsp; <i className="fa-solid fa-circle"></i> &nbsp;
-                            </p>
+                            </div>
                           );
                         }
                       })}

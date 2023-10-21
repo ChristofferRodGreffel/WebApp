@@ -24,6 +24,7 @@ export const staticMovies = {
       description: "When the Joker wreaks havoc on Gotham City, Batman must confront the chaos he brings.",
       language: "English",
       service: [services.hbo],
+      serviceImage: "hboIcon",
     },
     {
       imdb_id: "tt0172495",
