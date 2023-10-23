@@ -483,9 +483,18 @@ nav a i {
   font-size: 20px;
 }
 
-.services {
+.overview h2 {
   margin-top: 1.5rem;
-}
-.services h2 {
   margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.movie-about p {
+  font-size: 15px;
+  font-weight: 400;
+  text-align: justify;
+}
+.movie-about a {
+  margin-top: 1rem !important;
 }

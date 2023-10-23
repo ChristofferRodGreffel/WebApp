@@ -109,6 +109,17 @@ function SingleMovieOverview() {
                       })}
                     </div>
                   </div>
+                  <div className="language">
+                    <h2>Languages </h2>
+                    <p>{movie.language}</p>
+                  </div>
+                  <div className="movie-about">
+                    <h2>About the movie</h2>
+                    <p>{movie.description}</p>
+                    <Link to={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank">
+                      Read more
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
