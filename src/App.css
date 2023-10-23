@@ -47,6 +47,14 @@ input {
   background-color: var(--white);
 }
 
+textarea {
+  font-family: inherit;
+}
+
+textarea::placeholder {
+  padding: 10px;
+}
+
 a {
   color: var(--white);
 }
@@ -398,6 +406,18 @@ nav a i {
 
 /* Single Movie Page Styling */
 
+.overview h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.overview h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
 .poster-image {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -501,13 +521,6 @@ nav a i {
   font-size: 20px;
 }
 
-.overview h2 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-size: 20px;
-}
-
 .movie-about p {
   font-size: 15px;
   font-weight: 400;
@@ -539,4 +552,29 @@ nav a i {
 
 .friendsSection > h2 {
   margin-bottom: 15px;
+}
+
+.reviews > div > div > form {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  gap: 13px;
+}
+
+.reviews > div > div > form > div {
+  display: flex;
+}
+
+.reviews > div > div > form > textarea {
+  border-radius: 10px;
+}
+
+.reviews > div > div > form > .submitButton {
+  height: 30px;
+  width: 350px;
+
+  background-color: var(--dark-grey);
+  border: 3px solid var(--light-grey);
+  color: var(--light-grey);
 }

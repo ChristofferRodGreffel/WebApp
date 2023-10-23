@@ -149,12 +149,19 @@ function SingleMovieOverview() {
                       <div>
                         <form>
                           <ReviewStars />
-                          <textarea name="reviewInput" id="reviewInput" cols="42" rows="9"></textarea>
+                          <textarea
+                            name="reviewInput"
+                            id="reviewInput"
+                            cols="45"
+                            rows="9"
+                            placeholder="What did you think of the movie?"
+                          ></textarea>
+                          <div>
+                            <input type="checkbox" className="checkbox" />
+                            <p>Contains spoilers</p>
+                          </div>
 
-                          <input type="checkbox" />
-                          <p>Contains spoilers</p>
-
-                          <input type="submit" value="Submit review" />
+                          <input type="submit" value="Submit review" className="submitButton" />
                         </form>
                       </div>
                     </div>
