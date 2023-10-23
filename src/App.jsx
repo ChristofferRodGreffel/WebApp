@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./Components/Navigation";
 import SingleMovieOverview from "./pages/SingleMovieOverview";
 import Profile from "./pages/Profile";
+import ScrollToTop from "./Helperfunctions/ScrollToTop";
 
 function App() {
   const [user, setUser] = useState("");
@@ -54,6 +55,7 @@ function App() {
         <Route path="*" element={<SignIn />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
+      <ScrollToTop />
     </>
   );
 }
