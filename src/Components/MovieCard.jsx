@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // Komponenten er udviklet fælles i gruppen
 
@@ -7,9 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 function MovieCard(props, { key }) {
   const navigate = useNavigate();
+  const { imdbid } = useParams();
 
   const handleOnCardClick = () => {
     navigate(`/overview/${props.id}`);
+    if (imdbid) {
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleOpen = (e) => {

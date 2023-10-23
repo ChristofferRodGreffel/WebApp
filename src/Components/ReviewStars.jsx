@@ -8,7 +8,7 @@ export const ReviewStars = () => {
 
   return (
     <div>
-      <ReactStars count={5} onChange={ratingChanged} size={24} color2={"#ffd700"} />
+      <ReactStars count={5} onChange={ratingChanged} size={35} color2={"#ffd700"} />
     </div>
   );
 };

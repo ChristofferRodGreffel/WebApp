@@ -15,6 +15,8 @@ import Backbutton from "../Components/Backbutton";
 import user from "../assets/defaultuser.svg";
 import ReactStars from "react-stars";
 import { ReviewStars } from "../Components/ReviewStars";
+import HorizontalScroller from "../Components/HorizontalScroller";
+import MovieCard from "../Components/MovieCard";
 
 const serviceIcons = {
   [services.netflix]: netflixIcon,
@@ -149,13 +151,7 @@ function SingleMovieOverview() {
                       <div>
                         <form>
                           <ReviewStars />
-                          <textarea
-                            name="reviewInput"
-                            id="reviewInput"
-                            cols="45"
-                            rows="9"
-                            placeholder="What did you think of the movie?"
-                          ></textarea>
+                          <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" />
                           <div>
                             <input type="checkbox" className="checkbox" />
                             <p>Contains spoilers</p>
@@ -167,6 +163,16 @@ function SingleMovieOverview() {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="movie-recommended">
+                <HorizontalScroller
+                  scrollerTitle="More like this"
+                  content={staticMovies.movies.map((movie, key) => {
+                    if (key <= 10) {
+                      return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+                    }
+                  })}
+                />
               </div>
             </div>
           );

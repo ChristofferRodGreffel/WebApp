@@ -18,6 +18,10 @@
 }
 
 /* General styling for whole document */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
   background-color: var(--dark-grey);
@@ -47,12 +51,18 @@ input {
   background-color: var(--white);
 }
 
+input[type="checkbox"] {
+  accent-color: var(--purple);
+}
+
 textarea {
   font-family: inherit;
+  padding: 10px;
+  border: none;
 }
 
 textarea::placeholder {
-  padding: 10px;
+  font-size: 13px;
 }
 
 a {
@@ -555,6 +565,7 @@ nav a i {
 }
 
 .reviews > div > div > form {
+  width: 100%;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -564,17 +575,28 @@ nav a i {
 
 .reviews > div > div > form > div {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 200;
 }
 
 .reviews > div > div > form > textarea {
   border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 140px;
 }
 
 .reviews > div > div > form > .submitButton {
-  height: 30px;
-  width: 350px;
-
+  width: 100%;
+  font-size: 15px;
+  padding: 0.5rem;
   background-color: var(--dark-grey);
-  border: 3px solid var(--light-grey);
+  border: 2px solid var(--light-grey);
   color: var(--light-grey);
+}
+
+.movie-recommended {
+  margin-top: 2rem;
+  padding-left: 8px;
 }
