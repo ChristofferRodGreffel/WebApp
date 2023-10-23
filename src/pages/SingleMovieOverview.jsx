@@ -119,7 +119,7 @@ function SingleMovieOverview() {
                     <h2>About the movie</h2>
                     <p>{movie.description}</p>
                     <Link to={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank">
-                      Read more
+                      Read more on IMDb
                     </Link>
                   </div>
                 </div>
