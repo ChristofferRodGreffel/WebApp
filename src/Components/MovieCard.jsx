@@ -10,9 +10,8 @@ function MovieCard(props, { key }) {
   const { imdbid } = useParams();
 
   const handleOnCardClick = () => {
-    navigate(`/overview/${props.id}`);
-    if (imdbid) {
-      window.scrollTo(0, 0);
+    if (imdbid !== props.id) {
+      navigate(`/overview/${props.id}`);
     }
   };
 

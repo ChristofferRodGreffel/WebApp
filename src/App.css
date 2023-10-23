@@ -18,10 +18,6 @@
 }
 
 /* General styling for whole document */
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: "Montserrat", sans-serif;
   background-color: var(--dark-grey);

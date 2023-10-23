@@ -1,14 +1,13 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Backbutton = () => {
   const navigate = useNavigate();
-  const { imdbid } = useParams();
   const handleGoBack = () => {
     navigate(-1);
-    if (imdbid) {
+    setTimeout(() => {
       window.scrollTo(0, 0);
-    }
+    }, 100);
   };
 
   return (
