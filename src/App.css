@@ -514,3 +514,29 @@ nav a i {
   text-align: justify;
   margin-bottom: 1rem;
 }
+
+.friendsSection > div {
+  display: flex;
+  gap: 18px;
+}
+
+.friendsSection > div > div > img {
+  height: 60px;
+  width: 60px;
+}
+
+.friendsSection > div > div > p {
+  font-size: 12px;
+}
+
+.friendsSection > div > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.friendsSection > h2 {
+  margin-bottom: 15px;
+}

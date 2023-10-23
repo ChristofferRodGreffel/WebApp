@@ -12,7 +12,9 @@ import tv2Icon from "../assets/icons/tv2play.svg";
 import filmstribenIcon from "../assets/icons/filmstriben.png";
 import { services } from "../staticmovies";
 import Backbutton from "../Components/Backbutton";
-import user from "../assets/icons/";
+import user from "../assets/defaultuser.svg";
+import ReactStars from "react-stars";
+import { ReviewStars } from "../Components/ReviewStars";
 
 const serviceIcons = {
   [services.netflix]: netflixIcon,
@@ -127,7 +129,33 @@ function SingleMovieOverview() {
                     <h2>Friends who loved it</h2>
                     <div>
                       <div>
-                        <img src={user} alt="" />
+                        <img src={user} alt="Placeholder for user" />
+                        <p>richguy2020</p>
+                      </div>
+                      <div>
+                        <img src={user} alt="Placeholder for user" />
+                        <p>flowergirl25</p>
+                      </div>
+                      <div>
+                        <img src={user} alt="Placeholder for user" />
+                        <p>peterparker</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="reviews">
+                    <h2>Reviews</h2>
+                    <div>
+                      <h3>How did you like the movie?</h3>
+                      <div>
+                        <form>
+                          <ReviewStars />
+                          <textarea name="reviewInput" id="reviewInput" cols="42" rows="9"></textarea>
+
+                          <input type="checkbox" />
+                          <p>Contains spoilers</p>
+
+                          <input type="submit" value="Submit review" />
+                        </form>
                       </div>
                     </div>
                   </div>
