@@ -12,6 +12,7 @@ import tv2Icon from "../assets/icons/tv2play.svg";
 import filmstribenIcon from "../assets/icons/filmstriben.png";
 import { services } from "../staticmovies";
 import Backbutton from "../Components/Backbutton";
+import user from "../assets/icons/";
 
 const serviceIcons = {
   [services.netflix]: netflixIcon,
@@ -121,6 +122,14 @@ function SingleMovieOverview() {
                     <Link to={`https://www.imdb.com/title/${movie.imdb_id}/`} target="_blank">
                       Read more on IMDb
                     </Link>
+                  </div>
+                  <div className="friendsSection">
+                    <h2>Friends who loved it</h2>
+                    <div>
+                      <div>
+                        <img src={user} alt="" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
