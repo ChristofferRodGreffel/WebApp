@@ -100,6 +100,24 @@ nav a i {
   color: var(--white);
 }
 
+.LeftArrow {
+  background: color-mix(in srgb, var(--purple) 70%, transparent);
+  border-radius: 50%;
+  height: 38px;
+  width: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+
+.LeftArrow > i {
+  font-size: 25px;
+}
+
 /* SignUp styling */
 .signup {
   width: 80%;

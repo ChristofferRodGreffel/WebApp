@@ -11,6 +11,7 @@ import appleIcon from "../assets/icons/appletv.svg";
 import tv2Icon from "../assets/icons/tv2play.svg";
 import filmstribenIcon from "../assets/icons/filmstriben.png";
 import { services } from "../staticmovies";
+import Backbutton from "../Components/Backbutton";
 
 const serviceIcons = {
   [services.netflix]: netflixIcon,
@@ -56,6 +57,7 @@ function SingleMovieOverview() {
 
   return (
     <>
+      <Backbutton />
       {staticMovies.movies.map((movie) => {
         if (movie.imdb_id === imdbid) {
           return (
