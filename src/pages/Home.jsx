@@ -5,6 +5,7 @@ import MovieCard from "../Components/MovieCard";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import SearchBar from "../Components/SearchBar";
 import AddToList from "../Components/AddToList";
+import { FIREBASE_AUTH } from "../../firebase-config";
 
 const Home = () => {
   const handleSignOut = () => {
