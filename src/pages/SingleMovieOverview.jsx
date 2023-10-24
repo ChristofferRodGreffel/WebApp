@@ -17,6 +17,10 @@ import ReactStars from "react-stars";
 import { ReviewStars } from "../Components/ReviewStars";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
+import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const serviceIcons = {
   [services.netflix]: netflixIcon,
@@ -31,6 +35,11 @@ const serviceIcons = {
 
 function SingleMovieOverview() {
   const { imdbid } = useParams();
+  const [reviews, setReviews] = useState([]);
+  const [userReview, setUserReview] = useState("");
+  const [userRating, setUserRating] = useState(NaN);
+  const [containsSpoilers, setContainsSpoilers] = useState(false);
+  const [spoilerVisibility, setSpoilerVisibility] = useState(Array(reviews?.reviews?.length).fill(false));
 
   //   const [movieData, setMovieData] = useState();
 
@@ -59,6 +68,61 @@ function SingleMovieOverview() {
   //     };
   //     getStreamingData()
   // }, []);
+
+  useEffect(() => {
+    const getReviews = async () => {
+      const docRef = doc(db, "reviews", imdbid);
+      const querySnapshot = await getDoc(docRef);
+      setReviews(querySnapshot.data());
+    };
+    getReviews();
+  }, [imdbid]);
+
+  const handleShowReview = (index) => {
+    setSpoilerVisibility((prevVisibility) => {
+      const newVisibility = [...prevVisibility];
+      newVisibility[index] = !newVisibility[index];
+      return newVisibility;
+    });
+  };
+
+  const handleAddReview = (e) => {
+    e.preventDefault();
+    const currentUser = getAuth().currentUser.displayName;
+    const newReview = {
+      userReview: userReview,
+      userName: currentUser,
+      spoilers: containsSpoilers,
+      rating: userRating,
+    };
+    addReview(newReview);
+  };
+
+  const addReview = async (review) => {
+    try {
+      await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
+      setUserRating(NaN);
+      setUserReview("");
+      setContainsSpoilers(false);
+
+      toast.success(`review added succesfully`, {
+        position: "top-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (e) {
+      console.error("Error adding review: ", e);
+    }
+  };
+
+  const ratingChanged = (newRating) => {
+    setUserRating(newRating);
+  };
 
   return (
     <>
@@ -149,16 +213,38 @@ function SingleMovieOverview() {
                     <div>
                       <h3>How did you like the movie?</h3>
                       <div>
-                        <form>
-                          <ReviewStars />
-                          <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" />
+                        <form onSubmit={handleAddReview}>
+                          <ReviewStars changed={ratingChanged} rating={userRating} />
+                          <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                           <div>
-                            <input type="checkbox" className="checkbox" />
+                            <input type="checkbox" className="checkbox" onChange={(e) => setContainsSpoilers(e.target.value)} />
                             <p>Contains spoilers</p>
                           </div>
 
                           <input type="submit" value="Submit review" className="submitButton" />
                         </form>
+                      </div>
+                      <div className="reviews-container">
+                        {reviews?.reviews?.map((review, key) => {
+                          return review.spoilers ? (
+                            <div className="user-review" key={key}>
+                              <h3>{review.userName}</h3>
+                              <ReviewStars rating={review.rating} edit={false} />
+                              <div className="spoiler-warning">
+                                {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
+                                <button onClick={() => handleShowReview(key)}>
+                                  {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="user-review" key={key}>
+                              <h3>{review.userName}</h3>
+                              <ReviewStars rating={review.rating} edit={false} />
+                              <p>{review.userReview}</p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
