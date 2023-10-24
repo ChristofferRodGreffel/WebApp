@@ -14,9 +14,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
+    "react-select": "^5.7.7",
     "react-spinners": "^0.13.8",
     "react-stars": "^2.2.5",
-    "react-toastify": "^9.1.3"
+    "react-toastify": "^9.1.3",
+    "react-turbo-select": "^1.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

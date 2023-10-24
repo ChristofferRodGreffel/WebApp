@@ -21,7 +21,8 @@ export const staticMovies = {
       genres: ["Action", "Crime", "Drama"],
       rating: 9.0,
       release_date: "2008-07-18",
-      description: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+      description:
+        "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
       language: "English",
       service: [services.hbo],
     },
@@ -52,7 +53,8 @@ export const staticMovies = {
       genres: ["Drama", "Romance"],
       rating: 8.8,
       release_date: "1994-07-06",
-      description: "The history of the United States from the 1950s to the '70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.",
+      description:
+        "The history of the United States from the 1950s to the '70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.",
       language: "English",
       service: [services.netflix, services.tv2],
     },
@@ -81,7 +83,8 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Sci-Fi"],
       rating: 8.1,
       release_date: "2015-05-15",
-      description: "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshiper and a drifter named Max.",
+      description:
+        "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshiper and a drifter named Max.",
       language: "English",
       service: [services.prime, services.hbo],
     },
@@ -111,7 +114,8 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Fantasy"],
       rating: 8.6,
       release_date: "1977-05-25",
-      description: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
+      description:
+        "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
       language: "English",
       service: [services.viaplay, services.disney],
     },
@@ -197,7 +201,8 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Sci-Fi"],
       rating: 8.8,
       release_date: "2010-07-16",
-      description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+      description:
+        "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
       language: "English",
       service: [services.prime, services.viaplay, services.hbo],
     },
@@ -211,7 +216,8 @@ export const staticMovies = {
       genres: ["Action", "Adventure", "Sci-Fi"],
       rating: 8.4,
       release_date: "2019-04-26",
-      description: "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+      description:
+        "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
       language: "English",
       service: [services.disney],
     },

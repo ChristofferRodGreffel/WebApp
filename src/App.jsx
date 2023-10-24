@@ -15,6 +15,7 @@ import Navigation from "./Components/Navigation";
 import SingleMovieOverview from "./pages/SingleMovieOverview";
 import Profile from "./pages/Profile";
 import ScrollToTop from "./Helperfunctions/ScrollToTop";
+import MyLists from "./pages/MyLists";
 
 function App() {
   const [user, setUser] = useState("");
@@ -52,6 +53,7 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/overview/:imdbid" element={<SingleMovieOverview />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/mylists" element={<MyLists />} />
         <Route path="*" element={<SignIn />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
