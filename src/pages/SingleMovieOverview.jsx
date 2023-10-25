@@ -114,9 +114,6 @@ function SingleMovieOverview() {
   const addReview = async (review) => {
     try {
       await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
-      setUserRating(NaN);
-      setUserReview("");
-      setContainsSpoilers(false);
 
       toast.success(`review added succesfully`, {
         position: "top-right",
@@ -128,6 +125,12 @@ function SingleMovieOverview() {
         progress: undefined,
         theme: "dark",
       });
+
+      setUserRating(NaN);
+      setUserReview("");
+      setContainsSpoilers();
+      const checkbox = document.querySelector("checkbox");
+      checkbox.check;
     } catch (e) {
       console.error("Error adding review: ", e);
     }
