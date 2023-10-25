@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserSelection from "./UserSelection";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
@@ -54,7 +54,7 @@ const CreateNewList = () => {
   }
 
   async function updateAccess(listId) {
-    const username = getAuth().currentUser.displayName;
+    const username = getAuth().currentUser?.displayName;
     try {
       const userRef = doc(db, "users", username);
 
