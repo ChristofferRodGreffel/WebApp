@@ -21,6 +21,10 @@ const MyLists = () => {
 
     const userName = FIREBASE_AUTH.currentUser?.displayName;
 
+    if(!userName) {
+      return
+    }
+
     // Følgende linjer henter de list id'er, som "userName" har adgang til og ligger
     // dem i variablen "iHaveAccessTo"
     const docRef = doc(db, "users", userName);
