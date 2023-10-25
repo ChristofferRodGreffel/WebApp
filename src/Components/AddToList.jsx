@@ -6,18 +6,18 @@ const AddToList = (props) => {
     popup.style.display = "none";
   };
 
-  useEffect(() => {
-    const getReviews = async () => {
-      const newReviews = [];
-      const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
-      querySnapshot.forEach((doc) => {
-        newReviews.push(doc.data());
-        // console.log(doc.id, "=>", doc.data());
-      });
-      setReviews(newReviews);
-    };
-    getReviews();
-  }, [reviews]);
+  // useEffect(() => {
+  //   const getReviews = async () => {
+  //     const newReviews = [];
+  //     const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
+  //     querySnapshot.forEach((doc) => {
+  //       newReviews.push(doc.data());
+  //       // console.log(doc.id, "=>", doc.data());
+  //     });
+  //     setReviews(newReviews);
+  //   };
+  //   getReviews();
+  // }, [reviews]);
 
   return (
     <div className="addToList">
