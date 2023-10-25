@@ -5,6 +5,7 @@ import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firesto
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
+// Komponenten modtager funktionen getAllLists(), som er videreført
 const CreateNewList = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [listName, setListName] = useState("");
@@ -35,6 +36,9 @@ const CreateNewList = (props) => {
       const listData = await addDoc(collection(db, "lists"), list);
       const listId = listData.id;
       updateAccess(listId);
+
+      // Kører funktionen, der henter de lister man har adgang til
+      // funktionen blev videreført gennem props
       props.onUpdate()
       setListName("");
       setSelectedUsers([]);
