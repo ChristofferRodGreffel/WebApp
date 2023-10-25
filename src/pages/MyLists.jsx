@@ -39,7 +39,7 @@ const MyLists = () => {
     // Følgende linjer henter alle lister, som ligger i vores Firestor
     // ... også dem, man ikke har adgang til
     const querySnapshot = await getDocs(collection(db, "lists"));
-    // følgende linjer tjekker for hver enkelt liste,
+    // Følgende linjer tjekker for hver enkelt liste,
     // om listen findes i den array som findes i "iHaveAccessTo"
     // ... hvis den findes, så tilføjes listen til variablen "newLists"
     querySnapshot.forEach((list) => {
