@@ -1,34 +1,70 @@
 import React, { useEffect, useState } from "react";
 import AddList from "../Components/AddListBtn";
 import CreateNewList from "../Components/CreateNewList";
-import { collection, getDocs, query } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import { FIREBASE_AUTH, db } from "../../firebase-config";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
+
+
   const handleAddList = (e) => {
     e.stopPropagation();
     const popup = document.querySelector(".addToList");
     popup.style.display = "flex";
   };
 
-  useEffect(() => {
-    const getAllLists = async () => {
-      const newLists = [];
-      const querySnapshot = await getDocs(collection(db, "lists"));
-      querySnapshot.forEach((list) => {
-        newLists.push(list.data());
+  const getAllLists = async () => {
+
+    const newLists = []
+    const iHaveAccessTo = []
+
+    const userName = FIREBASE_AUTH.currentUser?.displayName
+
+    // Følgende linjer henter de list id'er, som "userName" har adgang til og ligger
+    // dem i variablen "iHaveAccessTo"
+    const docRef = doc(db, "users", userName);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const docSnapData = docSnap.data()?.listsAccess
+      docSnapData.forEach((id) => {
+        iHaveAccessTo.push(id)
       });
-      setMyLists(newLists);
-    };
+
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such id!");
+    }
+
+    // Følgende linjer henter alle lister, som ligger i vores Firestor
+    // ... også dem, man ikke har adgang til
+    const querySnapshot = await getDocs(collection(db, "lists"));
+    // følgende linjer tjekker for hver enkelt liste,
+    // om listen findes i den array som findes i "iHaveAccessTo"
+    // ... hvis den findes, så tilføjes listen til variablen "newLists"
+    querySnapshot.forEach((list) => {
+      if (iHaveAccessTo.includes(list.id)) {
+        newLists.push(list.data());
+      }
+    });
+    // Efter at have tilføjet alle de lister, man har adgang til "newLists"
+    // sætter den "newLists" til vores useState "myLists, setMyLists"
+    setMyLists(newLists);
+  };
+
+  useEffect(() => {
+    // Kører funktionen "getAllLists", når man går ind på siden
     getAllLists();
   }, []);
 
   return (
     <div className="my-lists">
-      <CreateNewList />
+      {/* CreateNewList komponenten har fået en props, som er den funktion, getAllLists(), der henter de lister */}
+      {/* man har adgang til */}
+      <CreateNewList onUpdate={getAllLists} />
       <div>
         <h1>My lists</h1>
         <AddList function={handleAddList} />
