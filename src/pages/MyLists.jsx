@@ -42,11 +42,13 @@ const MyLists = () => {
     // Følgende linjer tjekker for hver enkelt liste,
     // om listen findes i den array som findes i "iHaveAccessTo"
     // ... hvis den findes, så tilføjes listen til variablen "newLists"
-    querySnapshot.forEach((list) => {
-      if (iHaveAccessTo.includes(list.id)) {
-        newLists.push(list.data());
-      }
-    });
+    if(querySnapshot) {
+      querySnapshot.forEach((list) => {
+        if (iHaveAccessTo.includes(list.id)) {
+          newLists.push(list.data());
+        }
+      });
+    }
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
