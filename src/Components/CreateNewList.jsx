@@ -4,6 +4,7 @@ import { FIREBASE_AUTH, db } from "../../firebase-config";
 import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
+import { getAllLists } from "../Helperfunctions/GetAllLists";
 
 // Komponenten modtager funktionen getAllLists(), som er videreført
 const CreateNewList = (props) => {
@@ -40,6 +41,7 @@ const CreateNewList = (props) => {
       // Kører funktionen, der henter de lister man har adgang til
       // funktionen blev videreført gennem props
       props.onUpdate()
+
       setListName("");
       setSelectedUsers([]);
 
