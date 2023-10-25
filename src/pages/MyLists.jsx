@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AddList from "../Components/AddListBtn";
 import CreateNewList from "../Components/CreateNewList";
-import { collection, getDocs, query } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { FIREBASE_AUTH, db } from "../../firebase-config";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 
@@ -16,10 +16,30 @@ const MyLists = () => {
 
   useEffect(() => {
     const getAllLists = async () => {
-      const newLists = [];
+      const newLists = []
+      const iHaveAccessTo = []
+
+      const userName = FIREBASE_AUTH.currentUser?.displayName
+
+      const docRef = doc(db, "users", userName);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const docSnapData = docSnap.data().listsAccess
+        docSnapData.forEach((id) => {
+          iHaveAccessTo.push(id)
+        });
+
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+      }
+
       const querySnapshot = await getDocs(collection(db, "lists"));
       querySnapshot.forEach((list) => {
-        newLists.push(list.data());
+        if(iHaveAccessTo.includes(list.id)) {
+          newLists.push(list.data());
+        }
       });
       setMyLists(newLists);
     };
