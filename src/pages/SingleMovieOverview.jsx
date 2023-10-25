@@ -235,8 +235,8 @@ function SingleMovieOverview() {
                           <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
                           <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                           <div>
-                            <input type="checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
-                            <p>Contains spoilers</p>
+                            <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
+                            <label htmlFor="spoiler-checkbox">Contains spoilers</label>
                           </div>
 
                           <input type="submit" value="Submit review" className="submitButton" />

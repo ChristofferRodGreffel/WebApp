@@ -688,3 +688,57 @@ nav a i {
   background-color: var(--white);
   border-radius: 50%;
 }
+
+/* Profile page styling */
+
+.profile {
+  width: 80%;
+  margin: auto;
+}
+
+.image-container {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+.image-container img {
+  width: 200px;
+  margin-bottom: 0.5rem;
+}
+
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin: auto;
+}
+.menu-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menu-section i {
+  font-size: 25px;
+}
+.menu-section div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menu-section div p {
+  font-size: 20px;
+}
+.menu-section div i {
+  font-size: 20px;
+  width: 40px;
+}
+.referral {
+  background: none;
+  color: var(--light-grey);
+  font-size: 15px;
+  margin: auto;
+  margin-top: 0.5rem;
+  text-decoration: underline;
+  width: max-content;
+  cursor: copy;
+}
