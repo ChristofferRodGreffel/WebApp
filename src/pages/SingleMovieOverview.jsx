@@ -78,18 +78,20 @@ function SingleMovieOverview() {
   //   getReviews();
   // }, [imdbid]);
 
+  const getReviews = async () => {
+    setReviews([]);
+    const newReviews = [];
+    const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
+    querySnapshot.forEach((doc) => {
+      newReviews.push(doc.data());
+      // console.log(doc.id, "=>", doc.data());
+    });
+    setReviews(newReviews);
+  };
+
   useEffect(() => {
-    const getReviews = async () => {
-      const newReviews = [];
-      const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
-      querySnapshot.forEach((doc) => {
-        newReviews.push(doc.data());
-        // console.log(doc.id, "=>", doc.data());
-      });
-      setReviews(newReviews);
-    };
     getReviews();
-  }, [reviews]);
+  }, []);
 
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
@@ -115,6 +117,8 @@ function SingleMovieOverview() {
     try {
       await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
 
+      getReviews();
+
       toast.success(`review added succesfully`, {
         position: "top-right",
         autoClose: 2500,
@@ -128,9 +132,7 @@ function SingleMovieOverview() {
 
       setUserRating(NaN);
       setUserReview("");
-      setContainsSpoilers();
-      const checkbox = document.querySelector("checkbox");
-      checkbox.check;
+      setContainsSpoilers(false);
     } catch (e) {
       console.error("Error adding review: ", e);
     }
@@ -233,7 +235,7 @@ function SingleMovieOverview() {
                           <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
                           <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                           <div>
-                            <input type="checkbox" className="checkbox" value={true} onChange={(e) => setContainsSpoilers(e.target.value)} />
+                            <input type="checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
                             <p>Contains spoilers</p>
                           </div>
 
