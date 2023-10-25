@@ -32,7 +32,9 @@ const CreateNewList = () => {
 
   async function insertList(list) {
     try {
-      await addDoc(collection(db, "lists"), list);
+      const listData = await addDoc(collection(db, "lists"), list);
+      const listId = listData.id;
+      updateAccess(listId);
       setListName("");
       setSelectedUsers([]);
 
@@ -45,6 +47,19 @@ const CreateNewList = () => {
         draggable: false,
         progress: undefined,
         theme: "dark",
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function updateAccess(listId) {
+    const username = getAuth().currentUser.displayName;
+    try {
+      const userRef = doc(db, "users", username);
+
+      await updateDoc(userRef, {
+        listsAccess: arrayUnion(listId),
       });
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -74,7 +89,14 @@ const CreateNewList = () => {
         <div className="addNewList">
           <form onSubmit={handleCreateList}>
             <label htmlFor="listName">What is the name of the list</label>
-            <input type="text" id="listName" placeholder="Add a list name" required value={listName} onChange={(e) => setListName(e.target.value)} />
+            <input
+              type="text"
+              id="listName"
+              placeholder="Add a list name"
+              required
+              value={listName}
+              onChange={(e) => setListName(e.target.value)}
+            />
             <label htmlFor="sharedWith">Would you like to share the list?</label>
             <UserSelection selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
             <button type="submit">Add new list</button>
