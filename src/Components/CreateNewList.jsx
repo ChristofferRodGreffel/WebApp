@@ -5,7 +5,7 @@ import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firesto
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
-const CreateNewList = () => {
+const CreateNewList = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [listName, setListName] = useState("");
 
@@ -35,6 +35,7 @@ const CreateNewList = () => {
       const listData = await addDoc(collection(db, "lists"), list);
       const listId = listData.id;
       updateAccess(listId);
+      props.onUpdate()
       setListName("");
       setSelectedUsers([]);
 

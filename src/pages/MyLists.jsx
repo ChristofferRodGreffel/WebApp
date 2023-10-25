@@ -16,42 +16,43 @@ const MyLists = () => {
     popup.style.display = "flex";
   };
 
-  useEffect(() => {
+  const getAllLists = async () => {
 
-    const getAllLists = async () => {
-      const newLists = []
-      const iHaveAccessTo = []
+    const newLists = []
+    const iHaveAccessTo = []
 
-      const userName = FIREBASE_AUTH.currentUser?.displayName
+    const userName = FIREBASE_AUTH.currentUser?.displayName
 
-      const docRef = doc(db, "users", userName);
-      const docSnap = await getDoc(docRef);
+    const docRef = doc(db, "users", userName);
+    const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        const docSnapData = docSnap.data().listsAccess
-        docSnapData.forEach((id) => {
-          iHaveAccessTo.push(id)
-        });
-
-      } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-      }
-
-      const querySnapshot = await getDocs(collection(db, "lists"));
-      querySnapshot.forEach((list) => {
-        if (iHaveAccessTo.includes(list.id)) {
-          newLists.push(list.data());
-        }
+    if (docSnap.exists()) {
+      const docSnapData = docSnap.data()?.listsAccess
+      docSnapData.forEach((id) => {
+        iHaveAccessTo.push(id)
       });
-      setMyLists(newLists);
-    };
+
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+
+    const querySnapshot = await getDocs(collection(db, "lists"));
+    querySnapshot.forEach((list) => {
+      if (iHaveAccessTo.includes(list.id)) {
+        newLists.push(list.data());
+      }
+    });
+    setMyLists(newLists);
+  };
+
+  useEffect(() => {
     getAllLists();
   }, []);
 
   return (
     <div className="my-lists">
-      <CreateNewList />
+      <CreateNewList onUpdate={getAllLists} />
       <div>
         <h1>My lists</h1>
         <AddList function={handleAddList} />
