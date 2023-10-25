@@ -17,7 +17,7 @@ import ReactStars from "react-stars";
 import { ReviewStars } from "../Components/ReviewStars";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -39,7 +39,7 @@ function SingleMovieOverview() {
   const [userReview, setUserReview] = useState("");
   const [userRating, setUserRating] = useState(NaN);
   const [containsSpoilers, setContainsSpoilers] = useState(false);
-  const [spoilerVisibility, setSpoilerVisibility] = useState(Array(reviews?.reviews?.length).fill(false));
+  const [spoilerVisibility, setSpoilerVisibility] = useState(Array(reviews?.length).fill(false));
 
   //   const [movieData, setMovieData] = useState();
 
@@ -69,14 +69,29 @@ function SingleMovieOverview() {
   //     getStreamingData()
   // }, []);
 
+  // useEffect(() => {
+  //   const getReviews = async () => {
+  //     const docRef = doc(db, `reviews/${imdbid}/`);
+  //     const querySnapshot = await getDoc(docRef);
+  //     setReviews(querySnapshot.data());
+  //   };
+  //   getReviews();
+  // }, [imdbid]);
+
   useEffect(() => {
     const getReviews = async () => {
-      const docRef = doc(db, "reviews", imdbid);
-      const querySnapshot = await getDoc(docRef);
-      setReviews(querySnapshot.data());
+      const newReviews = [];
+      const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
+      querySnapshot.forEach((doc) => {
+        newReviews.push(doc.data());
+        // console.log(doc.id, "=>", doc.data());
+      });
+      setReviews(newReviews);
     };
     getReviews();
-  }, [imdbid]);
+  }, [reviews]);
+
+  console.log(reviews);
 
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
@@ -85,6 +100,8 @@ function SingleMovieOverview() {
       return newVisibility;
     });
   };
+
+  console.log(reviews);
 
   const handleAddReview = (e) => {
     e.preventDefault();
@@ -225,7 +242,7 @@ function SingleMovieOverview() {
                         </form>
                       </div>
                       <div className="reviews-container">
-                        {reviews?.reviews?.map((review, key) => {
+                        {reviews?.map((review, key) => {
                           return review.spoilers ? (
                             <div className="user-review" key={key}>
                               <h3>{review.userName}</h3>
