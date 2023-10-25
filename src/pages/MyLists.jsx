@@ -21,6 +21,10 @@ const MyLists = () => {
 
     const userName = FIREBASE_AUTH.currentUser?.displayName;
 
+    if(!userName) {
+      return
+    }
+
     // Følgende linjer henter de list id'er, som "userName" har adgang til og ligger
     // dem i variablen "iHaveAccessTo"
     const docRef = doc(db, "users", userName);
@@ -39,14 +43,16 @@ const MyLists = () => {
     // Følgende linjer henter alle lister, som ligger i vores Firestor
     // ... også dem, man ikke har adgang til
     const querySnapshot = await getDocs(collection(db, "lists"));
-    // følgende linjer tjekker for hver enkelt liste,
+    // Følgende linjer tjekker for hver enkelt liste,
     // om listen findes i den array som findes i "iHaveAccessTo"
     // ... hvis den findes, så tilføjes listen til variablen "newLists"
-    querySnapshot.forEach((list) => {
-      if (iHaveAccessTo.includes(list.id)) {
-        newLists.push(list.data());
-      }
-    });
+    if(querySnapshot) {
+      querySnapshot.forEach((list) => {
+        if (iHaveAccessTo.includes(list.id)) {
+          newLists.push(list.data());
+        }
+      });
+    }
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
