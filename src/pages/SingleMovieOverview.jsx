@@ -91,8 +91,6 @@ function SingleMovieOverview() {
     getReviews();
   }, [reviews]);
 
-  console.log(reviews);
-
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
       const newVisibility = [...prevVisibility];
@@ -100,8 +98,6 @@ function SingleMovieOverview() {
       return newVisibility;
     });
   };
-
-  console.log(reviews);
 
   const handleAddReview = (e) => {
     e.preventDefault();
@@ -231,7 +227,7 @@ function SingleMovieOverview() {
                       <h3>How did you like the movie?</h3>
                       <div>
                         <form onSubmit={handleAddReview}>
-                          <ReviewStars changed={ratingChanged} rating={userRating} />
+                          <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
                           <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                           <div>
                             <input type="checkbox" className="checkbox" value={true} onChange={(e) => setContainsSpoilers(e.target.value)} />
@@ -246,7 +242,7 @@ function SingleMovieOverview() {
                           return review.spoilers ? (
                             <div className="user-review" key={key}>
                               <h3>{review.userName}</h3>
-                              <ReviewStars rating={review.rating} edit={false} />
+                              <ReviewStars size={30} rating={review.rating} edit={false} />
                               <div className="spoiler-warning">
                                 {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
                                 <button onClick={() => handleShowReview(key)}>
@@ -257,7 +253,7 @@ function SingleMovieOverview() {
                           ) : (
                             <div className="user-review" key={key}>
                               <h3>{review.userName}</h3>
-                              <ReviewStars rating={review.rating} edit={false} />
+                              <ReviewStars size={30} rating={review.rating} edit={false} />
                               <p>{review.userReview}</p>
                             </div>
                           );
