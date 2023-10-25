@@ -9,7 +9,6 @@ import MovieCard from "../Components/MovieCard";
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
 
-
   const handleAddList = (e) => {
     e.stopPropagation();
     const popup = document.querySelector(".addToList");
@@ -17,11 +16,10 @@ const MyLists = () => {
   };
 
   const getAllLists = async () => {
+    const newLists = [];
+    const iHaveAccessTo = [];
 
-    const newLists = []
-    const iHaveAccessTo = []
-
-    const userName = FIREBASE_AUTH.currentUser?.displayName
+    const userName = FIREBASE_AUTH.currentUser?.displayName;
 
     // Følgende linjer henter de list id'er, som "userName" har adgang til og ligger
     // dem i variablen "iHaveAccessTo"
@@ -29,11 +27,10 @@ const MyLists = () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const docSnapData = docSnap.data()?.listsAccess
+      const docSnapData = docSnap.data()?.listsAccess;
       docSnapData.forEach((id) => {
-        iHaveAccessTo.push(id)
+        iHaveAccessTo.push(id);
       });
-
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such id!");
