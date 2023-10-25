@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import AddList from "../Components/AddListBtn";
 import CreateNewList from "../Components/CreateNewList";
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
+
+
   const handleAddList = (e) => {
     e.stopPropagation();
     const popup = document.querySelector(".addToList");
@@ -15,6 +17,7 @@ const MyLists = () => {
   };
 
   useEffect(() => {
+
     const getAllLists = async () => {
       const newLists = []
       const iHaveAccessTo = []
@@ -37,7 +40,7 @@ const MyLists = () => {
 
       const querySnapshot = await getDocs(collection(db, "lists"));
       querySnapshot.forEach((list) => {
-        if(iHaveAccessTo.includes(list.id)) {
+        if (iHaveAccessTo.includes(list.id)) {
           newLists.push(list.data());
         }
       });
