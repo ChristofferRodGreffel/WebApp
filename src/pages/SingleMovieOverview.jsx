@@ -82,10 +82,11 @@ function SingleMovieOverview() {
     setReviews([]);
     const newReviews = [];
     const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
-    querySnapshot.forEach((doc) => {
-      newReviews.push(doc.data());
-      // console.log(doc.id, "=>", doc.data());
-    });
+    if (querySnapshot) {
+      querySnapshot.forEach((doc) => {
+        newReviews.push(doc.data());
+      });
+    }
     setReviews(newReviews);
   };
 
