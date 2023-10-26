@@ -35,11 +35,12 @@ const CreateNewList = (props) => {
     try {
       const listData = await addDoc(collection(db, "lists"), list);
       const listId = listData.id;
+
       updateAccess(listId);
 
       // Kører funktionen, der henter de lister man har adgang til
       // funktionen blev videreført gennem props
-      props.onUpdate()
+      props.onUpdate();
 
       setListName("");
       setSelectedUsers([]);
@@ -63,6 +64,11 @@ const CreateNewList = (props) => {
     const username = getAuth().currentUser?.displayName;
     try {
       const userRef = doc(db, "users", username);
+      const listRef = doc(db, "lists", listId);
+
+      await updateDoc(listRef, {
+        listDocId: listId,
+      });
 
       await updateDoc(userRef, {
         listsAccess: arrayUnion(listId),
@@ -95,14 +101,7 @@ const CreateNewList = (props) => {
         <div className="addNewList">
           <form onSubmit={handleCreateList}>
             <label htmlFor="listName">What is the name of the list</label>
-            <input
-              type="text"
-              id="listName"
-              placeholder="Add a list name"
-              required
-              value={listName}
-              onChange={(e) => setListName(e.target.value)}
-            />
+            <input type="text" id="listName" placeholder="Add a list name" required value={listName} onChange={(e) => setListName(e.target.value)} />
             <label htmlFor="sharedWith">Would you like to share the list?</label>
             <UserSelection selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
             <button type="submit">Add new list</button>

@@ -5,6 +5,7 @@ import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/fi
 import { FIREBASE_AUTH, db } from "../../firebase-config";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
+import { staticMovies } from "../staticmovies.js";
 
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
@@ -21,8 +22,8 @@ const MyLists = () => {
 
     const userName = FIREBASE_AUTH.currentUser?.displayName;
 
-    if(!userName) {
-      return
+    if (!userName) {
+      return;
     }
 
     // Følgende linjer henter de list id'er, som "userName" har adgang til og ligger
@@ -46,7 +47,7 @@ const MyLists = () => {
     // Følgende linjer tjekker for hver enkelt liste,
     // om listen findes i den array som findes i "iHaveAccessTo"
     // ... hvis den findes, så tilføjes listen til variablen "newLists"
-    if(querySnapshot) {
+    if (querySnapshot) {
       querySnapshot.forEach((list) => {
         if (iHaveAccessTo.includes(list.id)) {
           newLists.push(list.data());
@@ -75,28 +76,29 @@ const MyLists = () => {
       <div className="all-lists">
         {myLists.length != 0 ? (
           <>
-            {myLists.map((list, key) => {
+            {/* First we map myList, which returns each list the user has access to */}
+            {myLists.map((list) => {
               return (
-                <div key={key}>
-                  <HorizontalScroller
-                    scrollerTitle={list.listName}
-                    content={
-                      list.movies.length != 0 ? (
-                        <>
-                          {list.movies?.map((movie, key) => {
-                            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
-                          })}
-                        </>
-                      ) : (
-                        <>
-                          <p>Add a movie to the list you dumbass</p>
-                        </>
-                      )
-                    }
-                  />
-                </div>
+                // Then we return the HorizontalScroller component and pass the listName and
+                // content, which in this case is all of the imdb id's of the list.
+                <HorizontalScroller
+                  scrollerTitle={list.listName}
+                  content={list.movies.map((id) => {
+                    return <p>{id}</p>;
+                  })}
+                />
               );
             })}
+
+            {/* {staticMovies.movies.map((list, key) => {
+              if (list.id === imdb_id) {
+                return (
+                  <div key={key}>
+                    <HorizontalScroller content={<MovieCard key={key} id={list.imdb_id} title={list.title} url={list.poster_image} rating={list.rating?.toPrecision(2)} icon={"fa-solid fa-plus"} />} />
+                  </div>
+                );
+              }
+            })} */}
           </>
         ) : (
           <>
@@ -109,3 +111,22 @@ const MyLists = () => {
 };
 
 export default MyLists;
+
+{
+  /* <HorizontalScroller
+  scrollerTitle={list.listName}
+  content={
+    list.movies.length != 0 ? (
+      <>
+        {list.movies?.map((movie, key) => {
+          return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+        })}
+      </>
+    ) : (
+      <>
+        <p>Add a movie to the list you dumbass</p>
+      </>
+    )
+  }
+/>; */
+}
