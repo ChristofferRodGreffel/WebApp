@@ -286,6 +286,28 @@ nav a i {
   font-size: 25px;
 }
 
+/* Remove card styling */
+.moviecardRemove {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  height: 50px;
+  width: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: color-mix(in srgb, var(--red) 70%, transparent);
+  border-radius: 50px 0px 15px 0px;
+}
+.moviecardRemove > i {
+  position: relative;
+  left: 4px;
+  top: 4px;
+  font-size: 25px;
+}
+
 /* HORIZONTAL SCROLLER / MEDIA SCROLLER */
 
 .media-scroller {
@@ -746,4 +768,23 @@ nav a i {
 
 /* MyLists styling */
 .my-lists {
+  width: 85%;
+  margin: auto;
+}
+.my-lists-menu {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-list {
+  background-color: var(--light-grey);
+  color: var(--dark-grey);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 20px;
+}
+.all-lists {
+  margin-top: 3rem;
 }

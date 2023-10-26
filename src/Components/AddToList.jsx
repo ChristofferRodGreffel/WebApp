@@ -86,7 +86,7 @@ const AddToList = (props) => {
     await updateDoc(listRef, {
       movies: arrayUnion(props.movie.imdb_id),
     });
-    toast.success(`${props.movie.title} added to list`, {
+    toast.success(`${props.movie.title} added to list(s)`, {
       position: "top-right",
       autoClose: 2500,
       hideProgressBar: false,

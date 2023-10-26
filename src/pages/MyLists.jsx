@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AddList from "../Components/AddListBtn";
+import AddListBtn from "../Components/AddListBtn";
 import CreateNewList from "../Components/CreateNewList";
 import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
@@ -69,9 +69,9 @@ const MyLists = () => {
       {/* CreateNewList komponenten har fået en props, som er den funktion, getAllLists(), der henter de lister */}
       {/* man har adgang til */}
       <CreateNewList onUpdate={getAllLists} />
-      <div>
+      <div className="my-lists-menu">
         <h1>My lists</h1>
-        <AddList function={handleAddList} />
+        <AddListBtn function={handleAddList} />
       </div>
       <div className="all-lists">
         {myLists.length != 0 ? (
@@ -88,7 +88,9 @@ const MyLists = () => {
                       content={list.movies.map((id) => {
                         return staticMovies.movies.map((movie, key) => {
                           if (movie.imdb_id === id) {
-                            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-minus"} />;
+                            return (
+                              <MovieCard remove={true} key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-xmark"} />
+                            );
                           }
                         });
                       })}
@@ -111,22 +113,3 @@ const MyLists = () => {
 };
 
 export default MyLists;
-
-{
-  /* <HorizontalScroller
-  scrollerTitle={list.listName}
-  content={
-    list.movies.length != 0 ? (
-      <>
-        {list.movies?.map((movie, key) => {
-          return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-plus"} />;
-        })}
-      </>
-    ) : (
-      <>
-        <p>Add a movie to the list you dumbass</p>
-      </>
-    )
-  }
-/>; */
-}

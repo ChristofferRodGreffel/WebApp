@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Komponenten er udviklet fælles i gruppen
@@ -32,7 +32,7 @@ function MovieCard(props, { key }) {
           <p>{props.rating}</p>
         </div>
 
-        <div className="moviecardAdd" onClick={handleOpen}>
+        <div className={props.remove ? "moviecardRemove" : "moviecardAdd"} onClick={handleOpen}>
           <i className={props.icon}></i>
         </div>
       </div>
