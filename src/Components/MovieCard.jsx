@@ -17,7 +17,7 @@ function MovieCard(props, { key }) {
 
   const handleOpen = (e) => {
     e.stopPropagation();
-    props.onAddClick(props.movie);
+    props.onAddClick(props.movie); // onAddClick er videregivet fra Home.jsx, funktion ligger der.
     const popup = document.querySelector(".addToList");
     popup.style.display = "flex";
   };

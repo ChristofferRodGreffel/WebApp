@@ -1,8 +1,11 @@
 import { arrayUnion, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
+import { toast } from "react-toastify";
 
 const AddToList = (props) => {
+  // Props er movie objektet som er videregivet fra Home.jsx
+
   const [personalLists, setPersonalLists] = useState([]);
 
   const handleClose = () => {
@@ -55,7 +58,6 @@ const AddToList = (props) => {
     const checkbox = document.querySelectorAll(".list-personal-checkbox");
     checkbox.forEach((box) => {
       if (box.checked) {
-        console.log(box.value);
         insertMovieToList(box.value);
       }
     });
@@ -64,8 +66,42 @@ const AddToList = (props) => {
   const insertMovieToList = async (listId) => {
     const listRef = doc(db, "lists", listId);
 
+    personalLists.forEach((list) => {
+      if (list.listDocId === listId) {
+        if (list.movies.includes(props.movie.imdb_id)) {
+          toast.info(`${props.movie.title} already in ${list.listName}`, {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+      }
+    });
+
     await updateDoc(listRef, {
       movies: arrayUnion(props.movie.imdb_id),
+    });
+    toast.success(`${props.movie.title} added to list`, {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+    handleClose();
+    const checkbox = document.querySelectorAll(".list-personal-checkbox");
+    checkbox.forEach((box) => {
+      if (box.checked) {
+        box.checked = false;
+      }
     });
   };
 

@@ -77,28 +77,28 @@ const MyLists = () => {
         {myLists.length != 0 ? (
           <>
             {/* First we map myList, which returns each list the user has access to */}
-            {myLists.map((list) => {
-              return (
-                // Then we return the HorizontalScroller component and pass the listName and
-                // content, which in this case is all of the imdb id's of the list.
-                <HorizontalScroller
-                  scrollerTitle={list.listName}
-                  content={list.movies.map((id) => {
-                    return <p>{id}</p>;
-                  })}
-                />
-              );
-            })}
-
-            {/* {staticMovies.movies.map((list, key) => {
-              if (list.id === imdb_id) {
+            {myLists.map((list, key) => {
+              if (list.movies.length != 0) {
                 return (
+                  // Then we return the HorizontalScroller component and pass the listName and
+                  // content, which in this case is all of the imdb id's of the list.
                   <div key={key}>
-                    <HorizontalScroller content={<MovieCard key={key} id={list.imdb_id} title={list.title} url={list.poster_image} rating={list.rating?.toPrecision(2)} icon={"fa-solid fa-plus"} />} />
+                    <HorizontalScroller
+                      scrollerTitle={list.listName}
+                      content={list.movies.map((id) => {
+                        return staticMovies.movies.map((movie, key) => {
+                          if (movie.imdb_id === id) {
+                            return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-minus"} />;
+                          }
+                        });
+                      })}
+                    />
                   </div>
                 );
+              } else {
+                return <HorizontalScroller key={key} scrollerTitle={list.listName} content={<p>You have not added any movies to this list...</p>} />;
               }
-            })} */}
+            })}
           </>
         ) : (
           <>

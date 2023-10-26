@@ -361,6 +361,7 @@ nav a i {
 
 /* Add To List component styling */
 .addToList {
+  z-index: 1000;
   display: none;
   position: fixed;
   top: 0;
@@ -741,4 +742,8 @@ nav a i {
   text-decoration: underline;
   width: max-content;
   cursor: copy;
+}
+
+/* MyLists styling */
+.my-lists {
 }

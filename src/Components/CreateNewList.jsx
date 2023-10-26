@@ -38,10 +38,6 @@ const CreateNewList = (props) => {
 
       updateAccess(listId);
 
-      // Kører funktionen, der henter de lister man har adgang til
-      // funktionen blev videreført gennem props
-      props.onUpdate();
-
       setListName("");
       setSelectedUsers([]);
 
@@ -73,6 +69,11 @@ const CreateNewList = (props) => {
       await updateDoc(userRef, {
         listsAccess: arrayUnion(listId),
       });
+
+      // Kører funktionen, der henter de lister man har adgang til
+      // funktionen blev videreført gennem props
+      props.onUpdate();
+      handleClose();
     } catch (e) {
       console.error("Error adding document: ", e);
     }
