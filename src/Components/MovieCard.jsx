@@ -17,6 +17,7 @@ function MovieCard(props, { key }) {
 
   const handleOpen = (e) => {
     e.stopPropagation();
+    props.onAddClick(props.movie);
     const popup = document.querySelector(".addToList");
     popup.style.display = "flex";
   };
@@ -31,7 +32,7 @@ function MovieCard(props, { key }) {
           <p>{props.rating}</p>
         </div>
 
-        <div className="moviecardAdd" data-id={props.title} onClick={handleOpen}>
+        <div className="moviecardAdd" onClick={handleOpen}>
           <i className={props.icon}></i>
         </div>
       </div>

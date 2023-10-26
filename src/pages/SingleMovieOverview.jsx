@@ -92,7 +92,7 @@ function SingleMovieOverview() {
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [imdbid]);
 
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {

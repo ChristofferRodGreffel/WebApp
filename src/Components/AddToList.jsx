@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const AddToList = (props) => {
   const handleClose = () => {
@@ -6,10 +6,12 @@ const AddToList = (props) => {
     popup.style.display = "none";
   };
 
+  console.log(props.movie);
+
   // useEffect(() => {
   //   const getReviews = async () => {
-  //     const newReviews = [];
-  //     const querySnapshot = await getDocs(collection(db, `reviews/${imdbid}/reviews`));
+  //     const new = [];
+  //     const querySnapshot = await getDocs(collection(db, `lists/`));
   //     querySnapshot.forEach((doc) => {
   //       newReviews.push(doc.data());
   //       // console.log(doc.id, "=>", doc.data());
@@ -25,7 +27,7 @@ const AddToList = (props) => {
       <div className="addToList-content">
         <div>
           <h2>Add to a list</h2>
-          <p>{props.movieName}</p>
+          <p>{props.movie?.title}</p>
         </div>
         <div className="list">
           <h3>Personal lists</h3>
