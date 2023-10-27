@@ -701,6 +701,7 @@ nav a i {
   font-weight: 600;
 }
 .user-review p {
+  white-space: pre-line;
   font-size: 14px;
   font-weight: 300;
 }
@@ -727,6 +728,19 @@ nav a i {
 }
 .spoiled-review {
   display: none;
+}
+.review-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.review-title p {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-weight: 500;
+  background-color: var(--purple);
 }
 
 .movie-recommended {

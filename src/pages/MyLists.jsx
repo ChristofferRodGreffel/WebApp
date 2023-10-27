@@ -34,7 +34,7 @@ const MyLists = () => {
 
     if (docSnap.exists()) {
       const docSnapData = docSnap.data()?.listsAccess;
-      docSnapData.forEach((id) => {
+      docSnapData?.forEach((id) => {
         iHaveAccessTo.push(id);
       });
     } else {

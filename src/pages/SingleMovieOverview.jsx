@@ -17,7 +17,7 @@ import ReactStars from "react-stars";
 import { ReviewStars } from "../Components/ReviewStars";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
-import { addDoc, collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -116,13 +116,16 @@ function SingleMovieOverview() {
 
   const addReview = async (review) => {
     try {
-      await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
+      const reviewData = await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
+      const reviewId = reviewData.id;
+
+      updateReviewWithId(reviewId);
 
       getReviews();
 
       toast.success(`review added succesfully`, {
         position: "top-right",
-        autoClose: 2500,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -139,8 +142,48 @@ function SingleMovieOverview() {
     }
   };
 
+  const updateReviewWithId = async (reviewId) => {
+    try {
+      const reviewRef = doc(db, `reviews/${imdbid}/reviews/${reviewId}`);
+
+      await updateDoc(reviewRef, {
+        id: reviewId,
+      });
+    } catch (e) {
+      console.error("Error adding id: ", e);
+    }
+  };
+
   const ratingChanged = (newRating) => {
     setUserRating(newRating);
+  };
+
+  const handleDeleteReview = async (review) => {
+    if (review?.id && review?.userName === getAuth().currentUser.displayName) {
+      await deleteDoc(doc(db, `reviews/${imdbid}/reviews/${review.id}`));
+      toast.success(`Review removed succesfully`, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+      getReviews();
+    } else {
+      toast.error(`Review couldn't be deleted`, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   return (
@@ -230,7 +273,7 @@ function SingleMovieOverview() {
                   <div className="reviews">
                     <h2>Reviews</h2>
                     <div>
-                      <h3>How did you like the movie?</h3>
+                      <h3>Did you like the movie?</h3>
                       <div>
                         <form onSubmit={handleAddReview}>
                           <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
@@ -247,7 +290,16 @@ function SingleMovieOverview() {
                         {reviews?.map((review, key) => {
                           return review.spoilers ? (
                             <div className="user-review" key={key}>
-                              <h3>{review.userName}</h3>
+                              <div className="review-title">
+                                {review.userName === getAuth().currentUser.displayName ? (
+                                  <>
+                                    <h3>{review.userName}</h3>
+                                    <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                                  </>
+                                ) : (
+                                  <h3>{review.userName}</h3>
+                                )}
+                              </div>
                               <ReviewStars size={30} rating={review.rating} edit={false} />
                               <div className="spoiler-warning">
                                 {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
@@ -258,7 +310,16 @@ function SingleMovieOverview() {
                             </div>
                           ) : (
                             <div className="user-review" key={key}>
-                              <h3>{review.userName}</h3>
+                              <div className="review-title">
+                                {review.userName === getAuth().currentUser.displayName ? (
+                                  <>
+                                    <h3>{review.userName}</h3>
+                                    <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                                  </>
+                                ) : (
+                                  <h3>{review.userName}</h3>
+                                )}
+                              </div>
                               <ReviewStars size={30} rating={review.rating} edit={false} />
                               <p>{review.userReview}</p>
                             </div>

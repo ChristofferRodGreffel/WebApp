@@ -39,7 +39,7 @@ const SharedLists = () => {
     if (docSnap.exists()) {
       setLoading(true);
       const docSnapData = docSnap.data()?.listsAccess;
-      docSnapData.forEach((id) => {
+      docSnapData?.forEach((id) => {
         iHaveAccessTo.push(id);
       });
     } else {
