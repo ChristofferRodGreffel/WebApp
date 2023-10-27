@@ -7,7 +7,10 @@ import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import { staticMovies } from "../staticmovies.js";
 
-const MyLists = () => {
+// Den eneste forskel mellem MyLists og SharedLists er i funktionen getAllLists, hvor vi spørger på om
+// længden på sharedWith IKKE er lig med 0, modsat MyLists, hvor vi spørger om den er lig 0.
+
+const SharedLists = () => {
   const [myLists, setMyLists] = useState([]);
 
   const handleAddList = (e) => {
@@ -50,7 +53,7 @@ const MyLists = () => {
     if (querySnapshot) {
       querySnapshot.forEach((list) => {
         if (iHaveAccessTo.includes(list.id)) {
-          if (list.data()?.sharedWith.length == 0) {
+          if (list.data()?.sharedWith.length !== 0) {
             newLists.push(list.data());
           }
         }
@@ -72,7 +75,7 @@ const MyLists = () => {
       {/* man har adgang til */}
       <CreateNewList onUpdate={getAllLists} />
       <div className="my-lists-menu">
-        <h1>My lists</h1>
+        <h1>Shared lists</h1>
         <AddListBtn function={handleAddList} />
       </div>
       <div className="all-lists">
@@ -124,4 +127,4 @@ const MyLists = () => {
   );
 };
 
-export default MyLists;
+export default SharedLists;

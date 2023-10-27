@@ -15,7 +15,8 @@ const AddToList = (props) => {
   };
 
   const getAllLists = async () => {
-    const newLists = [];
+    const newPersonalLists = [];
+    const newSharedLists = [];
     const iHaveAccessTo = [];
 
     const userName = FIREBASE_AUTH.currentUser?.displayName;
@@ -40,11 +41,16 @@ const AddToList = (props) => {
     if (querySnapshot) {
       querySnapshot.forEach((list) => {
         if (iHaveAccessTo.includes(list.id)) {
-          newLists.push(list.data());
+          if (list.data()?.sharedWith.length == 0) {
+            newPersonalLists.push(list.data());
+          } else {
+            newSharedLists.push(list.data());
+          }
         }
       });
     }
-    setPersonalLists(newLists);
+    setPersonalLists(newPersonalLists);
+    setSharedLists(newSharedLists);
   };
 
   useEffect(() => {
@@ -68,6 +74,22 @@ const AddToList = (props) => {
     const listRef = doc(db, "lists", listId);
 
     personalLists.forEach((list) => {
+      if (list.listDocId === listId) {
+        if (list.movies.includes(props.movie.imdb_id)) {
+          toast.info(`${props.movie.title} already in ${list.listName}`, {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+      }
+    });
+    sharedLists.forEach((list) => {
       if (list.listDocId === listId) {
         if (list.movies.includes(props.movie.imdb_id)) {
           toast.info(`${props.movie.title} already in ${list.listName}`, {
@@ -117,32 +139,40 @@ const AddToList = (props) => {
         <div className="list">
           <h3>Personal lists</h3>
           <div className="list-overview">
-            {personalLists?.map((list, key) => {
-              return (
-                <div key={key}>
-                  <label htmlFor={key}>{list.listName}</label>
-                  <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
-                </div>
-              );
-            })}
+            {personalLists.length != 0 ? (
+              <>
+                {personalLists?.map((list, key) => {
+                  return (
+                    <div key={key}>
+                      <label htmlFor={key}>{list.listName}</label>
+                      <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <p>You don't have any personal lists</p>
+            )}
           </div>
         </div>
         <div className="list">
           <h3>Your shared lists</h3>
-          {sharedLists.length != 0 ? (
-            <>
-              {sharedLists?.map((listItem) => {
-                return (
-                  <div>
-                    <label>{listItem.title}</label>
-                    <input type="checkbox" />
-                  </div>
-                );
-              })}
-            </>
-          ) : (
-            <p>You don't have any shared lists</p>
-          )}
+          <div className="list-overview">
+            {sharedLists.length != 0 ? (
+              <>
+                {sharedLists?.map((list, key) => {
+                  return (
+                    <div key={key}>
+                      <label htmlFor={key}>{list.listName}</label>
+                      <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <p>You don't have any shared lists</p>
+            )}
+          </div>
         </div>
 
         <button className="addSelectedMovies" onClick={addMoviesToLists}>

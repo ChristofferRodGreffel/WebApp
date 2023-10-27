@@ -20,7 +20,13 @@ const SearchBar = () => {
         >
           My lists
         </button>
-        <button>Shared lists</button>
+        <button
+          onClick={() => {
+            navigate("/sharedlists");
+          }}
+        >
+          Shared lists
+        </button>
         <button>All genres</button>
       </div>
     </div>
