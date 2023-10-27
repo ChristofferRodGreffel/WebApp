@@ -41,7 +41,7 @@ const MyLists = () => {
       console.log("No such id!");
     }
 
-    // Følgende linjer henter alle lister, som ligger i vores Firestor
+    // Følgende linjer henter alle lister, som ligger i vores Firestore
     // ... også dem, man ikke har adgang til
     const querySnapshot = await getDocs(collection(db, "lists"));
     // Følgende linjer tjekker for hver enkelt liste,
@@ -89,7 +89,17 @@ const MyLists = () => {
                         return staticMovies.movies.map((movie, key) => {
                           if (movie.imdb_id === id) {
                             return (
-                              <MovieCard remove={true} key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating?.toPrecision(2)} icon={"fa-solid fa-xmark"} />
+                              <MovieCard
+                                getLists={getAllLists}
+                                listId={list.listDocId}
+                                remove={true}
+                                key={key}
+                                id={movie.imdb_id}
+                                title={movie.title}
+                                url={movie.poster_image}
+                                rating={movie.rating?.toPrecision(2)}
+                                icon={"fa-solid fa-xmark"}
+                              />
                             );
                           }
                         });

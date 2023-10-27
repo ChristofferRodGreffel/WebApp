@@ -7,6 +7,7 @@ const AddToList = (props) => {
   // Props er movie objektet som er videregivet fra Home.jsx
 
   const [personalLists, setPersonalLists] = useState([]);
+  const [sharedLists, setSharedLists] = useState([]);
 
   const handleClose = () => {
     const popup = document.querySelector(".addToList");
@@ -115,27 +116,39 @@ const AddToList = (props) => {
         </div>
         <div className="list">
           <h3>Personal lists</h3>
-          {personalLists?.map((list, key) => {
-            return (
-              <div key={key}>
-                <label htmlFor={list.listName}>{list.listName}</label>
-                <input type="checkbox" className="list-personal-checkbox" id={list.listName} value={list.listDocId} />
-              </div>
-            );
-          })}
+          <div className="list-overview">
+            {personalLists?.map((list, key) => {
+              return (
+                <div key={key}>
+                  <label htmlFor={key}>{list.listName}</label>
+                  <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="list">
           <h3>Your shared lists</h3>
-          {props.personalList?.map((listItem) => {
-            return (
-              <div>
-                <label>{listItem.title}</label>
-                <input type="checkbox" />
-              </div>
-            );
-          })}
+          {sharedLists.length != 0 ? (
+            <>
+              {sharedLists?.map((listItem) => {
+                return (
+                  <div>
+                    <label>{listItem.title}</label>
+                    <input type="checkbox" />
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <p>You don't have any shared lists</p>
+          )}
         </div>
-        <div className="addNewList">
+
+        <button className="addSelectedMovies" onClick={addMoviesToLists}>
+          Add movie to selected lists
+        </button>
+        {/* <div className="addNewList">
           <h4>Create new personal list</h4>
           <form>
             <input type="text" placeholder="Add a list name" />
@@ -143,8 +156,7 @@ const AddToList = (props) => {
               Create new list
             </button>
           </form>
-        </div>
-        <button onClick={addMoviesToLists}>Add movie to selected lists</button>
+        </div> */}
       </div>
     </div>
   );

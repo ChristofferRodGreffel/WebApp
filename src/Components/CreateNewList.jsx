@@ -70,6 +70,15 @@ const CreateNewList = (props) => {
         listsAccess: arrayUnion(listId),
       });
 
+      // Her deler vi listen med de valgte brugere
+      selectedUsers.forEach(async (user) => {
+        const userRef = doc(db, "users", user.value);
+
+        await updateDoc(userRef, {
+          listsAccess: arrayUnion(listId),
+        });
+      });
+
       // Kører funktionen, der henter de lister man har adgang til
       // funktionen blev videreført gennem props
       props.onUpdate();
@@ -78,22 +87,6 @@ const CreateNewList = (props) => {
       console.error("Error adding document: ", e);
     }
   }
-
-  // async function opretVare(e) {
-  //   e.preventDefault();
-
-  //   const nyvare = {
-  //     vare: vare,
-  //     pris: pris,
-  //   };
-
-  //   try {
-  //     const vareRef = await addDoc(collection(db, "shoppingliste"), nyvare);
-  //     console.log("Vare tilføjet med ID: ", vareRef.id);
-  //   } catch (e) {
-  //     console.error("FEJL - Kunne ikke tilføje vare: ", e);
-  //   }
-  // }
 
   return (
     <div className="addToList">

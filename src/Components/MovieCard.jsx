@@ -1,5 +1,8 @@
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { db } from "../../firebase-config";
+import { toast } from "react-toastify";
 
 // Komponenten er udviklet fælles i gruppen
 
@@ -22,6 +25,28 @@ function MovieCard(props, { key }) {
     popup.style.display = "flex";
   };
 
+  const handleRemove = async (e) => {
+    e.stopPropagation();
+    const listRef = doc(db, "lists", props.listId);
+
+    await updateDoc(listRef, {
+      movies: arrayRemove(props.id),
+    });
+
+    props.getLists();
+
+    toast.success(`${props.title} removed from list`, {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
   return (
     <div onClick={handleOnCardClick} className="moviecardWrapper media-element" data-id={props.id} key={key}>
       <div>
@@ -32,7 +57,7 @@ function MovieCard(props, { key }) {
           <p>{props.rating}</p>
         </div>
 
-        <div className={props.remove ? "moviecardRemove" : "moviecardAdd"} onClick={handleOpen}>
+        <div className={props.remove ? "moviecardRemove" : "moviecardAdd"} onClick={props.remove ? handleRemove : handleOpen}>
           <i className={props.icon}></i>
         </div>
       </div>
