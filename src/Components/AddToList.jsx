@@ -11,7 +11,9 @@ const AddToList = (props) => {
 
   const handleClose = () => {
     const popup = document.querySelector(".addToList");
+    const body = document.querySelector("body");
     popup.style.display = "none";
+    body.style.overflowY = "";
   };
 
   const getAllLists = async () => {
@@ -56,10 +58,6 @@ const AddToList = (props) => {
   useEffect(() => {
     getAllLists();
   }, []);
-
-  const createNewList = (e) => {
-    e.preventDefault();
-  };
 
   const addMoviesToLists = () => {
     const checkbox = document.querySelectorAll(".list-personal-checkbox");
@@ -178,15 +176,6 @@ const AddToList = (props) => {
         <button className="addSelectedMovies" onClick={addMoviesToLists}>
           Add movie to selected lists
         </button>
-        {/* <div className="addNewList">
-          <h4>Create new personal list</h4>
-          <form>
-            <input type="text" placeholder="Add a list name" />
-            <button type="submit" onClick={createNewList}>
-              Create new list
-            </button>
-          </form>
-        </div> */}
       </div>
     </div>
   );
