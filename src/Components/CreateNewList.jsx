@@ -11,7 +11,7 @@ const CreateNewList = (props) => {
   const [listName, setListName] = useState("");
 
   const handleClose = () => {
-    const popup = document.querySelector(".addToList");
+    const popup = document.querySelector(".createNewList");
     popup.style.display = "none";
   };
 
@@ -89,9 +89,9 @@ const CreateNewList = (props) => {
   }
 
   return (
-    <div className="addToList">
+    <div className="createNewList">
       <i className="fa-solid fa-xmark" onClick={handleClose}></i>
-      <div className="addToList-content">
+      <div className="createNewList-content">
         <div className="addNewList">
           <form onSubmit={handleCreateList}>
             <label htmlFor="listName">What is the name of the list</label>

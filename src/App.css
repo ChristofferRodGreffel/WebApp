@@ -469,24 +469,25 @@ nav a i {
   top: 1.5rem;
   right: 2rem;
 }
-.addNewList h4 {
-  margin-bottom: 0.5rem;
+
+/* Create new list styling */
+.createNewList {
+  display: none;
+  position: fixed;
+  top: 0;
+  background-color: var(--purple);
+  width: 90%;
+  height: 50vh;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
 }
-.addNewList form {
+.createNewList-content {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-.addNewList form input {
-  padding: 10px;
-}
-.addNewList form button {
-  padding: 10px;
-  background-color: var(--dark-grey);
-  color: var(--white);
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
+  padding: 50px;
 }
 
 /* Single Movie Page Styling */

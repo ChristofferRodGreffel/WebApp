@@ -16,7 +16,7 @@ const SharedLists = () => {
 
   const handleAddList = (e) => {
     e.stopPropagation();
-    const popup = document.querySelector(".addToList");
+    const popup = document.querySelector(".createNewList");
     popup.style.display = "flex";
   };
 
