@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AddListBtn from "../Components/AddListBtn";
 import CreateNewList from "../Components/CreateNewList";
-import { collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import { staticMovies } from "../staticmovies.js";
+import { toast } from "react-toastify";
 
 // Den eneste forskel mellem MyLists og SharedLists er i funktionen getAllLists, hvor vi spørger på om
 // længden på sharedWith IKKE er lig med 0, modsat MyLists, hvor vi spørger om den er lig 0.
@@ -69,6 +70,21 @@ const SharedLists = () => {
     getAllLists();
   }, []);
 
+  const handleDeleteList = async (list) => {
+    await deleteDoc(doc(db, "lists", list.listDocId));
+    toast.success(`${list.listName} removed succesfully`, {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+    getAllLists();
+  };
+
   return (
     <div className="my-lists">
       {/* CreateNewList komponenten har fået en props, som er den funktion, getAllLists(), der henter de lister */}
@@ -87,8 +103,12 @@ const SharedLists = () => {
                 return (
                   // Then we return the HorizontalScroller component and pass the listName and
                   // content, which in this case is all of the imdb id's of the list.
-                  <div key={key}>
+                  <div className="scroller-container" key={key}>
                     <HorizontalScroller
+                      handleDeleteList={handleDeleteList}
+                      list={list}
+                      delete="Delete"
+                      edit="Edit"
                       scrollerTitle={list.listName}
                       content={list.movies.map((id) => {
                         return staticMovies.movies.map((movie, key) => {
@@ -110,16 +130,33 @@ const SharedLists = () => {
                         });
                       })}
                     />
+                    <hr />
                   </div>
                 );
               } else {
-                return <HorizontalScroller key={key} scrollerTitle={list.listName} content={<p>You have not added any movies to this list...</p>} />;
+                return (
+                  <div className="scroller-container">
+                    <HorizontalScroller
+                      handleDeleteList={handleDeleteList}
+                      delete="Delete"
+                      edit="Edit"
+                      list={list}
+                      key={key}
+                      scrollerTitle={list.listName}
+                      content={<p className="italic">You have not added any movies to this list...</p>}
+                    />
+                    <hr />
+                  </div>
+                );
               }
             })}
           </>
         ) : (
           <>
-            <p>You have not made any lists...</p>
+            <p className="noLists">
+              You have not made any shared lists... <br />
+              <br /> Create a new list to start adding movies.
+            </p>
           </>
         )}
       </div>

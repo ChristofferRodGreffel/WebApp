@@ -9,6 +9,10 @@ const HorizontalScroller = (props) => {
     <div className="horizontal-scroller">
       <h1>{props.scrollerTitle}</h1>
       <div className="media-scroller">{props.content}</div>
+      <div className="hs-menu">
+        <p>{props.edit}</p>
+        <p onClick={() => props.handleDeleteList(props.list)}>{props.delete}</p>
+      </div>
     </div>
   );
 };

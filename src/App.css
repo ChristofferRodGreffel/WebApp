@@ -323,7 +323,7 @@ nav a i {
 .media-scroller {
   scroll-snap-type: inline mandatory;
   scroll-padding-inline: 1rem;
-  padding: 1rem 1rem 4.5rem 2rem;
+  padding: 1rem 1rem 4rem 2rem;
   display: flex;
   gap: 20px;
   overflow-x: auto;
@@ -343,6 +343,15 @@ nav a i {
   margin-left: 1rem;
   font-size: 20px;
   font-weight: 600;
+}
+.hs-menu {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.hs-menu p {
+  cursor: pointer;
 }
 
 /* Searchbar */
@@ -834,4 +843,17 @@ nav a i {
 }
 .all-lists {
   margin-top: 3rem;
+}
+.noLists {
+  text-align: center;
+  font-style: italic;
+}
+.italic {
+  font-style: italic;
+}
+.scroller-container {
+  margin-top: 1rem;
+}
+.scroller-container hr {
+  margin-top: 1rem;
 }
