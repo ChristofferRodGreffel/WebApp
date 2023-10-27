@@ -7,12 +7,15 @@ import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import { staticMovies } from "../staticmovies.js";
 import { toast } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
 
 // Den eneste forskel mellem MyLists og SharedLists er i funktionen getAllLists, hvor vi spørger på om
 // længden på sharedWith IKKE er lig med 0, modsat MyLists, hvor vi spørger om den er lig 0.
 
 const SharedLists = () => {
   const [myLists, setMyLists] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   const handleAddList = (e) => {
     e.stopPropagation();
@@ -24,8 +27,6 @@ const SharedLists = () => {
     const newLists = [];
     const iHaveAccessTo = [];
 
-    const userName = FIREBASE_AUTH.currentUser?.displayName;
-
     if (!userName) {
       return;
     }
@@ -36,6 +37,7 @@ const SharedLists = () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
+      setLoading(true);
       const docSnapData = docSnap.data()?.listsAccess;
       docSnapData.forEach((id) => {
         iHaveAccessTo.push(id);
@@ -63,12 +65,30 @@ const SharedLists = () => {
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
+    setLoading(false);
   };
 
+  // Her benyttes en useEffect til at checke om brugeren er logget ind og efterfølgende
+  // fylde vores useState "userName", med brugerens brugernavn
   useEffect(() => {
-    // Kører funktionen "getAllLists", når man går ind på siden
-    getAllLists();
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        setUserName(user.displayName);
+      } else {
+        setUserName(null);
+      }
+    });
+
+    // Clean up the observer when the component unmounts
+    return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    // Kører funktionen "getAllLists", når brugeren er godkendt og data er lagt i vores useState.
+    if (userName) {
+      getAllLists();
+    }
+  }, [userName]);
 
   const handleDeleteList = async (list) => {
     await deleteDoc(doc(db, "lists", list.listDocId));
@@ -97,6 +117,7 @@ const SharedLists = () => {
       <div className="all-lists">
         {myLists.length != 0 ? (
           <>
+            {loading && <p>LOADING</p>}
             {/* First we map myList, which returns each list the user has access to */}
             {myLists.map((list, key) => {
               if (list.movies.length != 0) {
@@ -107,8 +128,8 @@ const SharedLists = () => {
                     <HorizontalScroller
                       handleDeleteList={handleDeleteList}
                       list={list}
-                      delete="Delete"
-                      edit="Edit"
+                      delete="Delete list"
+                      edit="Edit list"
                       scrollerTitle={list.listName}
                       content={list.movies.map((id) => {
                         return staticMovies.movies.map((movie, key) => {
@@ -138,8 +159,8 @@ const SharedLists = () => {
                   <div className="scroller-container">
                     <HorizontalScroller
                       handleDeleteList={handleDeleteList}
-                      delete="Delete"
-                      edit="Edit"
+                      delete="Delete list"
+                      edit="Edit list"
                       list={list}
                       key={key}
                       scrollerTitle={list.listName}

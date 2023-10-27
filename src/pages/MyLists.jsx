@@ -7,9 +7,11 @@ import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import { staticMovies } from "../staticmovies.js";
 import { toast } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
 
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
+  const [userName, setUserName] = useState(null);
 
   const handleAddList = (e) => {
     e.stopPropagation();
@@ -20,8 +22,6 @@ const MyLists = () => {
   const getAllLists = async () => {
     const newLists = [];
     const iHaveAccessTo = [];
-
-    const userName = FIREBASE_AUTH.currentUser?.displayName;
 
     if (!userName) {
       return;
@@ -62,10 +62,27 @@ const MyLists = () => {
     setMyLists(newLists);
   };
 
+  // Her benyttes en useEffect til at checke om brugeren er logget ind og efterfølgende
+  // fylde vores useState "userName", med brugerens brugernavn
   useEffect(() => {
-    // Kører funktionen "getAllLists", når man går ind på siden
-    getAllLists();
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      if (user) {
+        setUserName(user.displayName);
+      } else {
+        setUserName(null);
+      }
+    });
+
+    // Clean up the observer when the component unmounts
+    return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    // Kører funktionen "getAllLists", når brugeren er godkendt og data er lagt i vores useState.
+    if (userName) {
+      getAllLists();
+    }
+  }, [userName]);
 
   const handleDeleteList = async (list) => {
     await deleteDoc(doc(db, "lists", list.listDocId));
@@ -104,8 +121,8 @@ const MyLists = () => {
                     <HorizontalScroller
                       handleDeleteList={handleDeleteList}
                       list={list}
-                      delete="Delete"
-                      edit="Edit"
+                      delete="Delete list"
+                      edit="Edit list"
                       scrollerTitle={list.listName}
                       content={list.movies.map((id) => {
                         return staticMovies.movies.map((movie, key) => {
@@ -137,8 +154,8 @@ const MyLists = () => {
                       handleDeleteList={handleDeleteList}
                       list={list}
                       key={key}
-                      delete="Delete"
-                      edit="Edit"
+                      delete="Delete list"
+                      edit="Edit list"
                       scrollerTitle={list.listName}
                       content={<p className="italic">You have not added any movies to this list...</p>}
                     />

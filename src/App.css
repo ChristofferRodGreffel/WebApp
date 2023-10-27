@@ -322,10 +322,10 @@ nav a i {
 
 .media-scroller {
   scroll-snap-type: inline mandatory;
-  scroll-padding-inline: 1rem;
-  padding: 1rem 1rem 4rem 2rem;
+  scroll-padding-inline: 1.5rem;
+  padding: 1rem 1rem 4rem 1.5rem;
   display: flex;
-  gap: 20px;
+  gap: 1.5rem;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
@@ -340,12 +340,12 @@ nav a i {
   aspect-ratio: 16 / 9;
 }
 .horizontal-scroller h1 {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
   font-size: 20px;
   font-weight: 600;
 }
 .hs-menu {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -477,7 +477,6 @@ nav a i {
   top: 0;
   background-color: var(--purple);
   width: 90%;
-  height: 50vh;
 
   top: 50%;
   left: 50%;
@@ -485,9 +484,27 @@ nav a i {
   border-radius: 20px;
 }
 .createNewList-content {
+  padding: 5rem 2rem;
+  height: 100%;
+  width: 90%;
+  margin: auto;
+}
+.addNewList form {
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  gap: 1rem;
+}
+.addNewList form input {
+  font-size: 15px;
+  padding: 10px;
+}
+.addNewList form button {
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: var(--dark-grey);
+  color: var(--white);
 }
 
 /* Single Movie Page Styling */
@@ -827,7 +844,7 @@ nav a i {
   margin: auto;
 }
 .my-lists-menu {
-  width: 85%;
+  width: 90%;
   margin: auto;
   margin-top: 3rem;
   display: flex;
