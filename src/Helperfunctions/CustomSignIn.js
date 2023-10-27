@@ -40,7 +40,6 @@ export function CustomSignIn(form, customSetLoad, navigate) {
           progress: undefined,
           theme: "dark",
         });
-
       });
   } finally {
     // Sets the loading state to false, whenever the function is done.

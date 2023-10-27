@@ -32,14 +32,11 @@ function App() {
         const uid = user.uid;
         setUser(uid);
         setShowNav(true);
-        navigate("/home");
-        // ...
       } else {
         setUser("");
         setShowNav(false);
         navigate("/");
         // User is signed out
-        // ...
       }
     });
   }, []);
@@ -56,7 +53,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/mylists" element={<MyLists />} />
         <Route path="/sharedlists" element={<SharedLists />} />
-        <Route path="*" element={<SignIn />} />
+        <Route path="/*" element={<SignIn />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
       <ScrollToTop />
