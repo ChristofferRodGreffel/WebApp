@@ -600,7 +600,8 @@ nav a i {
 .runtime-genre-container {
   margin-top: 2rem;
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1rem;
 }
 .dots-list {
   display: flex;
@@ -788,7 +789,7 @@ nav a i {
 }
 
 .movie-recommended {
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 /* Selct component styling */

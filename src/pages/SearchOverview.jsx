@@ -241,7 +241,6 @@ const SearchOverview = () => {
                   <i className="fa-regular fa-heart"></i>
                 </div>
                 <div className="runtime-genre-container">
-                  <p>{timeConvert(movieDetails.runtime)}</p>
                   <div className="dots-list">
                     {movieDetails?.genres?.map((genre, key) => {
                       if (movieDetails.genres.length == key + 1) {
@@ -255,6 +254,7 @@ const SearchOverview = () => {
                       }
                     })}
                   </div>
+                  <p>{timeConvert(movieDetails.runtime)}</p>
                 </div>
                 <button className="addToList-btn">
                   Add to list <i className="fa-solid fa-plus"></i>
