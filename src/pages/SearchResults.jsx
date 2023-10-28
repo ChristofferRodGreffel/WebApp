@@ -3,14 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import Backbutton from "../Components/Backbutton";
+import { CircleLoader } from "react-spinners";
 
 const SearchResults = () => {
   const { searchParam } = useParams();
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getAllResults = async () => {
+      setLoading(true);
       const options = {
         method: "GET",
         headers: {
@@ -25,6 +28,7 @@ const SearchResults = () => {
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data.results);
+          setLoading(false);
         } else {
           console.error("Error fetching data");
         }
@@ -49,6 +53,11 @@ const SearchResults = () => {
         </p>
       </div>
       <div className="results-container">
+        {loading && (
+          <div className="loader">
+            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+          </div>
+        )}
         {searchResults.map((result, key) => {
           if (result.poster_path && result.vote_average) {
             return (

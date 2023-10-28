@@ -5,6 +5,7 @@ import { FIREBASE_AUTH } from "../../firebase-config";
 import { ButtonPrimary } from "../Components/ButtonPrimary";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
 
@@ -64,7 +65,8 @@ const Profile = () => {
       });
   };
 
-  const icon = <FontAwesomeIcon icon={faRightFromBracket} />;
+  const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
+  const resetIcon = <FontAwesomeIcon icon={faKey} />;
 
   return (
     <div className="profile">
@@ -97,8 +99,10 @@ const Profile = () => {
           </div>
           <i className="fa-solid fa-chevron-down"></i>
         </div>
-        <ButtonPrimary content="Sign Out " icon={icon} function={handleSignOut} />
-        <ButtonPrimary content="Reset password " icon={icon} function={handleResetPassword} />
+        <div className="profile-buttons">
+          <ButtonPrimary content="Sign Out " icon={logoutIcon} function={handleSignOut} />
+          <ButtonPrimary content="Reset password " icon={resetIcon} function={handleResetPassword} />
+        </div>
       </div>
     </div>
   );
