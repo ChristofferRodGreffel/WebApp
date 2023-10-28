@@ -50,7 +50,7 @@ function MovieCard(props, { key }) {
   };
 
   return (
-    <div onClick={handleOnCardClick} className="moviecardWrapper media-element" data-id={props.id} key={key}>
+    <div onClick={props.onClick ? () => props.onClick(props.id) : handleOnCardClick} className="moviecardWrapper media-element" data-id={props.id} key={key}>
       <div>
         <img src={props.url} alt={`${props.title} Movie poster`} />
 

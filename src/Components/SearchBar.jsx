@@ -8,7 +8,7 @@ const SearchBar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/searchoverview/${searchTerm}`);
+    navigate(`/searchresults/${searchTerm}`);
     setSearchTerm("");
   };
 
@@ -17,12 +17,7 @@ const SearchBar = () => {
       <div className="search-input">
         <i className="fa-solid fa-magnifying-glass"></i>
         <form onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search for content..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <input type="text" placeholder="Search for content..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         </form>
       </div>
       <div className="search-buttons">

@@ -889,3 +889,35 @@ nav a i {
 .scroller-container hr {
   margin-top: 1rem;
 }
+
+/* Search Results Styling */
+.search-results {
+  width: 90%;
+  margin: auto;
+}
+.search-results h1 {
+  margin-top: 5rem;
+}
+.search-intro p {
+  margin-bottom: 2rem;
+}
+.results-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+.movie-result {
+  display: flex;
+  gap: 2rem;
+}
+.movie-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.movie-description h3 {
+  font-size: 18px;
+}

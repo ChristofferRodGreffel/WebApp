@@ -11,9 +11,9 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../firebase-config";
 
 const SearchOverview = () => {
-  const { searchParam } = useParams();
-  const [searchResults, setSearchResults] = useState([]);
+  const { movieId } = useParams();
   const [imdbId, setImdbId] = useState("");
+  const [movieDetails, setMovieDetails] = useState({});
   const [reviews, setReviews] = useState([]);
   const [userReview, setUserReview] = useState("");
   const [userRating, setUserRating] = useState(NaN);
@@ -35,7 +35,7 @@ const SearchOverview = () => {
 
   useEffect(() => {
     getReviews();
-  }, [searchParam]);
+  }, [movieId]);
 
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
@@ -131,108 +131,91 @@ const SearchOverview = () => {
   // End of review handling
 
   useEffect(() => {
-    const getMovieImdb = async () => {
-      setSearchResults([]);
-      const url = `https://moviesminidatabase.p.rapidapi.com/movie/imdb_id/byTitle/${searchParam}/`;
+    const getMovieDetails = async () => {
+      setMovieDetails([]);
       const options = {
         method: "GET",
         headers: {
-          "X-RapidAPI-Key": "0483b93bf4msh60c54eb3f79171dp13500ajsn06d4c55a084d",
-          "X-RapidAPI-Host": "moviesminidatabase.p.rapidapi.com",
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWJkODllZTQ1YjUwZmRlYWViMTRkYzZmYTI0YjY4YSIsInN1YiI6IjY1M2QwNmUxZTg5NGE2MDBhZDU2OTQxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CawKufvwC1jeUhbpNGSH0HW_UMxvOHXzXM2LgfODtIY",
         },
       };
 
       try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        // console.log(result.results[0].imdb_id);
-        getMovieDetails(result.results[0].imdb_id);
-        setImdbId(result.results[0].imdb_id);
-      } catch (error) {
-        console.error(error);
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos&language=en-US`, options);
+        if (response.ok) {
+          const data = await response.json();
+          setMovieDetails(data);
+        } else {
+          console.error("Error fetching data");
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
-    getMovieImdb();
-
-    const getMovieDetails = async (imdbId) => {
-      const url = `https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=${imdbId}&currentCountry=US`;
-      const options = {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key": "0483b93bf4msh60c54eb3f79171dp13500ajsn06d4c55a084d",
-          "X-RapidAPI-Host": "imdb8.p.rapidapi.com",
-        },
-      };
-
-      const newResult = [];
-
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        newResult.push(result);
-      } catch (error) {
-        console.error(error);
-      }
-      setSearchResults(newResult);
-    };
+    getMovieDetails();
   }, []);
-  console.log(searchResults);
+
+  console.log(movieDetails);
+
+  console.log(movieDetails);
 
   const timeConvert = (n) => {
-    var num = n;
-    var hours = num / 60;
-    var rhours = Math.floor(hours);
-    var minutes = (hours - rhours) * 60;
-    var rminutes = Math.round(minutes);
-    return rhours + " t " + rminutes + " m ";
+    let num = n;
+    let hours = num / 60;
+    let rhours = Math.floor(hours);
+    let minutes = (hours - rhours) * 60;
+    let rminutes = Math.round(minutes);
+    return rhours + "h " + rminutes + "m";
   };
+
+  const trailerVideo = movieDetails.videos?.results?.find((video) => video.type === "Main Trailer" || video.type === "Official Trailer" || video.type === "Trailer");
 
   return (
     <div>
       <Backbutton />
-      {searchResults.map((movie, key) => {
-        return (
-          <div key={key}>
-            <img className="poster-image" src={movie.title.image.url} alt={`${movie.title.title} cover image`} />
+      <div>
+        <img className="poster-image" src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`} alt={`${movieDetails.title} cover image`} />
 
-            <div className="movie-container">
-              <div className="overview">
-                <h1>{movie.title.title}</h1>
-                <div className="first-line">
-                  <div className="first-line-left">
-                    <div className="rating">
-                      <img src={imdb} alt="IMDb logo" />
-                      <p>{movie.ratings.rating.toPrecision(2)}</p>
-                    </div>
-                    <Link className="trailer" to={"no url"} target="_blank">
-                      Trailer
-                    </Link>
-                  </div>
-                  <i className="fa-regular fa-heart"></i>
+        <div className="movie-container">
+          <div className="overview">
+            <h1>{movieDetails.title}</h1>
+            <div className="first-line">
+              <div className="first-line-left">
+                <div className="rating">
+                  <img src={imdb} alt="IMDb logo" />
+                  <p>{movieDetails.vote_average?.toPrecision(2)}</p>
                 </div>
-                <div className="runtime-genre-container">
-                  <p>{timeConvert(movie.title.runningTimeInMinutes)}</p>
-                  <div className="dots-list">
-                    {movie.genres.map((genre, key) => {
-                      if (movie.genres.length == key + 1) {
-                        return <p key={key}>{genre}</p>;
-                      } else {
-                        return (
-                          <p key={key}>
-                            {genre}&nbsp; <i className="fa-solid fa-circle"></i> &nbsp;
-                          </p>
-                        );
-                      }
-                    })}
-                  </div>
-                </div>
-                <button className="addToList-btn">
-                  Add to list <i className="fa-solid fa-plus"></i>
-                </button>
-                <div className="services">
-                  <h2>Available on</h2>
-                  <div className="dots-list services">
-                    {/* {movie.service.map((service, key) => {
+                <Link className="trailer" to={trailerVideo ? `https://www.youtube.com/watch?v=${trailerVideo.key}` : ""} target="_blank">
+                  Trailer
+                </Link>
+              </div>
+              <i className="fa-regular fa-heart"></i>
+            </div>
+            <div className="runtime-genre-container">
+              <p>{timeConvert(movieDetails.runtime)}</p>
+              <div className="dots-list">
+                {/* {movieDetails.genres.map((genre, key) => {
+                  if (movieDetails.genres.length == key + 1) {
+                    return <p key={key}>{genre.name}</p>;
+                  } else {
+                    return (
+                      <p key={key}>
+                        {genre.name}&nbsp; <i className="fa-solid fa-circle"></i> &nbsp;
+                      </p>
+                    );
+                  }
+                })} */}
+              </div>
+            </div>
+            <button className="addToList-btn">
+              Add to list <i className="fa-solid fa-plus"></i>
+            </button>
+            <div className="services">
+              <h2>Available on</h2>
+              <div className="dots-list services">
+                {/* {movieDetails.service.map((service, key) => {
                       return (
                         <div key={key}>
                           <img src={serviceIcons[service]} alt={`${service} icon`} />
@@ -240,135 +223,102 @@ const SearchOverview = () => {
                         </div>
                       );
                     })} */}
-                  </div>
+              </div>
+            </div>
+            <div className="language">
+              <h2>Languages </h2>
+              <div>
+                {/* {movieDetails.spoken_languages.map((lang) => {
+                  return <p>{lang.name}</p>;
+                })} */}
+              </div>
+            </div>
+            <div className="movie-about">
+              <h2>About the movie</h2>
+              <p>{movieDetails.overview}</p>
+              <Link to={`https://www.imdb.com/title/${movieDetails.imdb_id}/`} target="_blank">
+                Read more on IMDb
+              </Link>
+            </div>
+            <div className="friendsSection">
+              <h2>Friends who loved it</h2>
+              <div>
+                <div>
+                  <img src={user} alt="Placeholder for user" />
+                  <p>richguy2020</p>
                 </div>
-                {/* <div className="language">
-                  <h2>Languages </h2>
-                  <p>{movie.language}</p>
-                </div> */}
-                <div className="movie-about">
-                  <h2>About the movie</h2>
-                  <p>{movie.plotOutline.text}</p>
-                  <Link to={`https://www.imdb.com/${movie.id}`} target="_blank">
-                    Read more on IMDb
-                  </Link>
+                <div>
+                  <img src={user} alt="Placeholder for user" />
+                  <p>flowergirl25</p>
                 </div>
-                <div className="friendsSection">
-                  <h2>Friends who loved it</h2>
-                  <div>
-                    <div>
-                      <img src={user} alt="Placeholder for user" />
-                      <p>richguy2020</p>
-                    </div>
-                    <div>
-                      <img src={user} alt="Placeholder for user" />
-                      <p>flowergirl25</p>
-                    </div>
-                    <div>
-                      <img src={user} alt="Placeholder for user" />
-                      <p>peterparker</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="reviews">
-                  <h2>Reviews</h2>
-                  <div>
-                    <h3>Did you like the movie?</h3>
-                    <div>
-                      <form onSubmit={handleAddReview}>
-                        <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
-                        <textarea
-                          name="reviewInput"
-                          id="reviewInput"
-                          placeholder="What did you think of the movie?"
-                          value={userReview}
-                          onChange={(e) => setUserReview(e.target.value)}
-                        />
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="spoiler-checkbox"
-                            className="checkbox"
-                            value={containsSpoilers}
-                            onChange={(e) => setContainsSpoilers(e.target.value)}
-                          />
-                          <label htmlFor="spoiler-checkbox">Contains spoilers</label>
-                        </div>
-
-                        <input type="submit" value="Submit review" className="submitButton" />
-                      </form>
-                    </div>
-                    <div className="reviews-container">
-                      {reviews?.map((review, key) => {
-                        return review.spoilers ? (
-                          <div className="user-review" key={key}>
-                            <div className="review-title">
-                              {review.userName === getAuth().currentUser.displayName ? (
-                                <>
-                                  <h3>{review.userName}</h3>
-                                  <p onClick={() => handleDeleteReview(review)}>Delete</p>
-                                </>
-                              ) : (
-                                <h3>{review.userName}</h3>
-                              )}
-                            </div>
-                            <ReviewStars size={30} rating={review.rating} edit={false} />
-                            <div className="spoiler-warning">
-                              {review.spoilers && !spoilerVisibility[key] ? (
-                                <p className="spoiler">Warning: contains spoilers</p>
-                              ) : (
-                                <p>{review.userReview}</p>
-                              )}
-                              <button onClick={() => handleShowReview(key)}>
-                                {!spoilerVisibility[key] ? "Read review" : "Hide review"}{" "}
-                                <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="user-review" key={key}>
-                            <div className="review-title">
-                              {review.userName === getAuth().currentUser.displayName ? (
-                                <>
-                                  <h3>{review.userName}</h3>
-                                  <p onClick={() => handleDeleteReview(review)}>Delete</p>
-                                </>
-                              ) : (
-                                <h3>{review.userName}</h3>
-                              )}
-                            </div>
-                            <ReviewStars size={30} rating={review.rating} edit={false} />
-                            <p>{review.userReview}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                <div>
+                  <img src={user} alt="Placeholder for user" />
+                  <p>peterparker</p>
                 </div>
               </div>
             </div>
-            {/* <div className="movie-recommended">
-                <HorizontalScroller
-                  scrollerTitle="More like this"
-                  content={staticMovies.movies.map((movie, key) => {
-                    if (key <= 10) {
-                      return (
-                        <MovieCard
-                          key={key}
-                          id={movie.imdb_id}
-                          title={movie.title}
-                          url={movie.poster_image}
-                          rating={movie.rating.toPrecision(2)}
-                          icon={"fa-solid fa-plus"}
-                        />
-                      );
-                    }
+            <div className="reviews">
+              <h2>Reviews</h2>
+              <div>
+                <h3>Did you like the movie?</h3>
+                <div>
+                  <form onSubmit={handleAddReview}>
+                    <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
+                    <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
+                    <div>
+                      <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
+                      <label htmlFor="spoiler-checkbox">Contains spoilers</label>
+                    </div>
+
+                    <input type="submit" value="Submit review" className="submitButton" />
+                  </form>
+                </div>
+                <div className="reviews-container">
+                  {reviews?.map((review, key) => {
+                    return review.spoilers ? (
+                      <div className="user-review" key={key}>
+                        <div className="review-title">
+                          {review.userName === getAuth().currentUser.displayName ? (
+                            <>
+                              <h3>{review.userName}</h3>
+                              <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                            </>
+                          ) : (
+                            <h3>{review.userName}</h3>
+                          )}
+                        </div>
+                        <ReviewStars size={30} rating={review.rating} edit={false} />
+                        <div className="spoiler-warning">
+                          {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
+                          <button onClick={() => handleShowReview(key)}>
+                            {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="user-review" key={key}>
+                        <div className="review-title">
+                          {review.userName === getAuth().currentUser.displayName ? (
+                            <>
+                              <h3>{review.userName}</h3>
+                              <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                            </>
+                          ) : (
+                            <h3>{review.userName}</h3>
+                          )}
+                        </div>
+                        <ReviewStars size={30} rating={review.rating} edit={false} />
+                        <p>{review.userReview}</p>
+                      </div>
+                    );
                   })}
-                />
-              </div> */}
+                </div>
+              </div>
+            </div>
           </div>
-        );
-      })}
+        </div>
+      </div>
+      );
     </div>
   );
 };
