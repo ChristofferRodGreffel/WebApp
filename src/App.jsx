@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import ScrollToTop from "./Helperfunctions/ScrollToTop";
 import MyLists from "./pages/MyLists";
 import SharedLists from "./pages/SharedLists";
+import SearchOverview from "./pages/SearchOverview";
 
 function App() {
   const [user, setUser] = useState("");
@@ -50,6 +51,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/overview/:imdbid" element={<SingleMovieOverview />} />
+        <Route path="/searchoverview/:searchParam" element={<SearchOverview />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/mylists" element={<MyLists />} />
         <Route path="/sharedlists" element={<SharedLists />} />

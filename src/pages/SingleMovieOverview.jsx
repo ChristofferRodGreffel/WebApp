@@ -34,7 +34,7 @@ const serviceIcons = {
 };
 
 function SingleMovieOverview() {
-  const { imdbid } = useParams();
+  const { imdbid, searchParam } = useParams();
   const [reviews, setReviews] = useState([]);
   const [userReview, setUserReview] = useState("");
   const [userRating, setUserRating] = useState(NaN);
@@ -277,9 +277,21 @@ function SingleMovieOverview() {
                       <div>
                         <form onSubmit={handleAddReview}>
                           <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
-                          <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
+                          <textarea
+                            name="reviewInput"
+                            id="reviewInput"
+                            placeholder="What did you think of the movie?"
+                            value={userReview}
+                            onChange={(e) => setUserReview(e.target.value)}
+                          />
                           <div>
-                            <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
+                            <input
+                              type="checkbox"
+                              id="spoiler-checkbox"
+                              className="checkbox"
+                              value={containsSpoilers}
+                              onChange={(e) => setContainsSpoilers(e.target.value)}
+                            />
                             <label htmlFor="spoiler-checkbox">Contains spoilers</label>
                           </div>
 
@@ -302,9 +314,14 @@ function SingleMovieOverview() {
                               </div>
                               <ReviewStars size={30} rating={review.rating} edit={false} />
                               <div className="spoiler-warning">
-                                {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
+                                {review.spoilers && !spoilerVisibility[key] ? (
+                                  <p className="spoiler">Warning: contains spoilers</p>
+                                ) : (
+                                  <p>{review.userReview}</p>
+                                )}
                                 <button onClick={() => handleShowReview(key)}>
-                                  {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
+                                  {!spoilerVisibility[key] ? "Read review" : "Hide review"}{" "}
+                                  <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
                                 </button>
                               </div>
                             </div>
@@ -335,7 +352,16 @@ function SingleMovieOverview() {
                   scrollerTitle="More like this"
                   content={staticMovies.movies.map((movie, key) => {
                     if (key <= 10) {
-                      return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
+                      return (
+                        <MovieCard
+                          key={key}
+                          id={movie.imdb_id}
+                          title={movie.title}
+                          url={movie.poster_image}
+                          rating={movie.rating.toPrecision(2)}
+                          icon={"fa-solid fa-plus"}
+                        />
+                      );
                     }
                   })}
                 />
