@@ -19,6 +19,7 @@ import MyLists from "./pages/MyLists";
 import SharedLists from "./pages/SharedLists";
 import SearchOverview from "./pages/SearchOverview";
 import SearchResults from "./pages/SearchResults";
+import About from "./pages/About";
 
 function App() {
   const [user, setUser] = useState("");
@@ -58,6 +59,7 @@ function App() {
         <Route path="/mylists" element={<MyLists />} />
         <Route path="/sharedlists" element={<SharedLists />} />
         <Route path="/*" element={<SignIn />} />
+        <Route path="/about" element={<About />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
       <ScrollToTop />

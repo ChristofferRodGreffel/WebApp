@@ -8,9 +8,11 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const userName = FIREBASE_AUTH.currentUser?.displayName;
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     CustomSignOut();
@@ -103,6 +105,7 @@ const Profile = () => {
           <ButtonPrimary content="Sign Out " icon={logoutIcon} function={handleSignOut} />
           <ButtonPrimary content="Reset password " icon={resetIcon} function={handleResetPassword} />
         </div>
+        <ButtonPrimary content="About WatchBuddy" function={() => navigate("/about")} />
       </div>
     </div>
   );
