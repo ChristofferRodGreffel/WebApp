@@ -6,14 +6,16 @@ import Backbutton from "../Components/Backbutton";
 import { ReviewStars } from "../Components/ReviewStars";
 import imdb from "../assets/imdb.svg";
 import user from "../assets/defaultuser.svg";
-import { addDoc, collection, deleteDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase-config";
+import { toast } from "react-toastify";
 
 const SearchOverview = () => {
   const { movieId } = useParams();
   const [imdbId, setImdbId] = useState("");
   const [movieDetails, setMovieDetails] = useState({});
+  const [streamingServices, setStreamingServices] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [userReview, setUserReview] = useState("");
   const [userRating, setUserRating] = useState(NaN);
@@ -32,10 +34,6 @@ const SearchOverview = () => {
     }
     setReviews(newReviews);
   };
-
-  useEffect(() => {
-    getReviews();
-  }, [movieId]);
 
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
@@ -128,6 +126,12 @@ const SearchOverview = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (imdbId) {
+      getReviews();
+    }
+  }, [imdbId]);
   // End of review handling
 
   useEffect(() => {
@@ -147,6 +151,8 @@ const SearchOverview = () => {
         if (response.ok) {
           const data = await response.json();
           setMovieDetails(data);
+          getServices(data.id);
+          setImdbId(data.imdb_id);
         } else {
           console.error("Error fetching data");
         }
@@ -157,9 +163,28 @@ const SearchOverview = () => {
     getMovieDetails();
   }, []);
 
-  console.log(movieDetails);
+  const getServices = async (id) => {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWJkODllZTQ1YjUwZmRlYWViMTRkYzZmYTI0YjY4YSIsInN1YiI6IjY1M2QwNmUxZTg5NGE2MDBhZDU2OTQxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CawKufvwC1jeUhbpNGSH0HW_UMxvOHXzXM2LgfODtIY",
+      },
+    };
 
-  console.log(movieDetails);
+    try {
+      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers`, options);
+      if (response.ok) {
+        const data = await response.json();
+        setStreamingServices(data.results.DK);
+      } else {
+        console.error("Error fetching data");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const timeConvert = (n) => {
     let num = n;
@@ -176,7 +201,11 @@ const SearchOverview = () => {
     <div>
       <Backbutton />
       <div>
-        <img className="poster-image" src={`https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}`} alt={`${movieDetails.title} cover image`} />
+        <img
+          className="poster-image"
+          src={movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}` : `https://image.tmdb.org/t/p/w1280/${movieDetails.poster_path}`}
+          alt={`${movieDetails.title} cover image`}
+        />
 
         <div className="movie-container">
           <div className="overview">
@@ -196,7 +225,7 @@ const SearchOverview = () => {
             <div className="runtime-genre-container">
               <p>{timeConvert(movieDetails.runtime)}</p>
               <div className="dots-list">
-                {/* {movieDetails.genres.map((genre, key) => {
+                {movieDetails?.genres?.map((genre, key) => {
                   if (movieDetails.genres.length == key + 1) {
                     return <p key={key}>{genre.name}</p>;
                   } else {
@@ -206,7 +235,7 @@ const SearchOverview = () => {
                       </p>
                     );
                   }
-                })} */}
+                })}
               </div>
             </div>
             <button className="addToList-btn">
@@ -215,22 +244,22 @@ const SearchOverview = () => {
             <div className="services">
               <h2>Available on</h2>
               <div className="dots-list services">
-                {/* {movieDetails.service.map((service, key) => {
-                      return (
-                        <div key={key}>
-                          <img src={serviceIcons[service]} alt={`${service} icon`} />
-                          <p>{service}</p>
-                        </div>
-                      );
-                    })} */}
+                {streamingServices?.flatrate?.map((service, key) => {
+                  return (
+                    <div key={key}>
+                      <img src={`https://image.tmdb.org/t/p/original/${service.logo_path}`} alt={`${service.provider_name} icon`} />
+                      <p>{service.provider_name}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className="language">
               <h2>Languages </h2>
               <div>
-                {/* {movieDetails.spoken_languages.map((lang) => {
-                  return <p>{lang.name}</p>;
-                })} */}
+                {movieDetails?.spoken_languages?.map((lang, key) => {
+                  return <p key={key}>{lang.english_name}</p>;
+                })}
               </div>
             </div>
             <div className="movie-about">
@@ -318,7 +347,6 @@ const SearchOverview = () => {
           </div>
         </div>
       </div>
-      );
     </div>
   );
 };

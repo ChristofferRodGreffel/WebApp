@@ -88,7 +88,7 @@ const MyLists = () => {
     await deleteDoc(doc(db, "lists", list.listDocId));
     toast.success(`${list.listName} removed succesfully`, {
       position: "top-right",
-      autoClose: 2500,
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

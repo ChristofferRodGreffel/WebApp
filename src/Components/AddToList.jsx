@@ -76,7 +76,7 @@ const AddToList = (props) => {
         if (list.movies.includes(props.movie.imdb_id)) {
           toast.info(`${props.movie.title} already in ${list.listName}`, {
             position: "top-right",
-            autoClose: 2500,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -92,7 +92,7 @@ const AddToList = (props) => {
         if (list.movies.includes(props.movie.imdb_id)) {
           toast.info(`${props.movie.title} already in ${list.listName}`, {
             position: "top-right",
-            autoClose: 2500,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -109,7 +109,7 @@ const AddToList = (props) => {
     });
     toast.success(`${props.movie.title} added to list(s)`, {
       position: "top-right",
-      autoClose: 2500,
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

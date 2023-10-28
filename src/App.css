@@ -6,6 +6,7 @@
 *::before,
 *::after {
   margin: 0;
+  padding: 0;
 }
 
 /* Color variables */
@@ -23,7 +24,7 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: var(--dark-grey);
   color: var(--white);
-  margin-bottom: 5rem;
+  margin-bottom: 8rem;
 }
 
 body::-webkit-scrollbar {
@@ -389,6 +390,7 @@ nav a i {
 
 .search-input input {
   background-color: var(--dark-grey);
+  padding-left: 2px;
   font-size: 15px;
   color: var(--light-grey);
 }
@@ -509,6 +511,11 @@ nav a i {
 
 /* Single Movie Page Styling */
 
+.overview {
+  width: 90%;
+  margin: auto;
+}
+
 .overview h2 {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
@@ -530,8 +537,6 @@ nav a i {
 }
 
 .movie-container {
-  width: 90%;
-  margin: auto;
   margin-top: 1rem;
 }
 .movie-container h1 {
@@ -598,16 +603,23 @@ nav a i {
 .dots-list img {
   width: 40px;
   height: 40px;
+  border-radius: 8px;
 }
+
 .services {
   gap: 1.5rem;
 }
 .services p {
-  font-size: 13px;
+  font-size: 11px;
 }
 .fa-circle {
   font-size: 5px;
 }
+
+.language p {
+  font-size: 14px;
+}
+
 .addToList-btn {
   margin-top: 1.5rem;
   display: flex;
@@ -624,11 +636,20 @@ nav a i {
   font-size: 20px;
 }
 
+.movie-about {
+  margin-top: 3rem;
+}
+
 .movie-about p {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   text-align: justify;
+  line-height: 22px;
   margin-bottom: 1rem;
+}
+
+.friendsSection {
+  margin-top: 3rem;
 }
 
 .friendsSection > div {
@@ -655,6 +676,10 @@ nav a i {
 
 .friendsSection > h2 {
   margin-bottom: 15px;
+}
+
+.reviews {
+  margin-top: 3rem;
 }
 
 .reviews > div > div > form {
@@ -745,7 +770,6 @@ nav a i {
 
 .movie-recommended {
   margin-top: 2rem;
-  padding-left: 8px;
 }
 
 /* Selct component styling */
@@ -908,6 +932,9 @@ nav a i {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 2rem;
+}
+.results-container div hr {
+  margin-top: 2rem;
 }
 .movie-result {
   display: flex;

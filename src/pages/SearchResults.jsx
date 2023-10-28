@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
-import noposter from "../assets/noposter.jpg";
 import Backbutton from "../Components/Backbutton";
 
 const SearchResults = () => {
@@ -53,7 +52,7 @@ const SearchResults = () => {
         {searchResults.map((result, key) => {
           if (result.poster_path && result.vote_average) {
             return (
-              <>
+              <div key={key}>
                 <div className="movie-result">
                   <MovieCard
                     onClick={handleOpenSearchOverview}
@@ -74,7 +73,7 @@ const SearchResults = () => {
                   </div>
                 </div>
                 <hr />
-              </>
+              </div>
             );
           }
         })}
