@@ -383,6 +383,7 @@ nav a i {
 
 .search-input {
   border: 2px solid var(--light-grey);
+  width: 95%;
   padding: 10px 10px;
   border-radius: 10px;
   display: flex;
@@ -391,10 +392,15 @@ nav a i {
   background-color: var(--dark-grey);
   position: relative;
 }
-
+.search-input form {
+  display: flex;
+  width: 100%;
+}
 .search-input input {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
   background-color: var(--dark-grey);
-  padding-left: 2px;
   font-size: 16px;
   color: var(--light-grey);
 }
@@ -969,6 +975,12 @@ nav a i {
 }
 .movie-description h3 {
   font-size: 18px;
+}
+.no-match {
+  margin-top: 5rem !important;
+  text-align: center;
+  width: 100%;
+  margin: auto;
 }
 
 /* About */

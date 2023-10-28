@@ -21,7 +21,7 @@ const About = () => {
           <p>
             WatchBuddy uses the <b>TMDB API</b> but is not endorsed or certified by <b>TMDB.</b> <br />
             <br /> We are very greateful for TMDB for providing a database of movie data which we can use in our app. <br />
-            <br /> Data about <b>streaming services</b> is provided by <b>JustWatch</b>.
+            <br /> <b>Streaming services</b> data is provided by <b>JustWatch</b>.
           </p>
           <div className="about-section-images">
             <Link to="https://www.themoviedb.org" target="_blank">

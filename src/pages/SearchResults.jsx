@@ -4,6 +4,7 @@ import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import Backbutton from "../Components/Backbutton";
 import { CircleLoader } from "react-spinners";
+import SearchField from "../Components/SearchField";
 
 const SearchResults = () => {
   const { searchParam } = useParams();
@@ -28,6 +29,7 @@ const SearchResults = () => {
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data.results);
+          console.log(data.results);
           setLoading(false);
         } else {
           console.error("Error fetching data");
@@ -43,6 +45,16 @@ const SearchResults = () => {
     navigate(`/searchoverview/${id}`);
   };
 
+  const correctedResults = () => {
+    const adjustedResults = [];
+    searchResults.map((result) => {
+      if (result.poster_path && result.vote_average) {
+        adjustedResults.push(result);
+      }
+    });
+    return adjustedResults;
+  };
+
   return (
     <div className="search-results">
       <Backbutton />
@@ -50,6 +62,8 @@ const SearchResults = () => {
         <h1>Search Results</h1>
         <p>
           You searched for: <b>{searchParam}</b>
+          <br />
+          {correctedResults()?.length} results found
         </p>
       </div>
       <div className="results-container">
@@ -58,34 +72,43 @@ const SearchResults = () => {
             <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
           </div>
         )}
-        {searchResults.map((result, key) => {
-          if (result.poster_path && result.vote_average) {
-            return (
-              <div key={key}>
-                <div className="movie-result">
-                  <MovieCard
-                    onClick={handleOpenSearchOverview}
-                    key={key}
-                    id={result.id}
-                    url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
-                    rating={result.vote_average.toPrecision(2)}
-                    icon={"fa-solid fa-plus"}
-                  />
-                  <div className="movie-description">
-                    <h3>{result.title}</h3>
-                    <p>
-                      Released: <b>{result.release_date}</b>
-                    </p>
-                    <p>
-                      Original language: <b>{result.original_language.toUpperCase()}</b>
-                    </p>
+        {searchResults.length !== 0 ? (
+          <>
+            {searchResults.map((result, key) => {
+              if (result.poster_path && result.vote_average) {
+                return (
+                  <div key={key}>
+                    <div className="movie-result">
+                      <MovieCard
+                        onClick={handleOpenSearchOverview}
+                        key={key}
+                        id={result.id}
+                        url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
+                        rating={result.vote_average.toPrecision(2)}
+                        icon={"fa-solid fa-plus"}
+                      />
+                      <div className="movie-description">
+                        <h3>{result.title}</h3>
+                        <p>
+                          Released: <b>{result.release_date}</b>
+                        </p>
+                        <p>
+                          Original language: <b>{result.original_language.toUpperCase()}</b>
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
                   </div>
-                </div>
-                <hr />
-              </div>
-            );
-          }
-        })}
+                );
+              }
+            })}
+          </>
+        ) : (
+          <div className="no-match">
+            <p>Nothing matched your search... Try searching for something else.</p>
+            <SearchField />
+          </div>
+        )}
       </div>
     </div>
   );
