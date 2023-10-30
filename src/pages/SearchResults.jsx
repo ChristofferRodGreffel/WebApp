@@ -18,7 +18,6 @@ const SearchResults = () => {
   // Den kører når searchParam, hvilket er brugerens søgeord, ændrer sig.
   useEffect(() => {
     const getAllResults = async () => {
-      setLoading(true);
       const options = {
         method: "GET",
         headers: {
@@ -73,48 +72,51 @@ const SearchResults = () => {
         </p>
       </div>
       <div className="results-container">
-        {loading && (
+        {loading ? (
           <div className="loader">
             <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
           </div>
-        )}
-        {searchResults.length !== 0 ? (
-          <>
-            {searchResults.map((result, key) => {
-              if (result.poster_path && result.vote_average) {
-                // Resultater uden billede eller rating sorteres fra
-                return (
-                  <div key={key}>
-                    <div className="movie-result">
-                      <MovieCard
-                        onClick={handleOpenSearchOverview}
-                        key={key}
-                        id={result.id}
-                        url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
-                        rating={result.vote_average.toPrecision(2)}
-                        icon={"fa-solid fa-plus"}
-                      />
-                      <div className="movie-description">
-                        <h3>{result.title}</h3>
-                        <p>
-                          Released: <b>{result.release_date}</b>
-                        </p>
-                        <p>
-                          Original language: <b>{result.original_language.toUpperCase()}</b>
-                        </p>
-                      </div>
-                    </div>
-                    <hr />
-                  </div>
-                );
-              }
-            })}
-          </>
         ) : (
-          <div className="no-match">
-            <p>Nothing matched your search... Try searching for something else.</p>
-            <SearchField />
-          </div>
+          <>
+            {searchResults.length !== 0 ? (
+              <>
+                {searchResults.map((result, key) => {
+                  if (result.poster_path && result.vote_average) {
+                    // Resultater uden billede eller rating sorteres fra
+                    return (
+                      <div key={key}>
+                        <div className="movie-result">
+                          <MovieCard
+                            onClick={handleOpenSearchOverview}
+                            key={key}
+                            id={result.id}
+                            url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
+                            rating={result.vote_average.toPrecision(2)}
+                            icon={"fa-solid fa-plus"}
+                          />
+                          <div className="movie-description">
+                            <h3>{result.title}</h3>
+                            <p>
+                              Released: <b>{result.release_date}</b>
+                            </p>
+                            <p>
+                              Original language: <b>{result.original_language.toUpperCase()}</b>
+                            </p>
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    );
+                  }
+                })}
+              </>
+            ) : (
+              <div className="no-match">
+                <p>Nothing matched your search... Try searching for something else.</p>
+                <SearchField />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

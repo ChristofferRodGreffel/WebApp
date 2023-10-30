@@ -10,6 +10,7 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../firebase-config";
 import { toast } from "react-toastify";
 import { CircleLoader } from "react-spinners";
+import AddToList from "../Components/AddToList";
 
 // Komponenten er udvilket fælles i gruppen
 
@@ -230,8 +231,20 @@ const SearchOverview = () => {
     navigate(`/searchoverview/${id}`);
   };
 
+  const movie = {
+    title: movieDetails.title,
+  };
+
+  const handleOpenAddToList = () => {
+    const popup = document.querySelector(".addToList");
+    const body = document.querySelector("body");
+    body.style.overflowY = "hidden";
+    popup.style.display = "flex";
+  };
+
   return (
     <div>
+      <AddToList movie={movie} />
       {loading ? (
         <div className="loader">
           <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
@@ -277,7 +290,7 @@ const SearchOverview = () => {
                   </div>
                   <p>{timeConvert(movieDetails.runtime)}</p>
                 </div>
-                <button className="addToList-btn">
+                <button className="addToList-btn" onClick={handleOpenAddToList}>
                   Add to list <i className="fa-solid fa-plus"></i>
                 </button>
                 <div className="services">

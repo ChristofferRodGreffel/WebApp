@@ -8,12 +8,15 @@ import MovieCard from "../Components/MovieCard";
 import { staticMovies } from "../staticmovies.js";
 import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
+import { CircleLoader } from "react-spinners";
 
 // Denne komponent er udviklet fælles i gruppen
 
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
-  const [userName, setUserName] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const userName = FIREBASE_AUTH.currentUser?.displayName;
 
   const handleAddList = (e) => {
     e.stopPropagation();
@@ -62,22 +65,8 @@ const MyLists = () => {
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
+    setLoading(false);
   };
-
-  // Her benyttes en useEffect til at checke om brugeren er logget ind og efterfølgende
-  // fylde vores useState "userName", med brugerens brugernavn
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      if (user) {
-        setUserName(user.displayName);
-      } else {
-        setUserName(null);
-      }
-    });
-
-    // Clean up the observer when the component unmounts
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     // Kører funktionen "getAllLists", når brugeren er godkendt og data er lagt i vores useState.
@@ -111,68 +100,76 @@ const MyLists = () => {
         <AddListBtn function={handleAddList} />
       </div>
       <div className="all-lists">
-        {myLists.length != 0 ? (
-          <>
-            {/* First we map myList, which returns each list the user has access to */}
-            {myLists.map((list, key) => {
-              if (list.movies.length != 0) {
-                return (
-                  // Then we return the HorizontalScroller component and pass the listName and
-                  // content, which in this case is all of the imdb id's of the list.
-                  <div className="scroller-container" key={key}>
-                    <HorizontalScroller
-                      handleDeleteList={handleDeleteList}
-                      list={list}
-                      delete="Delete list"
-                      edit="Edit list"
-                      scrollerTitle={list.listName}
-                      content={list.movies.map((id) => {
-                        return staticMovies.movies.map((movie, key) => {
-                          if (movie.imdb_id === id) {
-                            return (
-                              <MovieCard
-                                getLists={getAllLists}
-                                listId={list.listDocId}
-                                remove={true}
-                                key={key}
-                                id={movie.imdb_id}
-                                title={movie.title}
-                                url={movie.poster_image}
-                                rating={movie.rating?.toPrecision(2)}
-                                icon={"fa-solid fa-xmark"}
-                              />
-                            );
-                          }
-                        });
-                      })}
-                    />
-                    <hr />
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="scroller-container">
-                    <HorizontalScroller
-                      handleDeleteList={handleDeleteList}
-                      list={list}
-                      key={key}
-                      delete="Delete list"
-                      edit="Edit list"
-                      scrollerTitle={list.listName}
-                      content={<p className="italic">You have not added any movies to this list...</p>}
-                    />
-                    <hr />
-                  </div>
-                );
-              }
-            })}
-          </>
+        {loading ? (
+          <div className="loader">
+            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+          </div>
         ) : (
           <>
-            <p className="noLists">
-              You have not made any personal lists... <br />
-              <br /> Create a new list to start adding movies.
-            </p>
+            {myLists.length != 0 ? (
+              <>
+                {/* First we map myList, which returns each list the user has access to */}
+                {myLists.map((list, key) => {
+                  if (list.movies.length != 0) {
+                    return (
+                      // Then we return the HorizontalScroller component and pass the listName and
+                      // content, which in this case is all of the imdb id's of the list.
+                      <div className="scroller-container" key={key}>
+                        <HorizontalScroller
+                          handleDeleteList={handleDeleteList}
+                          list={list}
+                          delete="Delete list"
+                          edit="Edit list"
+                          scrollerTitle={list.listName}
+                          content={list.movies.map((id) => {
+                            return staticMovies.movies.map((movie, key) => {
+                              if (movie.imdb_id === id) {
+                                return (
+                                  <MovieCard
+                                    getLists={getAllLists}
+                                    listId={list.listDocId}
+                                    remove={true}
+                                    key={key}
+                                    id={movie.imdb_id}
+                                    title={movie.title}
+                                    url={movie.poster_image}
+                                    rating={movie.rating?.toPrecision(2)}
+                                    icon={"fa-solid fa-xmark"}
+                                  />
+                                );
+                              }
+                            });
+                          })}
+                        />
+                        <hr />
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div className="scroller-container">
+                        <HorizontalScroller
+                          handleDeleteList={handleDeleteList}
+                          list={list}
+                          key={key}
+                          delete="Delete list"
+                          edit="Edit list"
+                          scrollerTitle={list.listName}
+                          content={<p className="italic">You have not added any movies to this list...</p>}
+                        />
+                        <hr />
+                      </div>
+                    );
+                  }
+                })}
+              </>
+            ) : (
+              <>
+                <p className="noLists">
+                  You have not made any personal lists... <br />
+                  <br /> Create a new list to start adding movies.
+                </p>
+              </>
+            )}
           </>
         )}
       </div>
