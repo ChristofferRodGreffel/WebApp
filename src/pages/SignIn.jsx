@@ -5,6 +5,8 @@ import logo from "../assets/logo.svg";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 
+// Denne komponent er udviklet fælles i gruppen
+
 function SignIn() {
   const navigate = useNavigate();
 

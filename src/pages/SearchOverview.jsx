@@ -4,13 +4,14 @@ import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import Backbutton from "../Components/Backbutton";
 import { ReviewStars } from "../Components/ReviewStars";
-import imdb from "../assets/imdb.svg";
 import user from "../assets/defaultuser.svg";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase-config";
 import { toast } from "react-toastify";
 import { CircleLoader } from "react-spinners";
+
+// Komponenten er udvilket fælles i gruppen
 
 const SearchOverview = () => {
   const { movieId } = useParams();
@@ -27,6 +28,8 @@ const SearchOverview = () => {
   const navigate = useNavigate();
 
   // Review handling
+
+  // Henter alle reviews fra firestore og sætter reviews useState.
   const getReviews = async () => {
     setReviews([]);
     const newReviews = [];
@@ -39,6 +42,7 @@ const SearchOverview = () => {
     setReviews(newReviews);
   };
 
+  // Toggler visibilitet af review ud fra index paramteren
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
       const newVisibility = [...prevVisibility];
@@ -47,6 +51,7 @@ const SearchOverview = () => {
     });
   };
 
+  // Her laves et review objekt, som sendes videre til addReview funktionen.
   const handleAddReview = (e) => {
     e.preventDefault();
     const currentUser = getAuth().currentUser.displayName;
@@ -59,6 +64,8 @@ const SearchOverview = () => {
     addReview(newReview);
   };
 
+  // Her tilføjes review objektet til firestore med addDoc.
+  // Samtidig opdateres reviewet med sit eget id gennem updateReviewWithId funktionen
   const addReview = async (review) => {
     try {
       const reviewData = await addDoc(collection(db, `reviews/${imdbId}/reviews`), review);
@@ -87,6 +94,8 @@ const SearchOverview = () => {
     }
   };
 
+  // Her indsættes review id'et til review objektet
+  // Dette skal bruges til at slette et review og i en videreudviklet version, redigere reviewet.
   const updateReviewWithId = async (reviewId) => {
     try {
       const reviewRef = doc(db, `reviews/${imdbId}/reviews/${reviewId}`);
@@ -99,12 +108,15 @@ const SearchOverview = () => {
     }
   };
 
+  // Bruges til at opdatere userRating state, så vi adgang til den.
   const ratingChanged = (newRating) => {
     setUserRating(newRating);
   };
 
+  // Bruges til at slette en anmeldelse. Kører getReviews bagefter.
+  // En anmeldelse kan kun slettes hvis den findes og brugeren selv har lavet den.
   const handleDeleteReview = async (review) => {
-    if (review?.id && review?.userName === getAuth().currentUser.displayName) {
+    if (review?.id && review?.userName === getAuth()?.currentUser.displayName) {
       await deleteDoc(doc(db, `reviews/${imdbId}/reviews/${review.id}`));
       toast.success(`Review removed succesfully`, {
         position: "top-right",
@@ -131,6 +143,8 @@ const SearchOverview = () => {
     }
   };
 
+  // Når man først går ind på siden indlæses alle reviews, dog først når vi har adgang til imdbId
+  // ImdbId hentes inde i getMovieDetails.
   useEffect(() => {
     if (imdbId) {
       getReviews();
@@ -138,6 +152,9 @@ const SearchOverview = () => {
   }, [imdbId]);
   // End of review handling
 
+  // Henter information om filmen fra TMDB api'en ud fra det filmId som hører til den film brugeren har klikket på.
+  // Denne useEffect kører kun når movieId ændrer sig, dvs. når der er klikket på en ny film.
+  // Hvis data findes opdaterer vi samtlige useStates.
   useEffect(() => {
     const getMovieDetails = async () => {
       setLoading(true);
@@ -156,7 +173,6 @@ const SearchOverview = () => {
         if (response.ok) {
           const data = await response.json();
           setMovieDetails(data);
-          console.log(data);
           getServices(data.id);
           setImdbId(data.imdb_id);
           setLoading(false);
@@ -165,11 +181,13 @@ const SearchOverview = () => {
         }
       } catch (err) {
         console.error(err);
+        setLoading(false);
       }
     };
     getMovieDetails();
   }, [movieId]);
 
+  // Henter data om streaming services. Kaldes i getMovieDetails. Sætter streamingServices useState.
   const getServices = async (id) => {
     const options = {
       method: "GET",
@@ -193,6 +211,7 @@ const SearchOverview = () => {
     }
   };
 
+  // Konverterer fra minutter til timer og minutter
   const timeConvert = (n) => {
     let num = n;
     let hours = num / 60;
@@ -202,8 +221,10 @@ const SearchOverview = () => {
     return rhours + "h " + rminutes + "m";
   };
 
+  // Finder en trailer i videos objektet i vore API data.
   const trailerVideo = movieDetails.videos?.results?.find((video) => video.type === "Main Trailer" || video.type === "Official Trailer" || video.type === "Trailer");
 
+  // Går ind på en ny film, når man trykker på en lignende film
   const handleOpenSearchOverview = (id) => {
     console.log(id);
     navigate(`/searchoverview/${id}`);

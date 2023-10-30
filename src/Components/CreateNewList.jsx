@@ -5,11 +5,14 @@ import { addDoc, collection, doc, updateDoc, arrayUnion } from "firebase/firesto
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
+// Udviklet fælles i gruppen
+
 // Komponenten modtager funktionen getAllLists(), som er videreført
 const CreateNewList = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [listName, setListName] = useState("");
 
+  // Lukker popup
   const handleClose = () => {
     const popup = document.querySelector(".createNewList");
     popup.style.display = "none";
@@ -17,6 +20,7 @@ const CreateNewList = (props) => {
 
   const uid = FIREBASE_AUTH.currentUser?.uid;
 
+  // Laver et listobjekt og giver det videre til insertList
   const handleCreateList = (e) => {
     e.preventDefault();
     const newListObject = {
@@ -31,7 +35,8 @@ const CreateNewList = (props) => {
     insertList(newListObject);
   };
 
-  async function insertList(list) {
+  // Modtager listobjektet og tilføjer til lists i firestore og kører updateAccess
+  const insertList = async (list) => {
     try {
       const listData = await addDoc(collection(db, "lists"), list);
       const listId = listData.id;
@@ -54,18 +59,21 @@ const CreateNewList = (props) => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  }
+  };
 
+  // Modtager listId fra insertList og tilføjer listId til listen og opdaterer listAccess for valgte brugere og brugeren selv
   async function updateAccess(listId) {
     const username = getAuth().currentUser?.displayName;
     try {
       const userRef = doc(db, "users", username);
       const listRef = doc(db, "lists", listId);
 
+      // Tilføjer listId til listen
       await updateDoc(listRef, {
         listDocId: listId,
       });
 
+      // Opdaterer brugerens listAccess array, som er de lister brugeren har adgang til.
       await updateDoc(userRef, {
         listsAccess: arrayUnion(listId),
       });

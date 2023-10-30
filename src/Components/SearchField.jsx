@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ButtonPrimary } from "../Components/ButtonPrimary";
+
+// Udviklet fælles i gruppen
 
 const SearchField = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const { searchParam } = useParams();
 
+  // Navigerer til siden searchresults, som benytter API
+  // Medtager søgeordet som params
   const handleSearch = (e) => {
     e.preventDefault();
     navigate(`/searchresults/${searchTerm}`);

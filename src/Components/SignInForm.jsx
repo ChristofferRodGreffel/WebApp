@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import { FIREBASE_AUTH } from "../../firebase-config";
-import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
 import { CustomSignIn } from "../Helperfunctions/CustomSignIn";
 import { ButtonPrimary } from "./ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import CircleLoader from "react-spinners/CircleLoader";
+
+// Udviklet fælles i gruppen
 
 function SignInForm() {
   const [loading, setLoading] = useState(false);

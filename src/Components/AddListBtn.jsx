@@ -1,5 +1,7 @@
 import React from "react";
 
+// Udviklet fælles i gruppen
+
 const AddListBtn = (props) => {
   return (
     <button className="add-list" onClick={props.function}>

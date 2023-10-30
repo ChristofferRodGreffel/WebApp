@@ -9,6 +9,8 @@ import { staticMovies } from "../staticmovies.js";
 import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 
+// Denne komponent er udviklet fælles i gruppen
+
 const MyLists = () => {
   const [myLists, setMyLists] = useState([]);
   const [userName, setUserName] = useState(null);

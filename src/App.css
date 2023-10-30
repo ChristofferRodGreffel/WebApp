@@ -78,11 +78,8 @@ a {
 }
 
 .loader {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1000;
+  align-items: center;
 }
 
 /* Button Primary */

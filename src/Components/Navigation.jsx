@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+// Udviklet fælles i gruppen
+
 const Navigation = () => {
   return (
     <nav>

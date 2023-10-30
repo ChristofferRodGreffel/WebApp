@@ -1,19 +1,22 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
-import { useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, query, getDocs, setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
+// Udviklet fælles i gruppen
+
+// Denne funktion køres inde i CustomSignUp funktionen.
 async function insertUsername(signUpUsername, navigate, customSetLoad) {
   try {
-    // const docRef = await setDoc(collection(db, "users", user.userName ), user)
-
+    // Tilføjer brugeren til firestore med brugernavn og inviteCode.
     await setDoc(doc(db, "users", signUpUsername), {
       userName: signUpUsername,
       inviteCode: signUpUsername,
     });
 
+    // Tilføjer displayName for brugeren i auth altså IKKE i firestore.
+    // På den kan vi få brugernavn på den bruger der er logget ind, på en nem måde.
     updateProfile(FIREBASE_AUTH.currentUser, {
       displayName: signUpUsername,
     }).catch((error) => {
@@ -27,6 +30,7 @@ async function insertUsername(signUpUsername, navigate, customSetLoad) {
   }
 }
 
+// Her oprettes brugeren.
 export async function CustomSignUp(form, customSetLoad, navigate) {
   // Sets the loading state to true, so user gets feedback
   // afterwards signin in with the passed values
@@ -59,9 +63,8 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
 
   let result = false;
 
+  // Tjekker om brugernavnet allerede er i brug. Giver feedback hvis det er i brug.
   querySnapshot.forEach((name) => {
-    // doc.data() is never undefined for query doc snapshots
-
     if (signUpUsername.toLowerCase() === name.id.toLowerCase()) {
       toast.error("Sorry, this username is already taken...", {
         position: "top-right",
@@ -83,6 +86,7 @@ export async function CustomSignUp(form, customSetLoad, navigate) {
     return;
   }
 
+  // Her oprettes brugeren og kører insertUsername
   try {
     createUserWithEmailAndPassword(FIREBASE_AUTH, signUpEmail, signUpPassword)
       .then((userCredential) => {

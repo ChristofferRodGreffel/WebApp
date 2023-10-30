@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// Udviklet fælles i gruppen
+
+// Komponenten bruger useNavigate til at gå én side tilbage.
 const Backbutton = () => {
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1);
     setTimeout(() => {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0); // Scroller til toppen af siden
     }, 100);
   };
 

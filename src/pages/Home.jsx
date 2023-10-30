@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { CustomSignOut } from "../Helperfunctions/CustomSignOut";
 import { staticMovies } from "../staticmovies";
 import MovieCard from "../Components/MovieCard";
 import HorizontalScroller from "../Components/HorizontalScroller";
 import SearchBar from "../Components/SearchBar";
 import AddToList from "../Components/AddToList";
-import { FIREBASE_AUTH } from "../../firebase-config";
+
+// Denne komponent er udviklet fælles i gruppen
 
 const Home = () => {
   // Vi laver en useState til at opbevare den valgte film som objekt

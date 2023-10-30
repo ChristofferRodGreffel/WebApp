@@ -2,6 +2,8 @@ import React from "react";
 import Backbutton from "../Components/Backbutton";
 import { Link } from "react-router-dom";
 
+// Denne komponent er udviklet fælles i gruppen
+
 const About = () => {
   return (
     <div className="about">

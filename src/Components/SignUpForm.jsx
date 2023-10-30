@@ -4,6 +4,8 @@ import { ButtonPrimary } from "./ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import CircleLoader from "react-spinners/CircleLoader";
 
+// Udviklet fælles i gruppen
+
 function SignInForm() {
   const [loading, setLoading] = useState(false);
 

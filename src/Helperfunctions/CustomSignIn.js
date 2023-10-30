@@ -1,8 +1,9 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebase-config";
 import { firebaseErrorsCodes } from "../../firebaseErrorCodes";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+// Udviklet fælles i gruppen
 
 export function CustomSignIn(form, customSetLoad, navigate) {
   // Sets the loading state to true, so user gets feedback

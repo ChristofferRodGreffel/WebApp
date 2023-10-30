@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import { FIREBASE_AUTH, db } from "../../firebase-config";
 import { toast } from "react-toastify";
 
+// Udviklet fælles i gruppen
+
 const AddToList = (props) => {
   // Props er movie objektet som er videregivet fra Home.jsx
 
   const [personalLists, setPersonalLists] = useState([]);
   const [sharedLists, setSharedLists] = useState([]);
 
+  // Lukker popup
   const handleClose = () => {
     const popup = document.querySelector(".addToList");
     const body = document.querySelector("body");
@@ -16,6 +19,8 @@ const AddToList = (props) => {
     body.style.overflowY = "";
   };
 
+  // Henter alle lister og finder dem brugeren har adgang til
+  // Derefter opdeler vi dem i personlige og delte lister
   const getAllLists = async () => {
     const newPersonalLists = [];
     const newSharedLists = [];
@@ -59,6 +64,8 @@ const AddToList = (props) => {
     getAllLists();
   }, []);
 
+  // Går igennem alle checkbox og finder dem der er checked
+  // Kører insertMovieToList med box.value, som er listens firestore id.
   const addMoviesToLists = () => {
     const checkbox = document.querySelectorAll(".list-personal-checkbox");
     checkbox.forEach((box) => {
@@ -68,9 +75,13 @@ const AddToList = (props) => {
     });
   };
 
+  // Funktionen tilføjer den valgte film til de valgte lister
   const insertMovieToList = async (listId) => {
+    // Bruger listens firestore id (listId) til at finde den korrekte liste.
     const listRef = doc(db, "lists", listId);
 
+    // Løber igennem personlige lister og finder den matchende liste.
+    // Hvis filmen allerede er i listen, får brugeren en besked om det.
     personalLists.forEach((list) => {
       if (list.listDocId === listId) {
         if (list.movies.includes(props.movie.imdb_id)) {
@@ -87,6 +98,8 @@ const AddToList = (props) => {
         }
       }
     });
+    // Løber igennem delte lister og finder den matchende liste.
+    // Hvis filmen allerede er i listen, får brugeren en besked om det.
     sharedLists.forEach((list) => {
       if (list.listDocId === listId) {
         if (list.movies.includes(props.movie.imdb_id)) {
@@ -104,6 +117,7 @@ const AddToList = (props) => {
       }
     });
 
+    // Går ind i movies array i listen og tilføjer filmen og giver brugeren besked efterfølgende.
     await updateDoc(listRef, {
       movies: arrayUnion(props.movie.imdb_id),
     });
@@ -117,6 +131,7 @@ const AddToList = (props) => {
       progress: undefined,
       theme: "dark",
     });
+    // Lukker popup og unchecker alle checkboxes
     handleClose();
     const checkbox = document.querySelectorAll(".list-personal-checkbox");
     checkbox.forEach((box) => {

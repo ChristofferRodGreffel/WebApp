@@ -9,6 +9,8 @@ import { staticMovies } from "../staticmovies.js";
 import { toast } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
 
+// Denne komponent er udviklet fælles i gruppen
+
 // Den eneste forskel mellem MyLists og SharedLists er i funktionen getAllLists, hvor vi spørger på om
 // længden på sharedWith IKKE er lig med 0, modsat MyLists, hvor vi spørger om den er lig 0.
 

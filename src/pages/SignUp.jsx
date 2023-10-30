@@ -3,6 +3,8 @@ import SignUpForm from "../Components/SignUpForm";
 import logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
 
+// Denne komponent er udviklet fælles i gruppen
+
 const SignUp = () => {
   return (
     <div className="signup">

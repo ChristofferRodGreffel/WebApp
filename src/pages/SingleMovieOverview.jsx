@@ -22,6 +22,9 @@ import { db } from "../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
 
+// Denne komponent er ligesom SearchOverview, men benytter lokal JSON data, i stedet for API.
+// Vi forventer at fjerne denne komponent når API'en er 100% implementeret i app'en.
+
 const serviceIcons = {
   [services.netflix]: netflixIcon,
   [services.hbo]: hboIcon,
@@ -41,43 +44,7 @@ function SingleMovieOverview() {
   const [containsSpoilers, setContainsSpoilers] = useState(false);
   const [spoilerVisibility, setSpoilerVisibility] = useState(Array(reviews?.length).fill(false));
 
-  //   const [movieData, setMovieData] = useState();
-
-  // Denne skal bruges når vi er ved at være færdige (OBS 100 kald dagligt)
-
-  // useEffect(() => {
-  //     const getStreamingData = async () => {
-  //         const url = `https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id=${imdbid}`;
-  //         const options = {
-  //             method: "GET",
-  //             headers: {
-  //                 "X-RapidAPI-Key": "0483b93bf4msh60c54eb3f79171dp13500ajsn06d4c55a084d",
-  //                 "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com",
-  //             },
-  //         };
-
-  //         try {
-  //             const response = await fetch(url, options);
-  //             const resultJsonData = await response.json();
-
-  //             setMovieData(resultJsonData)
-  //         } catch (error) {
-  //             alert(error)
-  //             console.error(error);
-  //         }
-  //     };
-  //     getStreamingData()
-  // }, []);
-
-  // useEffect(() => {
-  //   const getReviews = async () => {
-  //     const docRef = doc(db, `reviews/${imdbid}/`);
-  //     const querySnapshot = await getDoc(docRef);
-  //     setReviews(querySnapshot.data());
-  //   };
-  //   getReviews();
-  // }, [imdbid]);
-
+  // Henter alle reviews fra firestore og sætter reviews useState.
   const getReviews = async () => {
     setReviews([]);
     const newReviews = [];
@@ -94,6 +61,7 @@ function SingleMovieOverview() {
     getReviews();
   }, [imdbid]);
 
+  // Toggler visibilitet af review ud fra index paramteren
   const handleShowReview = (index) => {
     setSpoilerVisibility((prevVisibility) => {
       const newVisibility = [...prevVisibility];
@@ -102,6 +70,7 @@ function SingleMovieOverview() {
     });
   };
 
+  // Her laves et review objekt, som sendes videre til addReview funktionen.
   const handleAddReview = (e) => {
     e.preventDefault();
     const currentUser = getAuth().currentUser.displayName;
@@ -114,6 +83,8 @@ function SingleMovieOverview() {
     addReview(newReview);
   };
 
+  // Her tilføjes review objektet til firestore med addDoc.
+  // Samtidig opdateres reviewet med sit eget id gennem updateReviewWithId funktionen
   const addReview = async (review) => {
     try {
       const reviewData = await addDoc(collection(db, `reviews/${imdbid}/reviews`), review);
@@ -142,6 +113,8 @@ function SingleMovieOverview() {
     }
   };
 
+  // Her indsættes review id'et til review objektet
+  // Dette skal bruges til at slette et review og i en videreudviklet version, redigere reviewet.
   const updateReviewWithId = async (reviewId) => {
     try {
       const reviewRef = doc(db, `reviews/${imdbid}/reviews/${reviewId}`);
@@ -154,10 +127,13 @@ function SingleMovieOverview() {
     }
   };
 
+  // Bruges til at opdatere userRating state, så vi adgang til den.
   const ratingChanged = (newRating) => {
     setUserRating(newRating);
   };
 
+  // Bruges til at slette en anmeldelse. Kører getReviews bagefter.
+  // En anmeldelse kan kun slettes hvis den findes og brugeren selv har lavet den.
   const handleDeleteReview = async (review) => {
     if (review?.id && review?.userName === getAuth().currentUser.displayName) {
       await deleteDoc(doc(db, `reviews/${imdbid}/reviews/${review.id}`));
@@ -186,6 +162,7 @@ function SingleMovieOverview() {
     }
   };
 
+  // Herunder bruger vi data staticMovies til at vise indhold på siden.
   return (
     <>
       <Backbutton />
@@ -277,21 +254,9 @@ function SingleMovieOverview() {
                       <div>
                         <form onSubmit={handleAddReview}>
                           <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
-                          <textarea
-                            name="reviewInput"
-                            id="reviewInput"
-                            placeholder="What did you think of the movie?"
-                            value={userReview}
-                            onChange={(e) => setUserReview(e.target.value)}
-                          />
+                          <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                           <div>
-                            <input
-                              type="checkbox"
-                              id="spoiler-checkbox"
-                              className="checkbox"
-                              value={containsSpoilers}
-                              onChange={(e) => setContainsSpoilers(e.target.value)}
-                            />
+                            <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
                             <label htmlFor="spoiler-checkbox">Contains spoilers</label>
                           </div>
 
@@ -314,14 +279,9 @@ function SingleMovieOverview() {
                               </div>
                               <ReviewStars size={30} rating={review.rating} edit={false} />
                               <div className="spoiler-warning">
-                                {review.spoilers && !spoilerVisibility[key] ? (
-                                  <p className="spoiler">Warning: contains spoilers</p>
-                                ) : (
-                                  <p>{review.userReview}</p>
-                                )}
+                                {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
                                 <button onClick={() => handleShowReview(key)}>
-                                  {!spoilerVisibility[key] ? "Read review" : "Hide review"}{" "}
-                                  <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
+                                  {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
                                 </button>
                               </div>
                             </div>
@@ -352,16 +312,7 @@ function SingleMovieOverview() {
                   scrollerTitle="More like this"
                   content={staticMovies.movies.map((movie, key) => {
                     if (key <= 10) {
-                      return (
-                        <MovieCard
-                          key={key}
-                          id={movie.imdb_id}
-                          title={movie.title}
-                          url={movie.poster_image}
-                          rating={movie.rating.toPrecision(2)}
-                          icon={"fa-solid fa-plus"}
-                        />
-                      );
+                      return <MovieCard key={key} id={movie.imdb_id} title={movie.title} url={movie.poster_image} rating={movie.rating.toPrecision(2)} icon={"fa-solid fa-plus"} />;
                     }
                   })}
                 />

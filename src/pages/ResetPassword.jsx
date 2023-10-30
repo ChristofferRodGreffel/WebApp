@@ -14,6 +14,8 @@ const ResetPassword = () => {
 
   const formRef = useRef(null);
 
+  // Bruges til at sende brugeren en email med reset link
+  // Benytter firebase's indbyggede sendPasswordResetEmail funktion
   const handleResetPassword = (e) => {
     e.preventDefault();
 
@@ -33,7 +35,6 @@ const ResetPassword = () => {
           theme: "dark",
         });
         formRef.current?.reset();
-
       })
       .catch((error) => {
         const errorCode = error.code;

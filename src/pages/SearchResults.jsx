@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import HorizontalScroller from "../Components/HorizontalScroller";
 import MovieCard from "../Components/MovieCard";
 import Backbutton from "../Components/Backbutton";
 import { CircleLoader } from "react-spinners";
 import SearchField from "../Components/SearchField";
 
+// Denne komponent er udviklet fælles i gruppen
+
+// Komponenten tager filmid med fra søgefeltet og henter data fra TMDB api'en.
 const SearchResults = () => {
   const { searchParam } = useParams();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Denne useEffect henter data fra api'en og sætter resultatet i searchResults useState.
+  // Den kører når searchParam, hvilket er brugerens søgeord, ændrer sig.
   useEffect(() => {
     const getAllResults = async () => {
       setLoading(true);
@@ -29,7 +33,6 @@ const SearchResults = () => {
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data.results);
-          console.log(data.results);
           setLoading(false);
         } else {
           console.error("Error fetching data");
@@ -41,10 +44,13 @@ const SearchResults = () => {
     getAllResults();
   }, [searchParam]);
 
+  // Denne funktion fører brugeren videre til overview siden, når der klikkes på et filmkort.
   const handleOpenSearchOverview = (id) => {
     navigate(`/searchoverview/${id}`);
   };
 
+  // Denne funktion bruges til at udfiltrere film uden billede og rating
+  // Bliver brugt til at vise mængden af søgeresultater
   const correctedResults = () => {
     const adjustedResults = [];
     searchResults.map((result) => {
@@ -76,6 +82,7 @@ const SearchResults = () => {
           <>
             {searchResults.map((result, key) => {
               if (result.poster_path && result.vote_average) {
+                // Resultater uden billede eller rating sorteres fra
                 return (
                   <div key={key}>
                     <div className="movie-result">

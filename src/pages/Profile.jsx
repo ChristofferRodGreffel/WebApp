@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+// Denne komponent er udviklet fælles i gruppen
+
 const Profile = () => {
   const userName = FIREBASE_AUTH.currentUser?.displayName;
   const navigate = useNavigate();
