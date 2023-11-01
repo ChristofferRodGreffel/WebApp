@@ -604,7 +604,10 @@ nav a i {
   gap: 1rem;
 }
 .dots-list {
+  width: 90%;
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
 }
 .dots-list div {
   display: flex;
