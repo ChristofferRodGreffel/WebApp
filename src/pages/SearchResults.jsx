@@ -4,6 +4,7 @@ import MovieCard from "../Components/MovieCard";
 import Backbutton from "../Components/Backbutton";
 import { CircleLoader } from "react-spinners";
 import SearchField from "../Components/SearchField";
+import AddToList from "../Components/AddToList";
 
 // Denne komponent er udviklet fælles i gruppen
 
@@ -12,6 +13,7 @@ const SearchResults = () => {
   const { searchParam } = useParams();
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const navigate = useNavigate();
 
   // Denne useEffect henter data fra api'en og sætter resultatet i searchResults useState.
@@ -28,7 +30,7 @@ const SearchResults = () => {
       };
 
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchParam}&include_adult=false&language=en-US&page=1`, options);
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${searchParam}&include_adult=false&language=en-US&page=1&region=europe`, options);
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data.results);
@@ -60,15 +62,22 @@ const SearchResults = () => {
     return adjustedResults;
   };
 
+  // Denne funktion sætter vores useState til den valgte film
+  // (funtion gives videre i MovieCard komponenten som onAddClick)
+  const handleAddClick = (movie) => {
+    setSelectedMovie(movie);
+  };
+
   return (
     <div className="search-results">
+      <AddToList movie={selectedMovie} />
       <Backbutton />
       <div className="search-intro">
         <h1>Search Results</h1>
         <p>
           You searched for: <b>{searchParam}</b>
           <br />
-          {correctedResults()?.length} results found
+          {!loading && <>{correctedResults()?.length} results found</>}
         </p>
       </div>
       <div className="results-container">
@@ -82,18 +91,35 @@ const SearchResults = () => {
               <>
                 {searchResults.map((result, key) => {
                   if (result.poster_path && result.vote_average) {
+                    const movie = {
+                      title: result.title,
+                      imdb_id: result.id,
+                    };
                     // Resultater uden billede eller rating sorteres fra
                     return (
                       <div key={key}>
                         <div className="movie-result">
-                          <MovieCard
-                            onClick={handleOpenSearchOverview}
-                            key={key}
-                            id={result.id}
-                            url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
-                            rating={result.vote_average.toPrecision(2)}
-                            icon={"fa-solid fa-plus"}
-                          />
+                          {loading ? (
+                            <>
+                              <div className="loader">
+                                <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <MovieCard
+                                onClick={handleOpenSearchOverview}
+                                onAddClick={handleAddClick}
+                                key={key}
+                                movie={movie}
+                                id={result.id}
+                                url={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
+                                rating={result.vote_average.toPrecision(2)}
+                                icon={"fa-solid fa-plus"}
+                              />
+                            </>
+                          )}
+
                           <div className="movie-description">
                             <h3>{result.title}</h3>
                             <p>

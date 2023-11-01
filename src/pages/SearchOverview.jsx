@@ -170,11 +170,12 @@ const SearchOverview = () => {
       };
 
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar&language=en-US`, options);
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar,recommendations&language=en-US`, options);
         if (response.ok) {
           const data = await response.json();
           setMovieDetails(data);
           getServices(data.id);
+          console.log(data);
           setImdbId(data.imdb_id);
           setLoading(false);
         } else {
@@ -233,6 +234,7 @@ const SearchOverview = () => {
 
   const movie = {
     title: movieDetails.title,
+    imdb_id: movieDetails.id,
   };
 
   const handleOpenAddToList = () => {
@@ -268,7 +270,7 @@ const SearchOverview = () => {
                       <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="IMDb logo" />
                       <p>{movieDetails.vote_average?.toPrecision(2)}</p>
                     </div>
-                    <Link className="trailer" to={trailerVideo ? `https://www.youtube.com/watch?v=${trailerVideo.key}` : ""} target="_blank">
+                    <Link className="trailer" to={trailerVideo && `https://www.youtube.com/watch?v=${trailerVideo.key}`} target="_blank">
                       Trailer
                     </Link>
                   </div>
@@ -293,32 +295,71 @@ const SearchOverview = () => {
                 <button className="addToList-btn" onClick={handleOpenAddToList}>
                   Add to list <i className="fa-solid fa-plus"></i>
                 </button>
-                <div className="services">
-                  <h2>Available on</h2>
-                  <div className="dots-list services">
-                    {streamingServices?.flatrate ? (
-                      <>
-                        {streamingServices?.flatrate?.map((service, key) => {
-                          return (
-                            <div key={key}>
-                              <img src={`https://image.tmdb.org/t/p/original/${service.logo_path}`} alt={`${service.provider_name} icon`} />
-                              <p>{service.provider_name}</p>
-                            </div>
-                          );
-                        })}
-                      </>
-                    ) : (
-                      <p>No data...</p>
-                    )}
-                  </div>
-                </div>
+                {streamingServices?.flatrate && (
+                  <>
+                    <div className="services-container">
+                      <h2>Streaming on</h2>
+                      <div className="services">
+                        <>
+                          {streamingServices?.flatrate?.map((service, key) => {
+                            return (
+                              <div key={key}>
+                                <img src={`https://image.tmdb.org/t/p/original/${service.logo_path}`} alt={`${service.provider_name} icon`} />
+                                <p>{service.provider_name}</p>
+                              </div>
+                            );
+                          })}
+                        </>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {streamingServices?.rent && (
+                  <>
+                    <div className="services-container">
+                      <h2>Rent on</h2>
+                      <div className="services">
+                        <>
+                          {streamingServices?.rent?.map((service, key) => {
+                            return (
+                              <div key={key}>
+                                <img src={`https://image.tmdb.org/t/p/original/${service.logo_path}`} alt={`${service.provider_name} icon`} />
+                                <p>{service.provider_name}</p>
+                              </div>
+                            );
+                          })}
+                        </>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {streamingServices?.buy && (
+                  <>
+                    <div className="services-container">
+                      <h2>Buy on</h2>
+                      <div className="services">
+                        <>
+                          {streamingServices?.buy?.map((service, key) => {
+                            return (
+                              <div key={key}>
+                                <img src={`https://image.tmdb.org/t/p/original/${service.logo_path}`} alt={`${service.provider_name} icon`} />
+                                <p>{service.provider_name}</p>
+                              </div>
+                            );
+                          })}
+                        </>
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <div className="language">
                   <h2>Languages </h2>
-                  <div>
+                  <ul>
                     {movieDetails?.spoken_languages?.map((lang, key) => {
-                      return <p key={key}>{lang.english_name}</p>;
+                      return <li key={key}>{lang.english_name}</li>;
                     })}
-                  </div>
+                  </ul>
                 </div>
                 <div className="movie-about">
                   <h2>About the movie</h2>
@@ -406,8 +447,8 @@ const SearchOverview = () => {
             </div>
             <div className="movie-recommended">
               <HorizontalScroller
-                scrollerTitle="More like this"
-                content={movieDetails.similar?.results?.map((movie, key) => {
+                scrollerTitle="Recommendations"
+                content={movieDetails.recommendations?.results?.map((movie, key) => {
                   if (movie.poster_path && movie.vote_average) {
                     return (
                       <MovieCard

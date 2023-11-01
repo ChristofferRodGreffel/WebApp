@@ -103,7 +103,7 @@ const CreateNewList = (props) => {
         <div className="addNewList">
           <form onSubmit={handleCreateList}>
             <label htmlFor="listName">What is the name of the list</label>
-            <input type="text" id="listName" placeholder="Add a list name" required value={listName} onChange={(e) => setListName(e.target.value)} />
+            <input type="text" id="listName" placeholder="Add a list name" maxLength={30} required value={listName} onChange={(e) => setListName(e.target.value)} />
             <label htmlFor="sharedWith">Would you like to share the list?</label>
             <UserSelection selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
             <button type="submit">Add new list</button>

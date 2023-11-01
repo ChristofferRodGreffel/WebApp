@@ -78,6 +78,9 @@ a {
 }
 
 .loader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   z-index: 1000;
   align-items: center;
 }
@@ -621,17 +624,65 @@ nav a i {
 }
 
 .services {
-  gap: 1.5rem;
+  display: flex;
+  justify-content: left;
+  gap: 1rem;
+  row-gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.services img {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+}
+.services-container > div {
+  width: 100% !important;
+  text-align: center;
+}
+.services div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: 50px;
 }
 .services p {
   font-size: 11px;
 }
+
+.singlemovie-services {
+  display: flex;
+  flex-direction: column;
+}
+.singlemovie-service {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.singlemovie-service div {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+}
+.singlemovie-service div img {
+  width: 40px;
+  height: 40px;
+}
+.singlemovie-service div p {
+  font-size: 11px;
+}
+
 .fa-circle {
   font-size: 5px;
 }
 
 .language p {
   font-size: 14px;
+}
+.language ul li {
+  list-style-position: inside;
 }
 .addToList {
   z-index: 1000;

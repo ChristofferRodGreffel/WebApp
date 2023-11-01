@@ -28,14 +28,14 @@ const SearchBar = () => {
       <div className="search-buttons">
         <button
           onClick={() => {
-            navigate("/mylists");
+            navigate("/mylistsapi");
           }}
         >
           My lists
         </button>
         <button
           onClick={() => {
-            navigate("/sharedlists");
+            navigate("/sharedlistsapi");
           }}
         >
           Shared lists

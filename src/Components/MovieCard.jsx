@@ -23,7 +23,9 @@ function MovieCard(props, { key }) {
   // Åbner addToList popup.
   const handleOpen = (e) => {
     e.stopPropagation();
-    props.onAddClick(props.movie); // onAddClick er videregivet fra Home.jsx, funktion ligger der.
+    if (props.onAddClick) {
+      props.onAddClick(props.movie); // onAddClick er videregivet fra Home.jsx, funktion ligger der.
+    }
     const popup = document.querySelector(".addToList");
     const body = document.querySelector("body");
     body.style.overflowY = "hidden";

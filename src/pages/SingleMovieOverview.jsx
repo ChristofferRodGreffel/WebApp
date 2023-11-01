@@ -206,9 +206,9 @@ function SingleMovieOverview() {
                   <button className="addToList-btn">
                     Add to list <i className="fa-solid fa-plus"></i>
                   </button>
-                  <div className="services">
+                  <div className="singlemovie-services">
                     <h2>Available on</h2>
-                    <div className="dots-list services">
+                    <div className="singlemovie-service">
                       {movie.service.map((service, key) => {
                         return (
                           <div key={key}>

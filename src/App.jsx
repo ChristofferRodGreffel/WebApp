@@ -19,6 +19,8 @@ import SearchOverview from "./pages/SearchOverview";
 import SearchResults from "./pages/SearchResults";
 import About from "./pages/About";
 import Points from "./pages/Points";
+import MyListsApi from "./pages/MyListsApi";
+import SharedListsApi from "./pages/SharedListsApi";
 
 function App() {
   const [user, setUser] = useState("");
@@ -57,6 +59,8 @@ function App() {
         <Route path="/searchoverview/:movieId" element={<SearchOverview />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/mylists" element={<MyLists />} />
+        <Route path="/mylistsapi" element={<MyListsApi />} />
+        <Route path="/sharedlistsapi" element={<SharedListsApi />} />
         <Route path="/sharedlists" element={<SharedLists />} />
         <Route path="/points" element={<Points />} />
         <Route path="/*" element={<SignIn />} />
