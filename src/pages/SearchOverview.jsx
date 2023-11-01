@@ -158,7 +158,6 @@ const SearchOverview = () => {
   // Hvis data findes opdaterer vi samtlige useStates.
   useEffect(() => {
     const getMovieDetails = async () => {
-      setLoading(true);
       setMovieDetails([]);
       const options = {
         method: "GET",
@@ -175,7 +174,6 @@ const SearchOverview = () => {
           const data = await response.json();
           setMovieDetails(data);
           getServices(data.id);
-          console.log(data);
           setImdbId(data.imdb_id);
           setLoading(false);
         } else {
@@ -295,6 +293,14 @@ const SearchOverview = () => {
                 <button className="addToList-btn" onClick={handleOpenAddToList}>
                   Add to list <i className="fa-solid fa-plus"></i>
                 </button>
+                {!streamingServices?.flatrate && !streamingServices?.rent && !streamingServices?.buy && (
+                  <div className="services-container">
+                    <h2>Where to watch?</h2>
+                    <div className="services">
+                      <p>We're sorry... We don't have that data yet...</p>
+                    </div>
+                  </div>
+                )}
                 {streamingServices?.flatrate && (
                   <>
                     <div className="services-container">
@@ -445,26 +451,30 @@ const SearchOverview = () => {
                 </div>
               </div>
             </div>
-            <div className="movie-recommended">
-              <HorizontalScroller
-                scrollerTitle="Recommendations"
-                content={movieDetails.recommendations?.results?.map((movie, key) => {
-                  if (movie.poster_path && movie.vote_average) {
-                    return (
-                      <MovieCard
-                        onClick={handleOpenSearchOverview}
-                        key={key}
-                        id={movie.id}
-                        title={movie.title}
-                        url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                        rating={movie.vote_average.toPrecision(2)}
-                        icon={"fa-solid fa-plus"}
-                      />
-                    );
-                  }
-                })}
-              />
-            </div>
+            {movieDetails.recommendations?.results?.length != 0 && (
+              <>
+                <div className="movie-recommended">
+                  <HorizontalScroller
+                    scrollerTitle="Recommendations"
+                    content={movieDetails.recommendations?.results?.map((movie, key) => {
+                      if (movie.poster_path && movie.vote_average) {
+                        return (
+                          <MovieCard
+                            onClick={handleOpenSearchOverview}
+                            key={key}
+                            id={movie.id}
+                            title={movie.title}
+                            url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                            rating={movie.vote_average.toPrecision(2)}
+                            icon={"fa-solid fa-plus"}
+                          />
+                        );
+                      }
+                    })}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </>
       )}

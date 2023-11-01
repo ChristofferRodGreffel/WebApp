@@ -102,7 +102,6 @@ const MyListsApi = () => {
       if (response.ok) {
         const data = await response.json();
         newMovies.push(data);
-        setLoading(false);
       } else {
         console.error("Error fetching data");
       }
@@ -204,7 +203,7 @@ const MyListsApi = () => {
                     );
                   } else {
                     return (
-                      <div className="scroller-container">
+                      <div className="scroller-container" key={key}>
                         <HorizontalScroller
                           handleDeleteList={handleDeleteList}
                           list={list}

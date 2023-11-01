@@ -63,7 +63,7 @@ function MovieCard(props, { key }) {
 
         <div className="moviecardRatingContainer">
           <i className="fa-solid fa-star"></i>
-          <p>{props.rating}</p>
+          {props.rating > 0 ? <p>{props.rating}</p> : <p>Not rated</p>}
         </div>
 
         {/* Skifter mellem add og remove icon, samt ændrer class som er stylet forskelligt. */}
