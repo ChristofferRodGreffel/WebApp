@@ -232,7 +232,7 @@ const SearchOverview = () => {
 
   const movie = {
     title: movieDetails.title,
-    imdb_id: movieDetails.id,
+    id: movieDetails.id,
   };
 
   const handleOpenAddToList = () => {
@@ -266,7 +266,7 @@ const SearchOverview = () => {
                   <div className="first-line-left">
                     <div className="rating tmdb">
                       <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="IMDb logo" />
-                      <p>{movieDetails.vote_average?.toPrecision(2)}</p>
+                      {movieDetails.vote_average > 0 ? <p>{movieDetails.vote_average?.toPrecision(2)}</p> : <p>Not rated</p>}
                     </div>
                     <Link className="trailer" to={trailerVideo && `https://www.youtube.com/watch?v=${trailerVideo.key}`} target="_blank">
                       Trailer

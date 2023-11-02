@@ -84,7 +84,7 @@ const AddToList = (props) => {
     // Hvis filmen allerede er i listen, får brugeren en besked om det.
     personalLists.forEach((list) => {
       if (list.listDocId === listId) {
-        if (list.movies.includes(props.movie.imdb_id)) {
+        if (list.movies.includes(props.movie.id)) {
           toast.info(`${props.movie.title} already in ${list.listName}`, {
             position: "top-right",
             autoClose: 1500,
@@ -102,7 +102,7 @@ const AddToList = (props) => {
     // Hvis filmen allerede er i listen, får brugeren en besked om det.
     sharedLists.forEach((list) => {
       if (list.listDocId === listId) {
-        if (list.movies.includes(props.movie.imdb_id)) {
+        if (list.movies.includes(props.movie.id)) {
           toast.info(`${props.movie.title} already in ${list.listName}`, {
             position: "top-right",
             autoClose: 1500,
@@ -119,7 +119,7 @@ const AddToList = (props) => {
 
     // Går ind i movies array i listen og tilføjer filmen og giver brugeren besked efterfølgende.
     await updateDoc(listRef, {
-      movies: arrayUnion(props.movie.imdb_id),
+      movies: arrayUnion(props.movie.id),
     });
     toast.success(`${props.movie.title} added to list(s)`, {
       position: "top-right",
@@ -156,9 +156,9 @@ const AddToList = (props) => {
               <>
                 {personalLists?.map((list, key) => {
                   return (
-                    <div key={key}>
-                      <label htmlFor={key}>{list.listName}</label>
-                      <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
+                    <div key={list.listDocId}>
+                      <label htmlFor={list.listDocId}>{list.listName}</label>
+                      <input type="checkbox" className="list-personal-checkbox" id={list.listDocId} value={list.listDocId} />
                     </div>
                   );
                 })}
@@ -175,9 +175,9 @@ const AddToList = (props) => {
               <>
                 {sharedLists?.map((list, key) => {
                   return (
-                    <div key={key}>
-                      <label htmlFor={key}>{list.listName}</label>
-                      <input type="checkbox" className="list-personal-checkbox" id={key} value={list.listDocId} />
+                    <div key={list.listDocId}>
+                      <label htmlFor={list.listDocId}>{list.listName}</label>
+                      <input type="checkbox" className="list-personal-checkbox" id={list.listDocId} value={list.listDocId} />
                     </div>
                   );
                 })}

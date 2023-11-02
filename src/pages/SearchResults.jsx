@@ -93,7 +93,7 @@ const SearchResults = () => {
                   if (result.poster_path && result.vote_average) {
                     const movie = {
                       title: result.title,
-                      imdb_id: result.id,
+                      id: result.id,
                     };
                     // Resultater uden billede eller rating sorteres fra
                     return (
