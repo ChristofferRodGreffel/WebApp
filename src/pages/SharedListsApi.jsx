@@ -118,7 +118,6 @@ const SharedListsApi = () => {
 
   const handleDeleteList = async (list) => {
     const userRef = doc(db, "users", userName);
-    console.log(list);
 
     // Sletter listen fra "lists" kollektionen i firestore
     await deleteDoc(doc(db, "lists", list.listDocId));
@@ -134,6 +133,34 @@ const SharedListsApi = () => {
       await updateDoc(sharedUserRef, {
         listsAccess: arrayRemove(list.listDocId),
       });
+    });
+
+    toast.success(`${list.listName} removed succesfully`, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+    getAllLists();
+  };
+
+  // Sletter brugerens adgang til listen, ved at opdatere listAccess
+  const handleLeaveList = async (list) => {
+    const userRef = doc(db, "users", userName);
+    const listRef = doc(db, "lists", list.listDocId);
+
+    // Sletter listen fra "listsAccess" kollektionen i firestore
+    await updateDoc(userRef, {
+      listsAccess: arrayRemove(list.listDocId),
+    });
+
+    // Sletter brugeren fra sharedWith under listen i firestore
+    await updateDoc(listRef, {
+      sharedWith: arrayRemove(userName),
     });
 
     toast.success(`${list.listName} removed succesfully`, {
@@ -181,6 +208,7 @@ const SharedListsApi = () => {
                       <div className="scroller-container" key={key}>
                         <HorizontalScroller
                           handleDeleteList={handleDeleteList}
+                          handleLeaveList={handleLeaveList}
                           list={list}
                           delete="Delete list"
                           edit="Edit list"
@@ -214,6 +242,7 @@ const SharedListsApi = () => {
                       <div className="scroller-container">
                         <HorizontalScroller
                           handleDeleteList={handleDeleteList}
+                          handleLeaveList={handleLeaveList}
                           list={list}
                           key={key}
                           delete="Delete list"

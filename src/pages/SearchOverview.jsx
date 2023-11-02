@@ -16,7 +16,6 @@ import AddToList from "../Components/AddToList";
 
 const SearchOverview = () => {
   const { movieId } = useParams();
-  const [imdbId, setImdbId] = useState("");
   const [movieDetails, setMovieDetails] = useState({});
   const [streamingServices, setStreamingServices] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -34,7 +33,7 @@ const SearchOverview = () => {
   const getReviews = async () => {
     setReviews([]);
     const newReviews = [];
-    const querySnapshot = await getDocs(collection(db, `reviews/${imdbId}/reviews`));
+    const querySnapshot = await getDocs(collection(db, `reviews/${movieId}/reviews`));
     if (querySnapshot) {
       querySnapshot.forEach((doc) => {
         newReviews.push(doc.data());
@@ -69,10 +68,10 @@ const SearchOverview = () => {
   // Samtidig opdateres reviewet med sit eget id gennem updateReviewWithId funktionen
   const addReview = async (review) => {
     try {
-      const reviewData = await addDoc(collection(db, `reviews/${imdbId}/reviews`), review);
+      const reviewData = await addDoc(collection(db, `reviews/${movieId}/reviews`), review);
       const reviewId = reviewData.id;
 
-      updateReviewWithId(reviewId);
+      await updateReviewWithId(reviewId);
 
       getReviews();
 
@@ -89,7 +88,8 @@ const SearchOverview = () => {
 
       setUserRating(NaN);
       setUserReview("");
-      setContainsSpoilers(false);
+      const spoilerCheckbox = document.querySelector("#spoiler-checkbox");
+      spoilerCheckbox.checked = false;
     } catch (e) {
       console.error("Error adding review: ", e);
     }
@@ -99,7 +99,7 @@ const SearchOverview = () => {
   // Dette skal bruges til at slette et review og i en videreudviklet version, redigere reviewet.
   const updateReviewWithId = async (reviewId) => {
     try {
-      const reviewRef = doc(db, `reviews/${imdbId}/reviews/${reviewId}`);
+      const reviewRef = doc(db, `reviews/${movieId}/reviews/${reviewId}`);
 
       await updateDoc(reviewRef, {
         id: reviewId,
@@ -117,8 +117,9 @@ const SearchOverview = () => {
   // Bruges til at slette en anmeldelse. Kører getReviews bagefter.
   // En anmeldelse kan kun slettes hvis den findes og brugeren selv har lavet den.
   const handleDeleteReview = async (review) => {
-    if (review?.id && review?.userName === getAuth()?.currentUser.displayName) {
-      await deleteDoc(doc(db, `reviews/${imdbId}/reviews/${review.id}`));
+    console.log(review);
+    if (review?.id && review?.userName === getAuth()?.currentUser?.displayName) {
+      await deleteDoc(doc(db, `reviews/${movieId}/reviews/${review.id}`));
       toast.success(`Review removed succesfully`, {
         position: "top-right",
         autoClose: 1500,
@@ -144,13 +145,12 @@ const SearchOverview = () => {
     }
   };
 
-  // Når man først går ind på siden indlæses alle reviews, dog først når vi har adgang til imdbId
-  // ImdbId hentes inde i getMovieDetails.
+  // Når man først går ind på siden indlæses alle reviews, dog først når vi har adgang til movieId
   useEffect(() => {
-    if (imdbId) {
+    if (movieId) {
       getReviews();
     }
-  }, [imdbId]);
+  }, [movieId]);
   // End of review handling
 
   // Henter information om filmen fra TMDB api'en ud fra det filmId som hører til den film brugeren har klikket på.
@@ -169,12 +169,12 @@ const SearchOverview = () => {
       };
 
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar,recommendations&language=en-US`, options);
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar,recommendations,reviews&language=en-US`, options);
         if (response.ok) {
           const data = await response.json();
           setMovieDetails(data);
           getServices(data.id);
-          setImdbId(data.imdb_id);
+          console.log(data); // REMOVE THIS LOG AT SOME POIINT
           setLoading(false);
         } else {
           console.error("Error fetching data");
@@ -398,7 +398,7 @@ const SearchOverview = () => {
                     <div>
                       <form onSubmit={handleAddReview}>
                         <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
-                        <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" value={userReview} onChange={(e) => setUserReview(e.target.value)} />
+                        <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" required value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                         <div>
                           <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
                           <label htmlFor="spoiler-checkbox">Contains spoilers</label>
@@ -408,44 +408,78 @@ const SearchOverview = () => {
                       </form>
                     </div>
                     <div className="reviews-container">
-                      {reviews?.map((review, key) => {
-                        return review.spoilers ? (
-                          <div className="user-review" key={key}>
-                            <div className="review-title">
-                              {review.userName === getAuth().currentUser.displayName ? (
-                                <>
-                                  <h3>{review.userName}</h3>
-                                  <p onClick={() => handleDeleteReview(review)}>Delete</p>
-                                </>
+                      <div className="justWatch-reviews">
+                        <h2>JustWatch Reviews</h2>
+                        <hr />
+                        {reviews.length > 0 ? (
+                          <>
+                            {reviews?.map((review, key) => {
+                              return review.spoilers ? (
+                                <div className="user-review" key={key}>
+                                  <div className="review-title">
+                                    {review.userName === getAuth().currentUser.displayName ? (
+                                      <>
+                                        <h3>{review.userName}</h3>
+                                        <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                                      </>
+                                    ) : (
+                                      <h3>{review.userName}</h3>
+                                    )}
+                                  </div>
+                                  <ReviewStars size={30} rating={review.rating} edit={false} />
+                                  <div className="spoiler-warning">
+                                    {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p className="review-content">{review.userReview}</p>}
+                                    <button onClick={() => handleShowReview(key)}>
+                                      {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
+                                    </button>
+                                  </div>
+                                </div>
                               ) : (
-                                <h3>{review.userName}</h3>
-                              )}
-                            </div>
-                            <ReviewStars size={30} rating={review.rating} edit={false} />
-                            <div className="spoiler-warning">
-                              {review.spoilers && !spoilerVisibility[key] ? <p className="spoiler">Warning: contains spoilers</p> : <p>{review.userReview}</p>}
-                              <button onClick={() => handleShowReview(key)}>
-                                {!spoilerVisibility[key] ? "Read review" : "Hide review"} <i className={`fa-solid fa-angle-${spoilerVisibility[key] ? "up" : "down"}`}></i>
-                              </button>
-                            </div>
-                          </div>
+                                <div className="user-review" key={key}>
+                                  <div className="review-title">
+                                    {review.userName === getAuth().currentUser.displayName ? (
+                                      <>
+                                        <h3>{review.userName}</h3>
+                                        <p onClick={() => handleDeleteReview(review)}>Delete</p>
+                                      </>
+                                    ) : (
+                                      <h3>{review.userName}</h3>
+                                    )}
+                                  </div>
+                                  <ReviewStars size={30} rating={review.rating} edit={false} />
+                                  <p className="review-content">{review.userReview}</p>
+                                </div>
+                              );
+                            })}
+                          </>
                         ) : (
-                          <div className="user-review" key={key}>
-                            <div className="review-title">
-                              {review.userName === getAuth().currentUser.displayName ? (
-                                <>
-                                  <h3>{review.userName}</h3>
-                                  <p onClick={() => handleDeleteReview(review)}>Delete</p>
-                                </>
-                              ) : (
-                                <h3>{review.userName}</h3>
-                              )}
-                            </div>
-                            <ReviewStars size={30} rating={review.rating} edit={false} />
-                            <p>{review.userReview}</p>
+                          <p>Be the first to review this movie on JustWatch!</p>
+                        )}
+                      </div>
+                      <div className="tmdb-reviews">
+                        <h2>TMDB Reviews</h2>
+                        <hr />
+                        {movieDetails.reviews && (
+                          <div className="tmdb-reviews-container">
+                            {movieDetails.reviews.results.map((review, key) => {
+                              if (review.content.length < 800) {
+                                return (
+                                  <div className="user-review" key={key}>
+                                    <div className="review-title">
+                                      <h3>{review.author}</h3>
+                                    </div>
+                                    <div className="rating tmdb">
+                                      <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="IMDb logo" />
+                                      {review.author_details.rating?.toPrecision(2)}
+                                    </div>
+                                    <p className="review-content">{review.content}</p>
+                                  </div>
+                                );
+                              }
+                            })}
                           </div>
-                        );
-                      })}
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
