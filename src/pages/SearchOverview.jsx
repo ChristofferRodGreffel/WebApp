@@ -412,7 +412,7 @@ const SearchOverview = () => {
                         return review.spoilers ? (
                           <div className="user-review" key={key}>
                             <div className="review-title">
-                              {review.userName === getAuth().currentUser.displayName ? (
+                              {review.userName === getAuth().currentUser?.displayName ? (
                                 <>
                                   <h3>{review.userName}</h3>
                                   <p onClick={() => handleDeleteReview(review)}>Delete</p>
