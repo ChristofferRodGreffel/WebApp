@@ -844,6 +844,10 @@ nav a i {
   font-weight: 500;
   background-color: var(--purple);
 }
+.no-reviews {
+  font-style: italic;
+  font-size: 13px;
+}
 
 /* TMDB user reviews */
 .tmdb-reviews h3 {

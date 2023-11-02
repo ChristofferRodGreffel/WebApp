@@ -453,16 +453,16 @@ const SearchOverview = () => {
                             })}
                           </>
                         ) : (
-                          <p>Be the first to review this movie on JustWatch!</p>
+                          <p className="no-reviews">Be the first to review this movie on JustWatch!</p>
                         )}
                       </div>
-                      <div className="tmdb-reviews">
-                        <h2>TMDB Reviews</h2>
-                        <hr />
-                        {movieDetails.reviews && (
+                      {movieDetails.reviews?.results?.length > 0 && (
+                        <div className="tmdb-reviews">
+                          <h2>TMDB Reviews</h2>
+                          <hr />
                           <div className="tmdb-reviews-container">
                             {movieDetails.reviews.results.map((review, key) => {
-                              if (review.content.length < 800) {
+                              if (review.content.length < 800 && review.author_details.rating) {
                                 return (
                                   <div className="user-review" key={key}>
                                     <div className="review-title">
@@ -470,7 +470,9 @@ const SearchOverview = () => {
                                     </div>
                                     <div className="rating tmdb">
                                       <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="IMDb logo" />
-                                      {review.author_details.rating?.toPrecision(2)}
+                                      <p>
+                                        <b>{review.author_details.rating?.toPrecision(2)}</b>
+                                      </p>
                                     </div>
                                     <p className="review-content">{review.content}</p>
                                   </div>
@@ -478,8 +480,8 @@ const SearchOverview = () => {
                               }
                             })}
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
