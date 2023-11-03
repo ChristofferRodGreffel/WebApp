@@ -88,6 +88,7 @@ const SearchOverview = () => {
 
       setUserRating(NaN);
       setUserReview("");
+      setContainsSpoilers(false);
       const spoilerCheckbox = document.querySelector("#spoiler-checkbox");
       spoilerCheckbox.checked = false;
     } catch (e) {
@@ -174,7 +175,6 @@ const SearchOverview = () => {
           const data = await response.json();
           setMovieDetails(data);
           getServices(data.id);
-          console.log(data); // REMOVE THIS LOG AT SOME POIINT
           setLoading(false);
         } else {
           console.error("Error fetching data");
@@ -400,7 +400,7 @@ const SearchOverview = () => {
                         <ReviewStars size={35} changed={ratingChanged} rating={userRating} />
                         <textarea name="reviewInput" id="reviewInput" placeholder="What did you think of the movie?" required value={userReview} onChange={(e) => setUserReview(e.target.value)} />
                         <div>
-                          <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.value)} />
+                          <input type="checkbox" id="spoiler-checkbox" className="checkbox" value={containsSpoilers} onChange={(e) => setContainsSpoilers(e.target.checked)} />
                           <label htmlFor="spoiler-checkbox">Contains spoilers</label>
                         </div>
 
@@ -409,7 +409,7 @@ const SearchOverview = () => {
                     </div>
                     <div className="reviews-container">
                       <div className="justWatch-reviews">
-                        <h2>JustWatch Reviews</h2>
+                        <h2>WatchBuddy Reviews</h2>
                         <hr />
                         {reviews.length > 0 ? (
                           <>
@@ -453,7 +453,7 @@ const SearchOverview = () => {
                             })}
                           </>
                         ) : (
-                          <p className="no-reviews">Be the first to review this movie on JustWatch!</p>
+                          <p className="no-reviews">Be the first to review this movie on WatchBuddy!</p>
                         )}
                       </div>
                       {movieDetails.reviews?.results?.length > 0 && (

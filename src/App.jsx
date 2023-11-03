@@ -54,16 +54,13 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset" element={<ResetPassword />} />
-        <Route path="/overview/:imdbid" element={<SingleMovieOverview />} />
         <Route path="/searchresults/:searchParam" element={<SearchResults />} />
         <Route path="/searchoverview/:movieId" element={<SearchOverview />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/mylists" element={<MyLists />} />
         <Route path="/mylistsapi" element={<MyListsApi />} />
         <Route path="/sharedlistsapi" element={<SharedListsApi />} />
-        <Route path="/sharedlists" element={<SharedLists />} />
         <Route path="/points" element={<Points />} />
-        <Route path="/*" element={<SignIn />} />
+        <Route path="*" element={<SignIn />} />
         <Route path="/about" element={<About />} />
         {user && <Route path="/home" element={<Home />} />}
       </Routes>
