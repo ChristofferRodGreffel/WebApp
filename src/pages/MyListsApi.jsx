@@ -67,21 +67,32 @@ const MyListsApi = () => {
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
-    setLoading(false);
   };
 
-  // Denne useEffect bruges til at køre funktionen 'fetchMovies'. Denne funktion
+  // Denne useEffect nedenfor bruges til at køre funktionen 'fetchMovies'. Denne funktion
   // laver et API kald for hver movieId, der findes i listerne og fylder allApiMovies
   // med vores film objekter.
+
+  // Her opsætter vi vores throttle variabler, dissse bruges til at styre hvor mange API
+  // kald vi max. kan lave per sekund.
+  const maxRequestsPerSecond = 50; // API rate limit
+  const millisecondsPerSecond = 1000;
+  const requestDelay = millisecondsPerSecond / maxRequestsPerSecond; // Delay = 20ms
+
   useEffect(() => {
     const fetchMovies = async () => {
+      setLoading(true);
       const newMovies = [];
       for (const list of myLists) {
         for (const id of list.movies) {
           await getMovieDetails(id, newMovies);
+          // Her laver vi et nyt Promise og venter på at det resolver sig selv efter 20ms, hvorefter funktionen igen kører i næste loop.
+          await new Promise((resolve) => setTimeout(resolve, requestDelay));
         }
       }
       setAllApiMovies(newMovies);
+
+      setLoading(false);
     };
 
     fetchMovies();
@@ -99,11 +110,17 @@ const MyListsApi = () => {
 
     try {
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar&language=en-US`, options);
-      if (response.ok) {
-        const data = await response.json();
-        newMovies.push(data);
+      // Hvis vi rammer en fejl 429 (rate limit), så indfører vi en timeout og kalder igen
+      // Ellers kører vi funktionen som normalt
+      if (response.status === 429) {
+        setTimeout(() => getMovieDetails(movieId, newMovies), requestDelay);
       } else {
-        console.error("Error fetching data");
+        if (response.ok) {
+          const data = await response.json();
+          newMovies.push(data);
+        } else {
+          console.error("Error fetching data");
+        }
       }
     } catch (err) {
       console.error(err);
@@ -111,6 +128,7 @@ const MyListsApi = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     // Kører funktionen "getAllLists", når brugeren er godkendt og data er lagt i vores useState.
     if (userName) {
       getAllLists();

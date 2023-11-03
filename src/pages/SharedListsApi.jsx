@@ -67,18 +67,33 @@ const SharedListsApi = () => {
     // Efter at have tilføjet alle de lister, man har adgang til "newLists"
     // sætter den "newLists" til vores useState "myLists, setMyLists"
     setMyLists(newLists);
-    setLoading(false);
   };
+
+  // Denne useEffect nedenfor bruges til at køre funktionen 'fetchMovies'. Denne funktion
+  // laver et API kald for hver movieId, der findes i listerne og fylder allApiMovies
+  // med vores film objekter.
+
+  // Her opsætter vi vores throttle variabler, dissse bruges til at styre hvor mange API
+  // kald vi max. kan lave per sekund.
+  const maxRequestsPerSecond = 50; // API rate limit
+  const millisecondsPerSecond = 1000;
+  const requestDelay = millisecondsPerSecond / maxRequestsPerSecond; // Delay = 20ms
 
   useEffect(() => {
     const fetchMovies = async () => {
       const newMovies = [];
       for (const list of myLists) {
         for (const id of list.movies) {
-          await getMovieDetails(id, newMovies);
+          // Checker om filmen allerede eksisterer i newMovies for at undgå duplikerede film i listerne.
+          if (!newMovies.find((movie) => movie.id === id)) {
+            await getMovieDetails(id, newMovies);
+            // Her laver vi et nyt Promise og venter på at det resolver sig selv efter 20ms, hvorefter funktionen igen kører i næste loop.
+            await new Promise((resolve) => setTimeout(resolve, requestDelay));
+          }
         }
       }
       setAllApiMovies(newMovies);
+      setLoading(false);
     };
 
     fetchMovies();
@@ -96,20 +111,23 @@ const SharedListsApi = () => {
 
     try {
       const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,similar&language=en-US`, options);
-      if (response.ok) {
+      // Hvis vi rammer en fejl 429 (rate limit), så indfører vi en timeout og kalder igen
+      // Ellers kører vi funktionen som normalt
+      if (response.status === 429) {
+        setTimeout(() => getMovieDetails(movieId, newMovies), requestDelay);
+      } else if (response.ok) {
         const data = await response.json();
         newMovies.push(data);
-        setLoading(false);
       } else {
         console.error("Error fetching data");
       }
     } catch (err) {
       console.error(err);
-      setLoading(false);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     // Kører funktionen "getAllLists", når brugeren er godkendt og data er lagt i vores useState.
     if (userName) {
       getAllLists();
@@ -206,40 +224,48 @@ const SharedListsApi = () => {
                       // Then we return the HorizontalScroller component and pass the listName and
                       // content, which in this case is all of the imdb id's of the list.
                       <div className="scroller-container" key={key}>
-                        <HorizontalScroller
-                          handleDeleteList={handleDeleteList}
-                          handleLeaveList={handleLeaveList}
-                          list={list}
-                          delete="Delete list"
-                          edit="Edit list"
-                          scrollerTitle={list.listName}
-                          content={list.movies.map((id) => {
-                            return allApiMovies?.map((movie, key) => {
-                              if (movie.id === id) {
-                                return (
-                                  <MovieCard
-                                    getLists={getAllLists}
-                                    listId={list.listDocId}
-                                    onClick={handleOpenSearchOverview}
-                                    remove={true}
-                                    key={key}
-                                    id={movie.id}
-                                    title={movie.title}
-                                    url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                    rating={movie.vote_average?.toPrecision(2)}
-                                    icon={"fa-solid fa-xmark"}
-                                  />
-                                );
-                              }
-                            });
-                          })}
-                        />
+                        {list.loading ? (
+                          <div className="loader">
+                            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+                          </div>
+                        ) : (
+                          <>
+                            <HorizontalScroller
+                              handleDeleteList={handleDeleteList}
+                              handleLeaveList={handleLeaveList}
+                              list={list}
+                              delete="Delete list"
+                              edit="Edit list"
+                              scrollerTitle={list.listName}
+                              content={list.movies.map((id) => {
+                                return allApiMovies?.map((movie, key) => {
+                                  if (movie.id === id) {
+                                    return (
+                                      <MovieCard
+                                        getLists={getAllLists}
+                                        listId={list.listDocId}
+                                        onClick={handleOpenSearchOverview}
+                                        remove={true}
+                                        key={key}
+                                        id={movie.id}
+                                        title={movie.title}
+                                        url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                                        rating={movie.vote_average?.toPrecision(2)}
+                                        icon={"fa-solid fa-xmark"}
+                                      />
+                                    );
+                                  }
+                                });
+                              })}
+                            />
+                          </>
+                        )}
                         <hr />
                       </div>
                     );
                   } else {
                     return (
-                      <div className="scroller-container">
+                      <div className="scroller-container" key={key}>
                         <HorizontalScroller
                           handleDeleteList={handleDeleteList}
                           handleLeaveList={handleLeaveList}

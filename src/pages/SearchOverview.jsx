@@ -226,7 +226,6 @@ const SearchOverview = () => {
 
   // Går ind på en ny film, når man trykker på en lignende film
   const handleOpenSearchOverview = (id) => {
-    console.log(id);
     navigate(`/searchoverview/${id}`);
   };
 
@@ -491,7 +490,7 @@ const SearchOverview = () => {
               <>
                 <div className="movie-recommended">
                   <HorizontalScroller
-                    scrollerTitle="Recommendations"
+                    scrollerTitle="Recommended"
                     content={movieDetails.recommendations?.results?.map((movie, key) => {
                       if (movie.poster_path && movie.vote_average) {
                         return (
