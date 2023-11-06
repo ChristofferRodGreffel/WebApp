@@ -411,7 +411,7 @@ const SearchOverview = () => {
                         <h2>WatchBuddy Reviews</h2>
                         <hr />
                         {reviews.length > 0 ? (
-                          <>
+                          <div className="all-reviews-container">
                             {reviews?.map((review, key) => {
                               return review.spoilers ? (
                                 <div className="user-review" key={key}>
@@ -450,7 +450,7 @@ const SearchOverview = () => {
                                 </div>
                               );
                             })}
-                          </>
+                          </div>
                         ) : (
                           <p className="no-reviews">Be the first to review this movie on WatchBuddy!</p>
                         )}
@@ -459,7 +459,7 @@ const SearchOverview = () => {
                         <div className="tmdb-reviews">
                           <h2>TMDB Reviews</h2>
                           <hr />
-                          <div className="tmdb-reviews-container">
+                          <div className="all-reviews-container">
                             {movieDetails.reviews.results.map((review, key) => {
                               if (review.content.length < 800 && review.author_details.rating) {
                                 return (
