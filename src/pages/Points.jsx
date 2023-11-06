@@ -2,8 +2,10 @@ import React from "react";
 
 const Points = () => {
   return (
-    <div>
-      This page is under construction <i className="fa-solid fa-wrench"></i>
+    <div className="points-page">
+      <p>
+        This page is under construction <i className="fa-solid fa-wrench"></i>
+      </p>
     </div>
   );
 };

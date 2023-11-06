@@ -1111,3 +1111,15 @@ nav a i {
   margin-top: 0.5rem;
   font-size: 15px;
 }
+
+/* Points page */
+.points-page {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.points-page p {
+  font-size: 20px;
+}
