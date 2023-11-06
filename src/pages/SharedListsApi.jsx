@@ -212,6 +212,7 @@ const SharedListsApi = () => {
         {loading ? (
           <div className="loader">
             <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+            <p>Getting your lists...</p>
           </div>
         ) : (
           <>
@@ -224,42 +225,36 @@ const SharedListsApi = () => {
                       // Then we return the HorizontalScroller component and pass the listName and
                       // content, which in this case is all of the imdb id's of the list.
                       <div className="scroller-container" key={key}>
-                        {list.loading ? (
-                          <div className="loader">
-                            <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
-                          </div>
-                        ) : (
-                          <>
-                            <HorizontalScroller
-                              handleDeleteList={handleDeleteList}
-                              handleLeaveList={handleLeaveList}
-                              list={list}
-                              delete="Delete list"
-                              edit="Edit list"
-                              scrollerTitle={list.listName}
-                              content={list.movies.map((id) => {
-                                return allApiMovies?.map((movie, key) => {
-                                  if (movie.id === id) {
-                                    return (
-                                      <MovieCard
-                                        getLists={getAllLists}
-                                        listId={list.listDocId}
-                                        onClick={handleOpenSearchOverview}
-                                        remove={true}
-                                        key={key}
-                                        id={movie.id}
-                                        title={movie.title}
-                                        url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                        rating={movie.vote_average?.toPrecision(2)}
-                                        icon={"fa-solid fa-xmark"}
-                                      />
-                                    );
-                                  }
-                                });
-                              })}
-                            />
-                          </>
-                        )}
+                        <>
+                          <HorizontalScroller
+                            handleDeleteList={handleDeleteList}
+                            handleLeaveList={handleLeaveList}
+                            list={list}
+                            delete="Delete list"
+                            edit="Edit list"
+                            scrollerTitle={list.listName}
+                            content={list.movies.map((id) => {
+                              return allApiMovies?.map((movie, key) => {
+                                if (movie.id === id) {
+                                  return (
+                                    <MovieCard
+                                      getLists={getAllLists}
+                                      listId={list.listDocId}
+                                      onClick={handleOpenSearchOverview}
+                                      remove={true}
+                                      key={key}
+                                      id={movie.id}
+                                      title={movie.title}
+                                      url={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                                      rating={movie.vote_average?.toPrecision(2)}
+                                      icon={"fa-solid fa-xmark"}
+                                    />
+                                  );
+                                }
+                              });
+                            })}
+                          />
+                        </>
                         <hr />
                       </div>
                     );

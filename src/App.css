@@ -79,7 +79,9 @@ a {
 
 .loader {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 1rem;
   width: 100%;
   z-index: 1000;
   align-items: center;

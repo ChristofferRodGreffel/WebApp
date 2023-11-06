@@ -8,7 +8,7 @@ import AddToList from "../Components/AddToList";
 
 // Denne komponent er udviklet fælles i gruppen
 
-// Komponenten tager filmid med fra søgefeltet og henter data fra TMDB api'en.
+// Komponenten tager searchParam med fra søgefeltet og henter data fra TMDB api'en.
 const SearchResults = () => {
   const { searchParam } = useParams();
   const [searchResults, setSearchResults] = useState([]);

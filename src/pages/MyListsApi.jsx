@@ -177,6 +177,7 @@ const MyListsApi = () => {
         {loading ? (
           <div className="loader">
             <CircleLoader color={"#dadada"} loading={loading} size={100} cssOverride={{}} aria-label="Loading Spinner" data-testid="loader" />
+            <p>Getting your lists...</p>
           </div>
         ) : (
           <>
