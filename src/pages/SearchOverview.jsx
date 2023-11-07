@@ -118,7 +118,6 @@ const SearchOverview = () => {
   // Bruges til at slette en anmeldelse. Kører getReviews bagefter.
   // En anmeldelse kan kun slettes hvis den findes og brugeren selv har lavet den.
   const handleDeleteReview = async (review) => {
-    console.log(review);
     if (review?.id && review?.userName === getAuth()?.currentUser?.displayName) {
       await deleteDoc(doc(db, `reviews/${movieId}/reviews/${review.id}`));
       toast.success(`Review removed succesfully`, {
@@ -254,7 +253,7 @@ const SearchOverview = () => {
           <div>
             <img
               className="poster-image"
-              src={movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/w1280/${movieDetails.backdrop_path}` : `https://image.tmdb.org/t/p/w1280/${movieDetails.poster_path}`}
+              src={movieDetails.backdrop_path ? `https://image.tmdb.org/t/p/w1280/${movieDetails?.backdrop_path}` : `https://image.tmdb.org/t/p/w1280/${movieDetails.poster_path}`}
               alt={`${movieDetails.title} cover image`}
             />
 
@@ -267,9 +266,19 @@ const SearchOverview = () => {
                       <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg" alt="IMDb logo" />
                       {movieDetails.vote_average > 0 ? <p>{movieDetails.vote_average?.toPrecision(2)}</p> : <p>Not rated</p>}
                     </div>
-                    <Link className="trailer" to={trailerVideo && `https://www.youtube.com/watch?v=${trailerVideo.key}`} target="_blank">
-                      Trailer
-                    </Link>
+                    {trailerVideo?.id ? (
+                      <>
+                        <Link className="trailer" to={trailerVideo && `https://www.youtube.com/watch?v=${trailerVideo.key}`} target="_blank">
+                          Trailer
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link className="trailer" to={"#"}>
+                          No trailer found
+                        </Link>
+                      </>
+                    )}
                   </div>
                   <i className="fa-regular fa-heart"></i>
                 </div>
